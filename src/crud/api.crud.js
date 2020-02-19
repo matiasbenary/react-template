@@ -52,15 +52,17 @@ export const getToken = async () => {
 	return token;
 };
 
-
 export const apiCall = async (url, data, method) => {
-	const token = await getToken();
+  const token = await getToken();
 
-  console.log(url, data, method);
 	return axios({
 		method,
 		url: `${BASE_URL}api/${url}`,
 		data,
 		headers: token,
 	});
+};
+
+export const saveUser = (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
 };

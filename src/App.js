@@ -1,17 +1,22 @@
 import React from 'react';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { Route, Switch } from 'react-router';
 import './App.scss';
-// import Navbar from './components/organisms/Navbar';
-import { useSelector } from 'react-redux';
 import Login from './components/pages/Login';
+import Navbar from './components/organisms/Navbar';
 
-function App() {
-  const { loading, error, user } = useSelector((state) => ({ loading: state.auth.loading, error: state.auth.error, user: state.auth.user }));
-  console.log(loading, error, (user && user.data[0].id));
+
+function App({ store, history }) {
   return (
-    <div className="App">
-      <Login>  </Login>
-      {user && user.data[0].email}
-    </div>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+      <Switch>
+          <Route exact path="/login" render={() => (<Login />)} />
+          <Route render={() => (<Navbar />)} />
+      </Switch>
+      </ConnectedRouter>
+    </Provider>
   );
 }
 
