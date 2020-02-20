@@ -8,6 +8,7 @@ const Main = () => {
     user: state.auth.user,
   }));
 
+  console.log(user);
   if (!user) {
     return <Redirect to="/login" />;
   }

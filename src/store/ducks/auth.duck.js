@@ -9,7 +9,7 @@ export const actionTypes = {
 };
 
 const initialAuthState = {
-  user: JSON.parse(localStorage.getItem('token')),
+  user: JSON.parse(localStorage.getItem('user')),
 };
 
 // Reducer
@@ -61,7 +61,7 @@ export function* loginUser({ payload }) {
     const results = yield call(
       apiCall,
       'login',
-      { email: 'matiasbenary@gmail.com', password: 'mbenary123' },
+      payload,
       'POST',
     );
     const data = results.data.data[0];
