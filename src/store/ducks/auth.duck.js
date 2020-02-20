@@ -9,12 +9,11 @@ export const actionTypes = {
 };
 
 const initialAuthState = {
-
+  user: JSON.parse(localStorage.getItem('token')),
 };
 
 // Reducer
 export const reducer = (state = initialAuthState, action) => {
-  console.log(action);
   switch (action.type) {
     case actionTypes.LoginStart: {
       return {
@@ -53,9 +52,18 @@ export const actions = {
 };
 // Watchers
 
+export function saveUserStorage(user) {
+  localStorage.setItem('token', JSON.stringify(user));
+}
+
 export function* loginUser({ payload }) {
   try {
-    const results = yield call(apiCall, 'login', { email: 'matiasbenary@gmail.com', password: 'mbenary123' }, 'POST');
+    const results = yield call(
+      apiCall,
+      'login',
+      { email: 'matiasbenary@gmail.com', password: 'mbenary123' },
+      'POST',
+    );
     const data = results.data.data[0];
     yield call(saveUser, data);
     yield put({ type: actionTypes.LoginCOMPLETE, data });
