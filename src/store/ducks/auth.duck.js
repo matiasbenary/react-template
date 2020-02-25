@@ -3,9 +3,9 @@ import { apiCall, saveUser } from '../../crud/api.crud';
 
 // actions
 export const actionTypes = {
-  LoginStart: '[AUTH] Action START',
-  LoginCOMPLETE: '[AUTH] Action COMPLETE',
-  LoginERROR: '[AUTH] Action ERROR',
+  LoginStart: '[AUTH] LOGIN START',
+  LoginCOMPLETE: '[AUTH] LOGIN COMPLETE',
+  LoginERROR: '[AUTH] LOGIN ERROR',
 };
 
 const initialAuthState = {
@@ -52,10 +52,6 @@ export const actions = {
 };
 // Watchers
 
-export function saveUserStorage(user) {
-  localStorage.setItem('token', JSON.stringify(user));
-}
-
 export function* loginUser({ payload }) {
   try {
     const results = yield call(
@@ -68,7 +64,6 @@ export function* loginUser({ payload }) {
     yield call(saveUser, data);
     yield put({ type: actionTypes.LoginCOMPLETE, data });
   } catch (error) {
-    console.log('HERE ERROR', error.response.data);
     yield put({ type: actionTypes.LoginERROR, error: error.response.data });
   }
 }

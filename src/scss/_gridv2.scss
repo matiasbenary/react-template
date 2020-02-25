@@ -1,0 +1,96 @@
+@import './variables';
+
+$total-columns: 12;
+
+$grid-desktop-sideMargin: 80px;
+$grid-desktop-gutter: 40px;
+
+// tablet grid
+$grid-tablet-sideMargin: 60px;
+$grid-tablet-gutter: 30px;
+
+
+$grid-mobile-sideMargin: 32px;
+$grid-mobile-gutter: 20px;
+
+// pixels to % variables
+$desk-grid-width: 100% - ((($grid-desktop-sideMargin * 2) / $lg) * 100%);
+$tab-grid-width: 100% - (($grid-tablet-sideMargin * 2 / $md) * 100%);
+$mob-grid-width: 100% - (($grid-mobile-sideMargin * 2 / $sm) * 100%);
+
+$desk-gutter: (
+  (
+      $grid-desktop-gutter /
+        ($lg - ($grid-desktop-sideMargin * 2))
+    ) * 100%
+);
+$tab-gutter: (
+  (
+      $grid-tablet-gutter /
+        ($md - ($grid-tablet-sideMargin * 2))
+    ) * 100%
+);
+$mob-gutter: (
+  (
+      $grid-mobile-gutter /
+        ($sm - ($grid-mobile-sideMargin * 2))
+    ) * 100%
+);
+
+// FUNCTIONS AND MiXINS
+@function col-width($i, $columns) {
+  @return 100% / $columns * $i;
+}
+
+@mixin col-props($i, $columns, $gutter) {
+  box-sizing: border-box;
+  width: (col-width($i, $columns)-$gutter);
+  margin-left: $gutter/2;
+  margin-right: $gutter/2;
+  margin-top: $gutter/2;
+}
+
+@mixin columns-loop($name, $columns, $gutter) {
+  @for $i from 0 through $columns {
+    &-#{$name}-#{$i} {
+      @include col-props($i, $columns, $gutter);
+    }
+    &-#{$name}-shift-#{$i} {
+      margin-left: col-width($i, $columns);
+    }
+  }
+}
+
+@mixin grid-base($width) {
+  box-sizing: border-box;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  max-width: $lg;
+  width: $width;
+}
+
+// CLASSES
+.grid {
+  @include grid-base($desk-grid-width);
+  @media screen and (max-width: $md) {
+    width: $tab-grid-width;
+  }
+  @media screen and (max-width: $sm) {
+    width: $mob-grid-width;
+  }
+  &-0 {
+    @include grid-base(100%);
+  }
+}
+
+.col {
+  @include columns-loop(xl, $total-columns, $desk-gutter);
+  @media screen and (max-width: $md) {
+    @include columns-loop(md, $total-columns, $tab-gutter);
+  }
+  @media screen and (max-width: $sm) {
+    @include columns-loop(sm, $total-columns, $mob-gutter);
+  }
+}

@@ -1,0 +1,40 @@
+@import '../../../scss/variables';
+
+.card{
+  position: relative;
+  border: 1px solid #ebedf2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+.card__head_img{
+  max-width: 100%;
+}
+.card__head__title{
+  font-size: 1.25rem;
+  padding: 1rem;
+  display: block;
+}
+
+.card__body{
+  flex-grow: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card__body__description{
+  margin-top: 1rem;
+}
+
+.card__body__info{
+  margin-top: 1rem;
+}
+
+.card__foot{
+  border-top: 1px solid #ebedf2;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
