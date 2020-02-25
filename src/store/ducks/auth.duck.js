@@ -68,7 +68,8 @@ export function* loginUser({ payload }) {
     yield call(saveUser, data);
     yield put({ type: actionTypes.LoginCOMPLETE, data });
   } catch (error) {
-    yield put({ type: actionTypes.LoginERROR, error: error.response.data[0] });
+    console.log('HERE ERROR', error.response.data);
+    yield put({ type: actionTypes.LoginERROR, error: error.response.data });
   }
 }
 
