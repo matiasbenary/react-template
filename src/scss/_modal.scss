@@ -1,39 +1,45 @@
-@import '../../../scss/variables';
+.modal__container {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  height: 100vh;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 1;
+  transition: opacity 1s ease;
+}
 
-.card{
+.modal{
   border: 1px solid #ebedf2;
   display: flex;
   flex-direction: column;
   justify-content: space-between
 }
-.card__head_img{
-  max-width: 100%;
-}
-.card__head__title{
+.modal__head__title{
   font-size: 1.25rem;
   padding: 1rem;
   display: block;
 }
 
-.card__body{
+.modal__body{
   flex-grow: 1;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.card__body__description{
+.modal__body__description{
   margin-top: 1rem;
 }
 
-.card__body__info{
-  margin-top: 1rem;
-}
 
-.card__foot{
+.modal__foot{
   border-top: 1px solid #ebedf2;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
 }
-

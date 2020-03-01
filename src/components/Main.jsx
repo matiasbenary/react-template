@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Navbar from './organisms/Navbar';
 import CardConstainer from './organisms/CardContainer';
 import { actions } from '../store/ducks/activities.duck';
+import Modal from './molecules/Modal';
 
 const Main = () => {
   const { user, activities, activitiesLoading } = useSelector((state) => ({
@@ -38,6 +39,7 @@ const Main = () => {
     <>
       <Navbar email={user.email} />
       {renderCards()}
+      <Modal />
     </>
   );
 };

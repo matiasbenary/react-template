@@ -47,7 +47,7 @@ $mob-gutter: (
   width: (col-width($i, $columns)-$gutter);
   margin-left: $gutter/2;
   margin-right: $gutter/2;
-  margin-top: $gutter/2;
+  margin-top: $gutter;
 }
 
 @mixin columns-loop($name, $columns, $gutter) {
