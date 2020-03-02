@@ -3,43 +3,35 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Navbar from './organisms/Navbar';
 import CardConstainer from './organisms/CardContainer';
-import { actions } from '../store/ducks/activities.duck';
-import Modal from './molecules/Modal';
+import { actions as activitiesAction } from '../store/ducks/activities.duck';
+
+import ModalRoot from './molecules/Modal/ModalRoot';
 
 const Main = () => {
   const { user, activities, activitiesLoading } = useSelector((state) => ({
     user: state.auth.user,
-    activities: state.activities.activities,
-    activitiesLoading: state.activities.loading,
+    // activities: state.activities.activities,
+    // activitiesLoading: state.activities.loading,
   }));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    //   // props.getUsers();as
-    if (!activities) {
-      dispatch(actions.getActivities());
-    }
-  }, []);
+  // useEffect(() => {
+  //   //   // props.getUsers();as
+  //   if (!activities) {
+  //     dispatch(activitiesAction.getActivities());
+  //   }
+  // }, []);
 
   if (!user) {
     return <Redirect to="/login" />;
   }
 
-  const renderCards = () => {
-    if (activities) {
-      return <CardConstainer cards={activities.data} />;
-    }
-      if (activitiesLoading) {
-        return <div>cargando</div>;
-      }
-      return null;
-  };
-
-  return (
+return (
     <>
       <Navbar email={user.email} />
-      {renderCards()}
-      <Modal />
+      {/* {renderCards()} */}
+      <CardConstainer />
+      <ModalRoot />
     </>
   );
 };

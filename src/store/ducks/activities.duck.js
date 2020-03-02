@@ -5,12 +5,20 @@ export const actionTypes = {
   GetActivitiesStart: '[ACTIVITIES] GET START',
   GetActivitiesComplete: '[ACTIVITIES] GET COMPLETE',
   GetActivitiesError: '[ACTIVITIES] GET ERROR',
+  ApplyActivityStart: '[ACTIVITIES] APPLY START',
+  ApplyActivityComplete: '[ACTIVITIES] APPLY COMPLETE',
+  ApplyActivityError: '[ACTIVITIES] APPLY ERROR',
+  UnapplyActivityStart: '[ACTIVITIES] UNAPPLY START',
+  UnapplyActivityComplete: '[ACTIVITIES] UNAPPLY COMPLETE',
+  UnapplyActivityError: '[ACTIVITIES] UNAPPLY ERROR',
 };
 
 const initialAuthState = {
   loading: true,
   activities: null,
   error: '',
+  loadingApply: false,
+  errorApply: '',
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -28,6 +36,38 @@ export const reducer = (state = initialAuthState, action) => {
           ...state, loading: false, activities: null, error,
         };
       }
+      case actionTypes.ApplyActivityStart: {
+        return {
+          ...state, loadingApply: true, errorApply: null,
+        };
+      }
+      case actionTypes.ApplyActivityComplete: {
+        return {
+          ...state, loadingApply: false, errorApply: null,
+        };
+      }
+      case actionTypes.ApplyActivityError: {
+        const { error } = action;
+        return {
+          ...state, loadingApply: false, errorApply: error,
+        };
+      }
+      case actionTypes.UnapplyActivityStart: {
+        return {
+          ...state, loadingUnapply: true, errorUnapply: null,
+        };
+      }
+      case actionTypes.UnapplyActivityComplete: {
+        return {
+          ...state, loadingUnapply: false, errorUnapply: null,
+        };
+      }
+      case actionTypes.UnapplyActivityError: {
+        const { error } = action;
+        return {
+          ...state, loadingUnapply: false, errorUnapply: error,
+        };
+      }
       default:
         return state;
     }
@@ -35,7 +75,9 @@ export const reducer = (state = initialAuthState, action) => {
 
 
 export const actions = {
-  getActivities: (activity) => ({ type: actionTypes.GetActivitiesStart, payload: { activity } }),
+  getActivities: () => ({ type: actionTypes.GetActivitiesStart }),
+  applyActivity: ({ payload }) => ({ type: actionTypes.ApplyActivityStart, payload }),
+  unapplyActivity: ({ payload }) => ({ type: actionTypes.UnapplyActivityStart, payload }),
 };
 // Watchers
 
@@ -49,6 +91,36 @@ export function* getActivitiesState() {
   }
 }
 
+export function* applyActivityStart({ payload }) {
+  try {
+    const results = yield call(
+      apiCall,
+      'activity/postulate',
+      payload,
+      'POST',
+      );
+    yield put({ type: actionTypes.ApplyActivityComplete, results });
+  } catch (error) {
+    yield put({ type: actionTypes.ApplyActivityError, error });
+  }
+}
+
+export function* unapplyActivityStart({ payload }) {
+  try {
+    const results = yield call(
+      apiCall,
+      'activity/despostulate',
+      payload,
+      'POST',
+      );
+    yield put({ type: actionTypes.UnapplyActivityComplete, results });
+  } catch (error) {
+    yield put({ type: actionTypes.UnapplyActivityError, error });
+  }
+}
+
 export function* saga() {
   yield takeLatest(actionTypes.GetActivitiesStart, getActivitiesState);
+  yield takeLatest(actionTypes.ApplyActivityStart, applyActivityStart);
+  yield takeLatest(actionTypes.UnapplyActivityStart, unapplyActivityStart);
 }

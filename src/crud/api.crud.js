@@ -27,7 +27,7 @@ export const getToken = async () => {
 	let token = getHeaderLocalStorage();
 
 	const expireToken = getExpireTokenLocalStorage();
-
+  console.log(hasExpireToken(expireToken) && isExpiredToken(expireToken) && hasToken(token));
 	if (!(hasExpireToken(expireToken) && isExpiredToken(expireToken) && hasToken(token))) {
 		const params = new FormData();
 		params.set('grant_type', 'client_credentials');

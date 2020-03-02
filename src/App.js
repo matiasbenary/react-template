@@ -15,12 +15,8 @@ function App({ store, history }) {
     <Provider store={store}>
       <ConnectedRouter history={history}>
       <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route>
-            <Main />
-          </Route>
+          <Route path="/login" component={Login} />
+          <Route component={Main} />
       </Switch>
       </ConnectedRouter>
     </Provider>
