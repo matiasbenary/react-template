@@ -17,17 +17,17 @@ const getExpireTokenLocalStorage = () => JSON.parse(localStorage.getItem('expire
 
 const setExpireTokenLocalStorage = (res) => localStorage.setItem('expire_token', JSON.stringify(moment().add(res.expires_in, 's')));
 
-const hasExpireToken = (expireToken) => expireToken === null;
+const hasExpireToken = (expireToken) => expireToken !== null;
 
-const isExpiredToken = (expireToken) => moment().diff(expireToken) >= 0;
+const isExpiredToken = (expireToken) => moment().diff(expireToken) <= 0;
 
-const hasToken = (token) => token === null;
+const hasToken = (token) => token !== null;
 
 export const getToken = async () => {
 	let token = getHeaderLocalStorage();
 
 	const expireToken = getExpireTokenLocalStorage();
-  console.log(hasExpireToken(expireToken) && isExpiredToken(expireToken) && hasToken(token));
+
 	if (!(hasExpireToken(expireToken) && isExpiredToken(expireToken) && hasToken(token))) {
 		const params = new FormData();
 		params.set('grant_type', 'client_credentials');

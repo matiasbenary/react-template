@@ -14,11 +14,17 @@ export const actionTypes = {
 };
 
 const initialAuthState = {
-  loading: true,
+  loading: false,
   activities: null,
   error: '',
   loadingApply: false,
   errorApply: '',
+  apply: '',
+  applyId: null,
+  loadingUnapply: false,
+  errorUnapply: '',
+  unapply: '',
+  unapplyId: null,
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -38,34 +44,36 @@ export const reducer = (state = initialAuthState, action) => {
       }
       case actionTypes.ApplyActivityStart: {
         return {
-          ...state, loadingApply: true, errorApply: null,
+          ...state, loadingApply: true, errorApply: null, apply: '', applyId: null, unapply: '',
         };
       }
       case actionTypes.ApplyActivityComplete: {
+        const { message } = action.results.data;
         return {
-          ...state, loadingApply: false, errorApply: null,
+          ...state, loadingApply: false, errorApply: null, apply: message, applyId: action.id,
         };
       }
       case actionTypes.ApplyActivityError: {
         const { error } = action;
         return {
-          ...state, loadingApply: false, errorApply: error,
+          ...state, loadingApply: false, errorApply: error, apply: '', applyId: null,
         };
       }
       case actionTypes.UnapplyActivityStart: {
         return {
-          ...state, loadingUnapply: true, errorUnapply: null,
+          ...state, loadingUnapply: true, errorUnapply: null, unapply: '', apply: '',
         };
       }
       case actionTypes.UnapplyActivityComplete: {
+        const { message } = action.results.data;
         return {
-          ...state, loadingUnapply: false, errorUnapply: null,
+          ...state, loadingUnapply: false, errorUnapply: null, unapply: message, unapplyId: action.id,
         };
       }
       case actionTypes.UnapplyActivityError: {
         const { error } = action;
         return {
-          ...state, loadingUnapply: false, errorUnapply: error,
+          ...state, loadingUnapply: false, errorUnapply: error, unapply: '',
         };
       }
       default:
@@ -99,7 +107,7 @@ export function* applyActivityStart({ payload }) {
       payload,
       'POST',
       );
-    yield put({ type: actionTypes.ApplyActivityComplete, results });
+    yield put({ type: actionTypes.ApplyActivityComplete, results, id: payload.activity_id });
   } catch (error) {
     yield put({ type: actionTypes.ApplyActivityError, error });
   }
@@ -113,7 +121,7 @@ export function* unapplyActivityStart({ payload }) {
       payload,
       'POST',
       );
-    yield put({ type: actionTypes.UnapplyActivityComplete, results });
+    yield put({ type: actionTypes.UnapplyActivityComplete, results, id: payload.activity_id });
   } catch (error) {
     yield put({ type: actionTypes.UnapplyActivityError, error });
   }
