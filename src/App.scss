@@ -1,5 +1,17 @@
 
-@import './scss/main';
+// @import './scss/main';
 
+@import '~bootstrap/scss/bootstrap.scss';
 
+.card-columns {
+ margin-top: 20px;
+  @include media-breakpoint-only(sm) {
+    column-count: 2;
+  }
+
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+
+}
 

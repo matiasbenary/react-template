@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import './card.scss';
 
 const createMarkup = (setHtml) => ({ __html: setHtml });

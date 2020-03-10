@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './navbar.scss';
+import { Link } from 'react-router-dom';
 import Logo from './log1.svg';
 
 const Navbar = ({ email }) => {
@@ -13,13 +14,9 @@ const Navbar = ({ email }) => {
     <nav className="navbar">
       <div className="navbar__menu">
         <div className="navbar__brand">
-          <img
-src={Logo}
-alt=""
-className="navbar__brand__logo"
-
-          />
-
+          <Link to="/">
+            <img src={Logo} alt="" className="navbar__brand__logo" />
+          </Link>
           <span className="navbar__brand__text" />
         </div>
         <div className="navbar__mobile_menu">

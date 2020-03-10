@@ -1,12 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createSelector } from 'reselect';
 import { actions as modalAction } from '../../../store/ducks/modal.duck';
 import { actions as modalActivities } from '../../../store/ducks/activities.duck';
-import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import ApplyButton from '../../molecules/ApplyButton';
 
-const ActivitiesButtons = ({
+const applyIdSelector = (state) => state.activities.applyId;
+const applyMsjSelector = (state) => state.activities.apply;
+
+const applySelector = (activity_id) => createSelector(
+  applyIdSelector,
+  applyMsjSelector,
+  (id, msj) => (activity_id == id && msj !== ''),
+);
+
+const unapplyIdSelector = (state) => state.activities.unapplyId;
+const unapplyMsjSelector = (state) => state.activities.unapply;
+
+const unapplySelector = (activity_id) => createSelector(
+  unapplyIdSelector,
+  unapplyMsjSelector,
+  (id, msj) => (activity_id == id && msj !== ''),
+);
+
+
+const ActivitiesButtons = memo(({
   user_id,
   activity_id,
   isApply,
@@ -22,33 +41,16 @@ const ActivitiesButtons = ({
   //   loading: state.activities.loadingApply,
   // }));
 
-  const {
- loadingApply, apply, errorApply, applyId,
-} = useSelector((state) => ({
-    loadingApply: state.activities.loadingApply,
-    apply: state.activities.apply,
-    errorApply: state.activities.errorApply,
-    applyId: state.activities.applyId,
-  }));
-
-  const {
- loadingUnapply, unapply, errorUnapply, unapplyId,
-} = useSelector(
-    (state) => ({
-      loadingUnapply: state.activities.loadingUnapply,
-      unapply: state.activities.unapply,
-      errorUnapply: state.activities.errorUnapply,
-      unapplyId: state.activities.unapplyId,
-    }),
-  );
+  const apply = useSelector(applySelector(activity_id));
+  const unapply = useSelector(unapplySelector(activity_id));
 
   useEffect(() => {
-    if (applyId == activity_id && apply !== '') {
+    if (apply) {
       setToggleButton(false);
-    } else if (unapplyId == activity_id && unapply !== '') {
+    } else if (unapply) {
       setToggleButton(true);
     }
-  }, [applyId, unapply]);
+  }, [apply, unapply]);
 
   const openUnapplyModal = () => {
     dispatch(
@@ -101,6 +103,6 @@ const ActivitiesButtons = ({
       ) : null}
     </>
   );
-};
+});
 
 export default ActivitiesButtons;

@@ -6,18 +6,23 @@ import Card from '../../molecules/Card';
 import { actions } from '../../../store/ducks/activity/getActivity.duck';
 import ActivitiesButtons from '../CardContainer/ActivitiesButtons';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
+import useGetUserId from '../../../hooks/api/useGetUserId';
 
-const activitySelector = createSelector((state) => state.activity.activity, (activity) => activity);
-const userActivitiesSelector = createSelector((state) => state.userActivities.activities, (userActivities) => userActivities);
-const user_idSelector = createSelector((state) => state.auth.user.id, (user_id) => user_id);
-
+const activitySelector = createSelector(
+  (state) => state.activity.activity,
+  (activity) => activity,
+);
+const userActivitiesSelector = createSelector(
+  (state) => state.userActivities.activities,
+  (userActivities) => userActivities,
+);
 
 const DetailActivity = memo(() => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const activity = useSelector(activitySelector);
   const userActivities = useSelector(userActivitiesSelector);
-  const user_id = useSelector(user_idSelector);
+  const user_id = useGetUserId();
 
   useEffect(() => {
     if (!activity) {
@@ -31,21 +36,19 @@ const DetailActivity = memo(() => {
     }
   }, []);
 
-  if (activity && (userActivities)) {
-    const isApply = userActivities.data.find((activityLocal) => (activityLocal.id == id))
-
-              === undefined;
+  if (activity && userActivities) {
+    const isApply = userActivities.data.find((activityLocal) => activityLocal.id == id) === undefined;
     return (
       <div className="container">
-          <Card title={activity.title} descriptionHtml={(activity.description)}>
-             <ActivitiesButtons
+        <Card title={activity.title} descriptionHtml={activity.description}>
+          <ActivitiesButtons
             isApply={isApply}
             activity_id={id}
             user_id={user_id}
             title={activity.title}
             description={activity.short_description}
-             />
-          </Card>
+          />
+        </Card>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTransition, animated } from 'react-spring';
 import Card from '../../molecules/Card';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import { actions as activitiesAction } from '../../../store/ducks/activities.duck';
@@ -8,13 +9,11 @@ import ActivitiesButtons from './ActivitiesButtons';
 const CardsContainer = () => {
   const {
     user_id,
-    applyActivities,
     activities,
     activitiesLoading,
     userActivities,
   } = useSelector((state) => ({
     user_id: state.auth.user.id,
-    applyActivities: state.auth.user.activities,
     userActivities: state.userActivities.activities,
     activities: state.activities.activities,
     activitiesLoading: state.activities.loading,
@@ -35,30 +34,44 @@ const CardsContainer = () => {
     }
   }, []);
 
+  const acts = activities ? activities.data : [];
+
+  const transitions = useTransition(acts, (act) => act.id, {
+    from: { transform: 'translate3d(0,-40px,0)', opacity: 0 },
+    enter: { transform: 'translate3d(0,0px,0)', opacity: 1 },
+    leave: { transform: 'translate3d(0,-40px,0)', opacity: 0 },
+    trail: 55,
+    config: { mass: 1, tension: 210, friction: 20 },
+  });
+
+  if (activitiesLoading) {
+    return <div>Cargando...</div>;
+  }
+
   if (userActivities && activities) {
     return (
       <div className="container">
         <div className="card-columns">
-          {activities.data.map((card) => {
-            const isApply = userActivities.data.find((activity) => activity.id === card.id)
-              === undefined;
+          {transitions.map(({ item, props, key }) => {
+            const isApply = userActivities.data.find((activity) => activity.id === item.id) === undefined;
             return (
-              <Card
-                key={`cardactivity${card.id}`}
-                title={card.title}
-                description={card.short_description}
-                img={card.description_image}
-
-              >
-                <ActivitiesButtons
+              <animated.div key={key} style={props}>
+                <Card
+                  key={`cardactivity${item.id}`}
+                  title={item.title}
+                  description={item.short_description}
+                  img={item.description_image}
+                >
+                  <ActivitiesButtons
                     isApply={isApply}
-                    activity_id={card.id}
+                    activity_id={item.id}
                     user_id={user_id}
-                    title={card.title}
-                    description={card.short_description}
+                    title={item.title}
+                    description={item.short_description}
                     withLink
-                />
-              </Card>
+                  />
+                </Card>
+              </animated.div>
             );
           })}
         </div>
