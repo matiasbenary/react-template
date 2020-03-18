@@ -75,7 +75,7 @@ const ActivitiesButtons = memo(({
     );
   };
   return (
-    <>
+    <div className="d-flex justify-content-around">
       {toggleButton ? (
         <ApplyButton
           activity_id={activity_id}
@@ -96,12 +96,11 @@ const ActivitiesButtons = memo(({
         <Link
           to={`/detail/${activity_id}`}
           className="btn btn-secondary btn-sm"
-          type="button"
         >
           Ver más
         </Link>
       ) : null}
-    </>
+    </div>
   );
 });
 

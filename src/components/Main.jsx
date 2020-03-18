@@ -9,11 +9,11 @@ const Main = () => {
   const user = useSelector((state) => state.auth.user);
 
 return (
-    <>
+    <div className="bg-light" style={{ minHeight: '100vh' }}>
       <Navbar email={user.email} />
       <CardConstainer />
       <ModalRoot />
-    </>
+    </div>
   );
 };
 

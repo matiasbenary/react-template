@@ -1,17 +1,75 @@
 import React, { useState } from 'react';
 import './navbar.scss';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Logo from './log1.svg';
+import { actions } from '../../../store/ducks/auth.duck';
 
 const Navbar = ({ email }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(actions.logOut());
+  };
 
   const toogleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar navbar-expand-lg navbar-light bg-white ">
+      <div className="container">
+      <Link to="/" className="navbar-brand">
+          <img
+            src={Logo}
+            width="200"
+            className="d-inline-block align-top"
+            alt=""
+          />
+      </Link>
+        {/* <button
+        className="navbar-toggler"
+        type="button"
+      >
+        <span className="navbar-toggler-icon" />
+      </button> */}
+
+        <ul className="nav navbar-nav flex-row justify-content-between ml-auto">
+          <li className="nav-item order-2 order-md-1">
+            <a href="#" className="nav-link" title="settings">
+              <i className="fa fa-cog fa-fw fa-lg" />
+            </a>
+          </li>
+          <li className="dropdown order-1">
+            <button
+              type="button"
+              id="dropdownMenu1"
+              data-toggle="dropdown"
+              className="btn btn-link dropdown-toggle"
+              onClick={toogleMenu}
+            >
+              {email}
+              <span className="caret" />
+            </button>
+            <ul className={`dropdown-menu dropdown-menu-right mt-2 ${isOpen ? 'show' : null}`}>
+              <li className="px-5 ">
+                <button type="submit" className="btn btn-primary btn-block" onClick={logout}>
+                  Cerrar sesión
+                </button>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+/*    { <nav className="navbar">
       <div className="navbar__menu">
         <div className="navbar__brand">
           <Link to="/">
@@ -44,7 +102,4 @@ const Navbar = ({ email }) => {
         <button className="navbar__item">{email}</button>
       </div>
     </nav>
-  );
-};
-
-export default Navbar;
+    */

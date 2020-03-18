@@ -66,3 +66,7 @@ export const apiCall = async (url, data, method) => {
 export const saveUser = (user) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
+
+export const clearStorage = () => {
+  localStorage.clear();
+};

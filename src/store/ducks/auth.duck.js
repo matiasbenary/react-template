@@ -1,11 +1,12 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { apiCall, saveUser } from '../../crud/api.crud';
+import { apiCall, saveUser, clearStorage } from '../../crud/api.crud';
 
 // actions
 export const actionTypes = {
   LoginStart: '[AUTH] LOGIN START',
   LoginCOMPLETE: '[AUTH] LOGIN COMPLETE',
   LoginERROR: '[AUTH] LOGIN ERROR',
+  Logout: '[AUTH] LOGOUT',
 };
 
 const initialAuthState = {
@@ -41,6 +42,14 @@ export const reducer = (state = initialAuthState, action) => {
         error,
       };
     }
+    case actionTypes.Logout: {
+      return {
+        ...state,
+        loading: null,
+        user: null,
+        error: null,
+      };
+    }
     default:
       return state;
   }
@@ -49,6 +58,7 @@ export const reducer = (state = initialAuthState, action) => {
 // Action Creators
 export const actions = {
   login: (user) => ({ type: actionTypes.LoginStart, payload: user }),
+  logOut: () => ({ type: actionTypes.Logout }),
 };
 // Watchers
 
@@ -68,8 +78,13 @@ export function* loginUser({ payload }) {
   }
 }
 
+export function* logout() {
+    yield call(clearStorage);
+}
+
 // Watchers
 
 export function* saga() {
   yield takeLatest(actionTypes.LoginStart, loginUser);
+  yield takeLatest(actionTypes.Logout, logout);
 }

@@ -37,18 +37,36 @@ const DetailActivity = memo(() => {
   }, []);
 
   if (activity && userActivities) {
-    const isApply = userActivities.data.find((activityLocal) => activityLocal.id == id) === undefined;
+    const getDetail = () => ([
+      { title: 'Tipo de Actividad', value: activity.alternative_type },
+      { title: 'Estado de la actividad', value: activity.status_alias },
+      { title: 'Límite de postulación', value: activity.deadline },
+      { title: 'Fecha de la actividad', value: activity.activity_to },
+      ]);
+
+    const isApply = userActivities.data.find((activityLocal) => activityLocal.id == id)
+      === undefined;
     return (
-      <div className="container">
-        <Card title={activity.title} descriptionHtml={activity.description}>
-          <ActivitiesButtons
-            isApply={isApply}
-            activity_id={id}
-            user_id={user_id}
-            title={activity.title}
-            description={activity.short_description}
-          />
-        </Card>
+      <div className="container mt-4">
+        <div className="row">
+          <div className="col-12">
+            <Card title={activity.title} descriptionHtml={activity.description}>
+              <ActivitiesButtons
+                isApply={isApply}
+                activity_id={id}
+                user_id={user_id}
+                title={activity.title}
+                description={activity.short_description}
+              />
+            </Card>
+          </div>
+          <div className="col-6 mt-4">
+            <Card title="Términos y condiciones" descriptionHtml={activity.terms_and_conditions} />
+          </div>
+          <div className="col-6 mt-4">
+            <Card title="Otros datos" detail={getDetail()} />
+          </div>
+        </div>
       </div>
     );
   }

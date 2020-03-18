@@ -1,5 +1,3 @@
-import produce from 'immer';
-
 // actions
 export const actionTypes = {
   modalShow: '[MODAL] SHOW',
