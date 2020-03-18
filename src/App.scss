@@ -1,5 +1,5 @@
 
-// @import './scss/main';
+@import './scss/main';
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -13,5 +13,10 @@
     column-count: 2;
   }
 
+}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800&display=swap');
+
+body{
+  font-family: 'Open Sans', sans-serif;
 }
 

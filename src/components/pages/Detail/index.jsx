@@ -9,11 +9,11 @@ const Detail = () => {
 
 
   return (
-    <>
-      <Navbar email={user.email} />
+    <div className="bg-light" style={{ minHeight: '100vh' }}>
+    <Navbar email={user.email} />
       <DetailActivity />
       <ModalRoot />
-    </>
+    </div>
   );
 };
 
