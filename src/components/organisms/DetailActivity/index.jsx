@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createSelector } from 'reselect';
 import Card from '../../molecules/Card';
 import { actions } from '../../../store/ducks/activity/getActivity.duck';
-import ActivitiesButtons from '../CardContainer/ActivitiesButtons';
+import ActivitiesButtons from '../../molecules/ActivitiesButton';
+import Detail from '../../molecules/Detail';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import useGetUserId from '../../../hooks/api/useGetUserId';
 
@@ -37,13 +38,6 @@ const DetailActivity = memo(() => {
   }, []);
 
   if (activity && userActivities) {
-    const getDetail = () => ([
-      { title: 'Tipo de Actividad', value: activity.alternative_type },
-      { title: 'Estado de la actividad', value: activity.status_alias },
-      { title: 'Límite de postulación', value: activity.deadline },
-      { title: 'Fecha de la actividad', value: activity.activity_to },
-      ]);
-
     const isApply = userActivities.data.find((activityLocal) => activityLocal.id == id)
       === undefined;
     return (
@@ -64,7 +58,7 @@ const DetailActivity = memo(() => {
             <Card title="Términos y condiciones" descriptionHtml={activity.terms_and_conditions} />
           </div>
           <div className="col-6 mt-4">
-            <Card title="Otros datos" detail={getDetail()} />
+            <Card title="Otros datos" description={<Detail activity={activity} />} />
           </div>
         </div>
       </div>

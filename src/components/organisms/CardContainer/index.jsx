@@ -4,7 +4,8 @@ import { useTransition, animated } from 'react-spring';
 import Card from '../../molecules/Card';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import { actions as activitiesAction } from '../../../store/ducks/activities.duck';
-import ActivitiesButtons from './ActivitiesButtons';
+import ActivitiesButtons from '../../molecules/ActivitiesButton';
+import Detail from '../../molecules/Detail';
 
 const CardsContainer = () => {
   const {
@@ -48,13 +49,6 @@ const CardsContainer = () => {
     return <div>Cargando...</div>;
   }
 
-  const getDetail = (activity) => ([
-    { title: 'Tipo de Actividad', value: activity.alternative_type },
-    { title: 'Estado de la actividad', value: activity.status_alias },
-    { title: 'Límite de postulación', value: activity.deadline },
-    { title: 'Fecha de la actividad', value: activity.activity_to },
-    ]);
-
   if (userActivities && activities) {
     return (
       <div className="container">
@@ -66,9 +60,16 @@ const CardsContainer = () => {
                 <Card
                   key={`cardactivity${item.id}`}
                   title={item.title}
-                  description={item.short_description}
+                  description={(
+<>
+{item.short_description}
+{' '}
+<hr />
+<Detail activity={item} />
+</>
+)}
                   img={item.description_image}
-                  detail={getDetail(item)}
+
                 >
                   <ActivitiesButtons
                     isApply={isApply}
