@@ -7,11 +7,12 @@ const index = ({ activity }) => {
 
   return (
     <div className="list text-dark">
-      <b>Tipo de Actividad</b>
-:
-{' '}
+    <h5>
+<span className="badge badge-info">
+#
 {activity.alternative_type}
-      <br />
+</span>
+    </h5>
       <b>Estado de la actividad</b>
 :
 {' '}
