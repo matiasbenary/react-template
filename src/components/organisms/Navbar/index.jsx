@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './navbar.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Logo from './log1.svg';
+import config from '../../../config';
 import { actions } from '../../../store/ducks/auth.duck';
 
 const Navbar = ({ email }) => {
@@ -23,7 +23,7 @@ const Navbar = ({ email }) => {
       <div className="container">
       <Link to="/" className="navbar-brand">
           <img
-            src={Logo}
+            src={config.logo}
             width="200"
             className="d-inline-block align-top"
             alt=""
