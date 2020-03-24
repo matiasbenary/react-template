@@ -74,7 +74,7 @@ const DetailActivity = memo(() => {
           <div className="col-12 mt-4">
             <Card title="Términos y condiciones" descriptionHtml={activity.terms_and_conditions} />
           </div>
-          <div className="col-12 mt-4">
+          <div className="col-12 my-4">
             <Card title="Otros datos" description={<Detail activity={activity} />} />
           </div>
         </div>

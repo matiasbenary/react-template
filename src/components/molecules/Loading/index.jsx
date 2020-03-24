@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from 'react-spinners/ClimbingBoxLoader';
+import Loader from 'react-spinners/PropagateLoader';
 
 const index = () => (
   <div
@@ -11,7 +11,7 @@ const index = () => (
       justifyContent: 'center',
     }}
   >
-    <Loader size={30} color="#007bff" loading />
+    <Loader size={15} color="#007bff" loading />
   </div>
 );
 
