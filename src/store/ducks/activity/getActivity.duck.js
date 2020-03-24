@@ -42,7 +42,7 @@ export const actions = {
 
 export function* getActivityState({ id }) {
   try {
-    const results = yield call(apiCall, `activity/${id}`, null, 'GET');
+    const results = yield call(apiCall, `activity/${id}?include=locations`, null, 'GET');
     yield put({ type: actionTypes.GetActivityComplete, results });
   } catch (error) {
     yield put({ type: actionTypes.GetActivityError, error });

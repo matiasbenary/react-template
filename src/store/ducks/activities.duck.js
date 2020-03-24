@@ -92,7 +92,7 @@ export const actions = {
 
 export function* getActivitiesState() {
   try {
-    const results = yield call(apiCall, `activity/?filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}`, null, 'GET');
+    const results = yield call(apiCall, `activity/?filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}&filter[status]=1,2&include=locations`, null, 'GET');
     yield put({ type: actionTypes.GetActivitiesComplete, results });
   } catch (error) {
     yield put({ type: actionTypes.GetActivitiesError, error });

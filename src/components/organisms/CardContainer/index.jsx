@@ -6,6 +6,7 @@ import { actions as userActivitiesAction } from '../../../store/ducks/user/activ
 import { actions as activitiesAction } from '../../../store/ducks/activities.duck';
 import ActivitiesButtons from '../../molecules/ActivitiesButton';
 import Detail from '../../molecules/Detail';
+import Map from '../../molecules/Map';
 
 const CardsContainer = () => {
   const {
@@ -51,25 +52,26 @@ const CardsContainer = () => {
 
   if (userActivities && activities) {
     return (
-      <div className="container">
+      <div className="container mt-4">
+        <Card description={<Map activities={activities} />} title="Actividades de voluntariado" />
         <div className="card-columns">
           {transitions.map(({ item, props, key }) => {
-            const isApply = userActivities.data.find((activity) => activity.id === item.id) === undefined;
+            const isApply = userActivities.data.find((activity) => activity.id === item.id)
+              === undefined;
             return (
               <animated.div key={key} style={props}>
                 <Card
                   key={`cardactivity${item.id}`}
                   title={item.title}
                   description={(
-<>
-{item.short_description}
+                    <>
+                      {item.short_description}
 {' '}
 <hr />
-<Detail activity={item} />
-</>
-)}
+                      <Detail activity={item} />
+                    </>
+                  )}
                   img={item.description_image}
-
                 >
                   <ActivitiesButtons
                     isApply={isApply}
@@ -78,7 +80,6 @@ const CardsContainer = () => {
                     title={item.title}
                     description={item.short_description}
                     withLink
-
                   />
                 </Card>
               </animated.div>
