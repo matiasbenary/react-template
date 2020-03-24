@@ -26,7 +26,7 @@ const unapplySelector = (activity_id) => createSelector(
 
 const ActivitiesButtons = memo(
   ({
- user_id, activity_id, isApply, title, description, withLink,
+ user_id, activity_id, isApply, title, description, withLink, isEnable,
 }) => {
     const dispatch = useDispatch();
 
@@ -77,12 +77,14 @@ const ActivitiesButtons = memo(
             user_id={user_id}
             title={title}
             description={description}
+            disabled={!isEnable}
           />
         ) : (
           <button
             className="btn btn-danger btn-sm"
             onClick={openUnapplyModal}
             type="button"
+            disabled={!isEnable}
           >
             Despostularme
           </button>

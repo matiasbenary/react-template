@@ -6,7 +6,6 @@ const index = ({ activity }) => {
   const now = moment();
 
   const getLocation = () => {
-    console.log(activity.locations, activity.locations.length);
     if (activity.locations.length) {
       return (
         <>

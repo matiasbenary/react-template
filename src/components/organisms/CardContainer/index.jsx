@@ -1,10 +1,12 @@
 import React, { useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTransition, animated } from 'react-spring';
+import moment from 'moment';
 import Card from '../../molecules/Card';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import { actions as activitiesAction } from '../../../store/ducks/activities.duck';
 import ActivitiesButtons from '../../molecules/ActivitiesButton';
+import Loading from '../../molecules/Loading';
 import Detail from '../../molecules/Detail';
 import Map from '../../molecules/Map';
 
@@ -47,17 +49,24 @@ const CardsContainer = () => {
   });
 
   if (activitiesLoading) {
-    return <div>Cargando...</div>;
+    return <Loading />;
   }
 
   if (userActivities && activities) {
+    const now = moment();
     return (
       <div className="container mt-4">
-        <Card description={<Map activities={activities} />} title="Actividades de voluntariado" />
+        <Card
+          description={<Map activities={activities} />}
+          title="Actividades de voluntariado"
+        />
         <div className="card-columns">
           {transitions.map(({ item, props, key }) => {
             const isApply = userActivities.data.find((activity) => activity.id === item.id)
               === undefined;
+
+              const deadline = moment(item.deadline);
+              const isEnable = now < deadline;
             return (
               <animated.div key={key} style={props}>
                 <Card
@@ -74,6 +83,7 @@ const CardsContainer = () => {
                   img={item.description_image}
                 >
                   <ActivitiesButtons
+                    isEnable={isEnable}
                     isApply={isApply}
                     activity_id={item.id}
                     user_id={user_id}

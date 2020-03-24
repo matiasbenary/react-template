@@ -4,7 +4,7 @@ import { actions as modalAction } from '../../../store/ducks/modal.duck';
 import { actions as modalActivities } from '../../../store/ducks/activities.duck';
 
 const ApplyButton = ({
-user_id, activity_id, title, description,
+user_id, activity_id, title, description, disabled,
 }) => {
   const dispatch = useDispatch();
 
@@ -35,6 +35,7 @@ user_id, activity_id, title, description,
     className="btn btn-primary btn-sm"
     onClick={openApplyModal}
     type="button"
+    disabled={disabled}
     >
     Postularme
     </button>
