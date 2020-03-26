@@ -1,4 +1,4 @@
-import Logo from './4194.jpg';
+import Logo from './4194.png';
 
 export default {
   logo:
