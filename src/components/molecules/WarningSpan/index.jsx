@@ -1,6 +1,7 @@
 import React from 'react';
 import { TiWarningOutline } from 'react-icons/ti';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Div = styled.div`
   color: hsl(344, 59%, 52%);
@@ -11,7 +12,7 @@ const Div = styled.div`
   }
   & .icon {
     width: 1.5rem;
-    height:auto;
+    height: auto;
   }
 `;
 
@@ -21,5 +22,9 @@ const index = ({ msj }) => (
     <span className="msj">{msj}</span>
   </Div>
 );
+
+index.propTypes = {
+  msj: PropTypes.string,
+};
 
 export default index;

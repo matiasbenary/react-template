@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login2 from './components/pages/Login2';
-import Main from './components/Main';
+import Layout from './components/main/Layout';
+import Auth from './components/main/Auth';
 
 const Routing = () => {
   const { user } = useSelector((state) => ({
@@ -11,7 +11,7 @@ const Routing = () => {
 
   return (
     <BrowserRouter>
-      <Switch>{!user ? <Route component={Login2} /> : <Main />}</Switch>
+      <Switch>{!user ? <Auth /> : <Layout />}</Switch>
     </BrowserRouter>
   );
 };

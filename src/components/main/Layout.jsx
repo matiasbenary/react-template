@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import Navbar from './organisms/Navbar';
-import CardConstainer from './organisms/CardContainer';
+import Navbar from '../organisms/Navbar';
+import CardConstainer from '../organisms/CardContainer';
 
-import ModalRoot from './molecules/Modal/ModalRoot';
-import DetailActivity from './organisms/DetailActivity';
+import ModalRoot from '../molecules/Modal/ModalRoot';
+import DetailActivity from '../organisms/DetailActivity';
 
-const Main = ({ children }) => {
+const Main = () => {
   const user = useSelector((state) => state.auth.user);
 
   return (
