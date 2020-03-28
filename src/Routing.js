@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from './components/pages/Login';
+import Login2 from './components/pages/Login2';
 import Main from './components/Main';
 
 const Routing = () => {
@@ -11,7 +11,7 @@ const Routing = () => {
 
   return (
     <BrowserRouter>
-      <Switch>{!user ? <Route component={Login} /> : <Main />}</Switch>
+      <Switch>{!user ? <Route component={Login2} /> : <Main />}</Switch>
     </BrowserRouter>
   );
 };

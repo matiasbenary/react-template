@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import './navbar.scss';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
 import config from '../../../config';
 import { actions } from '../../../store/ducks/auth.duck';
+
+const Img = styled.img`
+  width:${(props) => props.width || '200px'};
+`;
 
 const Navbar = ({ email }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,9 +27,9 @@ const Navbar = ({ email }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-white ">
       <div className="container">
       <Link to="/" className="navbar-brand">
-          <img
+          <Img
             src={config.logo}
-            width="200"
+            width={config.logo_width}
             className="d-inline-block align-top"
             alt=""
           />

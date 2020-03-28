@@ -1,20 +1,20 @@
-import Fonselp from './226';
-import Empujar from './633';
-import ArgentinaLibreDeCoronavirus from './4194';
+import Fonselp from './226/226';
+import Empujar from './633/633';
+import ArgentinaLibreDeCoronavirus from './4194/4194';
 
 
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
 
+  const base = Fonselp;
+
   switch (entityConfig) {
-    case '226':
-      return Fonselp;
     case '633':
-      return Empujar;
+      return { ...base, ...Empujar };
     case '4194':
-      return ArgentinaLibreDeCoronavirus;
+      return { ...base, ...ArgentinaLibreDeCoronavirus };
      default:
-      return Fonselp;
+      return base;
   }
 };
 

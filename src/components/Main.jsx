@@ -6,8 +6,6 @@ import CardConstainer from './organisms/CardContainer';
 
 import ModalRoot from './molecules/Modal/ModalRoot';
 import DetailActivity from './organisms/DetailActivity';
-import Map from './molecules/Map';
-import Card from './molecules/Card';
 
 const Main = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
