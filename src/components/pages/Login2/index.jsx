@@ -69,7 +69,7 @@ const Login = () => {
         <div className="login__input_group">
           <label htmlFor="password" className="login__label">
             <span>Contraseña </span>
-            <Link to="reset">¿No recuerdas la contraseña?</Link>
+            <Link to="/">¿No recuerdas la contraseña?</Link>
           </label>
           <input
             id="password"
