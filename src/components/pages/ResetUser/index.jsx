@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
+import { createSelector } from 'reselect';
+import Loader from 'react-spinners/PropagateLoader';
+import Loading from '../../molecules/Loading';
 import { actions } from '../../../store/ducks/auth.duck';
 import WarningSpan from '../../molecules/WarningSpan';
 
@@ -12,27 +15,34 @@ const Img = styled.img`
   display: block;
 `;
 
-const Login = () => {
-  const { loading, error } = useSelector((state) => ({
-    loading: state.auth.loading,
-    error: state.auth.error,
-  }));
+const loadingReset = (state) => state.auth.loadingReset;
+const msjReset = (state) => state.auth.msjReset;
+const errorReset = (state) => state.auth.errorReset;
+
+const loadingSelector = () => createSelector(loadingReset, (loading) => loading);
+
+const msjSelector = () => createSelector(msjReset, (msj) => msj);
+
+const errorSelector = () => createSelector(errorReset, (error) => error);
+
+const Reset = () => {
+  const loading = useSelector(loadingSelector());
+  const msj = useSelector(msjSelector());
+  const error = useSelector(errorSelector());
 
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Email Invalido')
         .required('Requerido'),
-      password: Yup.string().required('Requerido'),
     }),
     onSubmit: (values) => {
-      dispatch(actions.login(values));
+      dispatch(actions.resetSendMail(values));
     },
   });
 
@@ -44,10 +54,13 @@ const Login = () => {
       });
     }
   }, [error]);
-
+  console.log('hey', loading);
   return (
     <form onSubmit={formik.handleSubmit}>
-    <span className="login__label">Introduce la dirección de correo electrónico asociada a tu cuenta y te enviaremos un vínculo para restablecer tu contraseña.</span>
+      <span className="login__label">
+        Introduce la dirección de correo electrónico asociada a tu cuenta y te
+        enviaremos un vínculo para restablecer tu contraseña.
+      </span>
       <br />
       <div className="login__inputs">
         <div className="login__input_group">
@@ -62,27 +75,43 @@ const Login = () => {
             {...formik.getFieldProps('email')}
           />
           {formik.errors.message ? (
-        <WarningSpan msj={formik.errors.message} />
-      ) : null}
+            <WarningSpan msj={formik.errors.message} />
+          ) : null}
           {formik.touched.email && formik.errors.email ? (
             <WarningSpan msj={formik.errors.email} />
           ) : null}
         </div>
       </div>
       <div className="login__buttons">
-        <button
-          className={`btn btn-primary btn__login ${
-            loading ? 'btn-disable' : ''
-          }`}
-          type="submit"
-        >
-          Continuar
-        </button>
+        {loading ? (
+          <div
+    className="mt-5"
+    style={{
+      height: '38px',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+    }}
+          >
+    <Loader size={15} color="#007bff" loading />
+          </div>
+        )
+
+        : (
+<button
+            className={`btn btn-primary btn__login ${
+              loading ? 'btn-disable' : ''
+            }`}
+            type="submit"
+>
+            Continuar
+</button>
+)}
       </div>
     </form>
   );
 };
 
-Login.propTypes = {};
+Reset.propTypes = {};
 
-export default Login;
+export default Reset;

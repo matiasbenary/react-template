@@ -4,17 +4,26 @@ import { apiCall, saveUser, clearStorage } from '../../crud/api.crud';
 // actions
 export const actionTypes = {
   LoginStart: '[AUTH] LOGIN START',
-  LoginCOMPLETE: '[AUTH] LOGIN COMPLETE',
-  LoginERROR: '[AUTH] LOGIN ERROR',
+  LoginComplete: '[AUTH] LOGIN COMPLETE',
+  LoginError: '[AUTH] LOGIN ERROR',
   Logout: '[AUTH] LOGOUT',
+  ResetSendMailStart: '[AUTH] RESET MAIL START',
+  ResetSendMailComplete: '[AUTH] RESET MAIL COMPLETE',
+  ResetSendMailError: '[AUTH] RESET MAIL ERROR',
 };
 
 const initialAuthState = {
   user: JSON.parse(localStorage.getItem('user')),
+  loading: false,
+  error: null,
+  loadingReset: false,
+  errorReset: null,
+  msjReset: null,
 };
 
 // Reducer
 export const reducer = (state = initialAuthState, action) => {
+  console.log(action);
   switch (action.type) {
     case actionTypes.LoginStart: {
       return {
@@ -24,7 +33,7 @@ export const reducer = (state = initialAuthState, action) => {
         error: null,
       };
     }
-    case actionTypes.LoginCOMPLETE: {
+    case actionTypes.LoginComplete: {
       const user = action.data;
       return {
         ...state,
@@ -33,7 +42,7 @@ export const reducer = (state = initialAuthState, action) => {
         error: null,
       };
     }
-    case actionTypes.LoginERROR: {
+    case actionTypes.LoginError: {
       const { error } = action;
       return {
         ...state,
@@ -50,6 +59,32 @@ export const reducer = (state = initialAuthState, action) => {
         error: null,
       };
     }
+    case actionTypes.ResetSendMailStart: {
+      return {
+        ...state,
+        loadingReset: true,
+        errorReset: null,
+        msjReset: null,
+      };
+    }
+    case actionTypes.ResetSendMailComplete: {
+      const msjReset = action.data;
+      return {
+        ...state,
+        loadingReset: false,
+        errorReset: null,
+        msjReset,
+      };
+    }
+    case actionTypes.ResetSendMailError: {
+      const { error: errorReset } = action;
+      return {
+        ...state,
+        loadingReset: false,
+        errorReset,
+        msjReset: 'No se encontro el usuario',
+      };
+    }
     default:
       return state;
   }
@@ -59,6 +94,7 @@ export const reducer = (state = initialAuthState, action) => {
 export const actions = {
   login: (user) => ({ type: actionTypes.LoginStart, payload: user }),
   logOut: () => ({ type: actionTypes.Logout }),
+  resetSendMail: (email) => ({ type: actionTypes.ResetSendMailStart, payload: email }),
 };
 // Watchers
 
@@ -72,9 +108,9 @@ export function* loginUser({ payload }) {
     );
     const data = results.data.data[0];
     yield call(saveUser, data);
-    yield put({ type: actionTypes.LoginCOMPLETE, data });
+    yield put({ type: actionTypes.LoginComplete, data });
   } catch (error) {
-    yield put({ type: actionTypes.LoginERROR, error: error.response.data });
+    yield put({ type: actionTypes.LoginError, error: error.response.data });
   }
 }
 
@@ -82,9 +118,27 @@ export function* logout() {
     yield call(clearStorage);
 }
 
+export function* sendEmailReset({ payload }) {
+  try {
+    const results = yield call(
+      apiCall,
+      'sendResetLinkEmail',
+      payload,
+      'POST',
+    );
+
+    console.log(results);
+    const data = results.data.message;
+    yield put({ type: actionTypes.ResetSendMailComplete, data });
+  } catch (error) {
+    yield put({ type: actionTypes.ResetSendMailError, error: error.response.data });
+  }
+}
+
 // Watchers
 
 export function* saga() {
   yield takeLatest(actionTypes.LoginStart, loginUser);
   yield takeLatest(actionTypes.Logout, logout);
+  yield takeLatest(actionTypes.ResetSendMailStart, sendEmailReset);
 }
