@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Layout from './components/main/Layout';
 import Auth from './components/main/Auth';
+import ResetPass from './components/pages/ResetPass';
 
 const Routing = () => {
   const { user } = useSelector((state) => ({
@@ -11,7 +12,14 @@ const Routing = () => {
 
   return (
     <BrowserRouter>
-      <Switch>{!user ? <Auth /> : <Layout />}</Switch>
+      <Switch>
+        <Route exact path="/password/reset/:id">
+          <Auth>
+            <ResetPass />
+          </Auth>
+        </Route>
+        {!user ? <Auth /> : <Layout />}
+      </Switch>
     </BrowserRouter>
   );
 };

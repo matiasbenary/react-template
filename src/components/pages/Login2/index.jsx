@@ -2,16 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
+import Loader from 'react-spinners/PropagateLoader';
 import { Link } from 'react-router-dom';
 import { actions } from '../../../store/ducks/auth.duck';
 import WarningSpan from '../../molecules/WarningSpan';
 
-const Img = styled.img`
-  width: ${(props) => props.width || '100%'};
-  margin-bottom: 3rem;
-  display: block;
-`;
 
 const Login = () => {
   const { loading, error } = useSelector((state) => ({
@@ -24,11 +19,13 @@ const Login = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
+      password: '',
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email('Email Invalido')
         .required('Requerido'),
+      password: Yup.string().required('Requerido'),
     }),
     onSubmit: (values) => {
       dispatch(actions.login(values));
@@ -46,7 +43,7 @@ const Login = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-    <span className="login__title_text">Inicia sesión en tu cuenta</span>
+      <span className="login__title_text">Inicia sesión en tu cuenta</span>
       {formik.errors.message ? (
         <WarningSpan msj={formik.errors.message} />
       ) : null}
@@ -84,14 +81,23 @@ const Login = () => {
         </div>
       </div>
       <div className="login__buttons">
-        <button
-          className={`btn btn-primary btn__login ${
-            loading ? 'btn-disable' : ''
-          }`}
-          type="submit"
-        >
-          Continuar
-        </button>
+        {loading ? (
+          <div
+            style={{
+              height: '38px',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Loader size={15} color="#007bff" loading />
+          </div>
+        ) : (
+          <button className="btn btn-primary btn__login" type="submit">
+            Continuar
+          </button>
+        )}
       </div>
     </form>
   );

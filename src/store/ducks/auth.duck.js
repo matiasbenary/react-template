@@ -10,12 +10,18 @@ export const actionTypes = {
   ResetSendMailStart: '[AUTH] RESET MAIL START',
   ResetSendMailComplete: '[AUTH] RESET MAIL COMPLETE',
   ResetSendMailError: '[AUTH] RESET MAIL ERROR',
+  ResetStart: '[AUTH] RESET START',
+  ResetComplete: '[AUTH] RESET COMPLETE',
+  ResetError: '[AUTH] RESET ERROR',
 };
 
 const initialAuthState = {
   user: JSON.parse(localStorage.getItem('user')),
   loading: false,
   error: null,
+  loadingResetMail: false,
+  errorResetMail: null,
+  msjResetMail: null,
   loadingReset: false,
   errorReset: null,
   msjReset: null,
@@ -23,7 +29,6 @@ const initialAuthState = {
 
 // Reducer
 export const reducer = (state = initialAuthState, action) => {
-  console.log(action);
   switch (action.type) {
     case actionTypes.LoginStart: {
       return {
@@ -59,7 +64,7 @@ export const reducer = (state = initialAuthState, action) => {
         error: null,
       };
     }
-    case actionTypes.ResetSendMailStart: {
+    case actionTypes.ResetStart: {
       return {
         ...state,
         loadingReset: true,
@@ -67,7 +72,7 @@ export const reducer = (state = initialAuthState, action) => {
         msjReset: null,
       };
     }
-    case actionTypes.ResetSendMailComplete: {
+    case actionTypes.ResetComplete: {
       const msjReset = action.data;
       return {
         ...state,
@@ -76,13 +81,39 @@ export const reducer = (state = initialAuthState, action) => {
         msjReset,
       };
     }
-    case actionTypes.ResetSendMailError: {
+    case actionTypes.ResetError: {
       const { error: errorReset } = action;
       return {
         ...state,
         loadingReset: false,
         errorReset,
         msjReset: 'No se encontro el usuario',
+      };
+    }
+    case actionTypes.ResetSendMailStart: {
+      return {
+        ...state,
+        loadingResetMail: true,
+        errorResetMail: null,
+        msjResetMail: null,
+      };
+    }
+    case actionTypes.ResetSendMailComplete: {
+      const msjResetMail = action.data;
+      return {
+        ...state,
+        loadingResetMail: false,
+        errorResetMail: null,
+        msjResetMail,
+      };
+    }
+    case actionTypes.ResetSendMailError: {
+      const { error: errorResetMail } = action;
+      return {
+        ...state,
+        loadingResetMail: false,
+        errorResetMail,
+        msjResetMail: 'No se encontro el usuario',
       };
     }
     default:
@@ -95,6 +126,7 @@ export const actions = {
   login: (user) => ({ type: actionTypes.LoginStart, payload: user }),
   logOut: () => ({ type: actionTypes.Logout }),
   resetSendMail: (email) => ({ type: actionTypes.ResetSendMailStart, payload: email }),
+  reset: (payload) => ({ type: actionTypes.ResetStart, payload }),
 };
 // Watchers
 
@@ -126,12 +158,25 @@ export function* sendEmailReset({ payload }) {
       payload,
       'POST',
     );
-
-    console.log(results);
     const data = results.data.message;
     yield put({ type: actionTypes.ResetSendMailComplete, data });
   } catch (error) {
     yield put({ type: actionTypes.ResetSendMailError, error: error.response.data });
+  }
+}
+
+export function* sendReset({ payload }) {
+  try {
+    const results = yield call(
+      apiCall,
+      'reset',
+      payload,
+      'POST',
+    );
+    const data = results.data.message;
+    yield put({ type: actionTypes.ResetComplete, data });
+  } catch (error) {
+    yield put({ type: actionTypes.ResetError, error: error.response.data });
   }
 }
 
@@ -141,4 +186,5 @@ export function* saga() {
   yield takeLatest(actionTypes.LoginStart, loginUser);
   yield takeLatest(actionTypes.Logout, logout);
   yield takeLatest(actionTypes.ResetSendMailStart, sendEmailReset);
+  yield takeLatest(actionTypes.ResetStart, sendReset);
 }
