@@ -132,6 +132,7 @@ export const actions = {
 
 export function* loginUser({ payload }) {
   try {
+    yield call(clearStorage);
     const results = yield call(
       apiCall,
       'login',
@@ -151,6 +152,7 @@ export function* logout() {
 }
 
 export function* sendEmailReset({ payload }) {
+  yield call(clearStorage);
   try {
     const results = yield call(
       apiCall,
@@ -166,6 +168,7 @@ export function* sendEmailReset({ payload }) {
 }
 
 export function* sendReset({ payload }) {
+  yield call(clearStorage);
   try {
     const results = yield call(
       apiCall,

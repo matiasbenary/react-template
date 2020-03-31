@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { createSelector } from 'reselect';
 import Loader from 'react-spinners/PropagateLoader';
+import { Link } from 'react-router-dom';
 import { actions } from '../../../store/ducks/auth.duck';
 import WarningSpan from '../../molecules/WarningSpan';
 import SuccessSpan from '../../molecules/SuccessSpan';
@@ -56,13 +57,13 @@ const Reset = () => {
       <br />
       <div className="login__inputs">
         <div className="login__input_group">
-        {formik.errors.message ? (
+          {formik.errors.message ? (
             <WarningSpan msj={formik.errors.message} />
           ) : null}
 
-          { (!error && msj)
-          ? <SuccessSpan msj="¡Se ha enviado un link a tu mail para restablecer tu contraseña!" />
-          : null}
+          {!error && msj ? (
+            <SuccessSpan msj="¡Se ha enviado un link a tu mail para restablecer tu contraseña!" />
+          ) : null}
           <label htmlFor="username" className="login__label">
             Correo electrónico
           </label>
@@ -82,28 +83,25 @@ const Reset = () => {
       <div className="login__buttons">
         {loading ? (
           <div
-    style={{
-      height: '38px',
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
+            style={{
+              height: '38px',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-    <Loader size={15} color="#007bff" loading />
+            <Loader size={15} color="#007bff" loading />
           </div>
-        )
-
-        : (
-<button
-            className={`btn btn-primary btn__login ${
-              loading ? 'btn-disable' : ''
-            }`}
-            type="submit"
->
+        ) : !error && msj ? (
+          <Link className="btn btn-primary btn__login" to="/">
+              Ir al login
+          </Link>
+        ) : (
+          <button className="btn btn-primary btn__login" type="submit">
             Continuar
-</button>
-)}
+          </button>
+        )}
       </div>
     </form>
   );

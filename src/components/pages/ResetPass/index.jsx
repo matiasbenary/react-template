@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { createSelector } from 'reselect';
 import Loader from 'react-spinners/PropagateLoader';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { actions } from '../../../store/ducks/auth.duck';
 import WarningSpan from '../../molecules/WarningSpan';
 import SuccessSpan from '../../molecules/SuccessSpan';
@@ -139,16 +140,15 @@ const Reset = () => {
           </div>
         )
 
-        : (
-<button
-            className={`btn btn-primary btn__login ${
-              loading ? 'btn-disable' : ''
-            }`}
-            type="submit"
->
+        : !error && msj ? (
+          <Link className="btn btn-primary btn__login" to="/">
+              Ir a iniciar Sesión
+          </Link>
+        ) : (
+          <button className="btn btn-primary btn__login" type="submit">
             Continuar
-</button>
-)}
+          </button>
+        )}
       </div>
     </form>
   );
