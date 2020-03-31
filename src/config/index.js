@@ -1,5 +1,6 @@
 import Fonselp from './226/226';
 import Empujar from './633/633';
+import Ada from './3221/3221';
 import ArgentinaLibreDeCoronavirus from './4194/4194';
 
 
@@ -13,6 +14,8 @@ const config = () => {
       return { ...base, ...Empujar };
     case '4194':
       return { ...base, ...ArgentinaLibreDeCoronavirus };
+    case '3221':
+      return { ...base, ...Ada };
      default:
       return base;
   }
