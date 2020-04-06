@@ -3,6 +3,7 @@ import Empujar from './633/633';
 import Ada from './3221/3221';
 import ArgentinaLibreDeCoronavirus from './4194/4194';
 import Naves from './176/176';
+import VamosAZoomar from './4161/4161';
 
 
 const config = () => {
@@ -19,6 +20,8 @@ const config = () => {
       return { ...base, ...Ada };
     case '176':
       return { ...base, ...Naves };
+    case '4161':
+    return { ...base, ...VamosAZoomar };
      default:
       return base;
   }
