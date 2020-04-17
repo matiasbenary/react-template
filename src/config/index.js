@@ -4,6 +4,7 @@ import Ada from './3221/3221';
 import ArgentinaLibreDeCoronavirus from './4194/4194';
 import Naves from './176/176';
 import VamosAZoomar from './4161/4161';
+import Baufest from './22/22';
 
 
 const config = () => {
@@ -12,6 +13,8 @@ const config = () => {
   const base = Fonselp;
 
   switch (entityConfig) {
+    case '226':
+      return base;
     case '633':
       return { ...base, ...Empujar };
     case '4194':
@@ -22,6 +25,8 @@ const config = () => {
       return { ...base, ...Naves };
     case '4161':
     return { ...base, ...VamosAZoomar };
+    case '22':
+    return { ...base, ...Baufest };
      default:
       return base;
   }
