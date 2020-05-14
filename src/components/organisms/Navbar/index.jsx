@@ -26,14 +26,25 @@ const Navbar = ({ email }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white ">
       <div className="container">
-      <Link to="/" className="navbar-brand">
+        <ul className="nav navbar-nav flex-row justify-content-between">
+          <li className="px-3">
+            <Link to="/">Inicio</Link>
+          </li>
+          <li className="px-3">
+            <Link to="/actividad">Mis actividades</Link>
+          </li>
+          <li className="px-3">
+            <Link to="/horas">Mis horas</Link>
+          </li>
+        </ul>
+        <Link to="/" className="navbar-brand">
           <Img
             src={config.logo}
             width={config.logo_width}
             className="d-inline-block align-top"
             alt=""
           />
-      </Link>
+        </Link>
         {/* <button
         className="navbar-toggler"
         type="button"
@@ -41,7 +52,7 @@ const Navbar = ({ email }) => {
         <span className="navbar-toggler-icon" />
       </button> */}
 
-        <ul className="nav navbar-nav flex-row justify-content-between ml-auto">
+        <ul className="nav navbar-nav flex-row justify-content-between">
           <li className="nav-item order-2 order-md-1">
             <a href="#" className="nav-link" title="settings">
               <i className="fa fa-cog fa-fw fa-lg" />
