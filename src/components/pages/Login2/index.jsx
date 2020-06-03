@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { actions } from '../../../store/ducks/auth.duck';
 import WarningSpan from '../../molecules/WarningSpan';
 
-
 const Login = () => {
   const { loading, error } = useSelector((state) => ({
     loading: state.auth.loading,
@@ -78,6 +77,9 @@ const Login = () => {
           {formik.touched.password && formik.errors.password ? (
             <WarningSpan msj={formik.errors.password} />
           ) : null}
+          <div className="login__label">
+            <Link to="register">¿Todavía no tenés cuenta? Registrarme</Link>
+          </div>
         </div>
       </div>
       <div className="login__buttons">

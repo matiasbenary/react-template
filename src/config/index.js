@@ -5,6 +5,7 @@ import ArgentinaLibreDeCoronavirus from './4194/4194';
 import Naves from './176/176';
 import VamosAZoomar from './4161/4161';
 import Baufest from './22/22';
+import CivicHouse from './2241/2241';
 
 
 const config = () => {
@@ -27,6 +28,8 @@ const config = () => {
     return { ...base, ...VamosAZoomar };
     case '22':
     return { ...base, ...Baufest };
+    case '2241':
+    return { ...base, ...CivicHouse };
      default:
       return base;
   }

@@ -1,22 +1,25 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { apiCall, saveUser, clearStorage } from '../../crud/api.crud';
+import { call, put, takeLatest } from "redux-saga/effects";
+import { apiCall, saveUser, clearStorage } from "../../crud/api.crud";
 
 // actions
 export const actionTypes = {
-  LoginStart: '[AUTH] LOGIN START',
-  LoginComplete: '[AUTH] LOGIN COMPLETE',
-  LoginError: '[AUTH] LOGIN ERROR',
-  Logout: '[AUTH] LOGOUT',
-  ResetSendMailStart: '[AUTH] RESET MAIL START',
-  ResetSendMailComplete: '[AUTH] RESET MAIL COMPLETE',
-  ResetSendMailError: '[AUTH] RESET MAIL ERROR',
-  ResetStart: '[AUTH] RESET START',
-  ResetComplete: '[AUTH] RESET COMPLETE',
-  ResetError: '[AUTH] RESET ERROR',
+  LoginStart: "[AUTH] LOGIN START",
+  LoginComplete: "[AUTH] LOGIN COMPLETE",
+  LoginError: "[AUTH] LOGIN ERROR",
+  Logout: "[AUTH] LOGOUT",
+  ResetSendMailStart: "[AUTH] RESET MAIL START",
+  ResetSendMailComplete: "[AUTH] RESET MAIL COMPLETE",
+  ResetSendMailError: "[AUTH] RESET MAIL ERROR",
+  ResetStart: "[AUTH] RESET START",
+  ResetComplete: "[AUTH] RESET COMPLETE",
+  ResetError: "[AUTH] RESET ERROR",
+  RegisterStart: "[AUTH] REGISTER START",
+  RegisterComplete: "[AUTH] REGISTER COMPLETE",
+  RegisterError: "[AUTH] REGISTER ERROR"
 };
 
 const initialAuthState = {
-  user: JSON.parse(localStorage.getItem('user')),
+  user: JSON.parse(localStorage.getItem("user")),
   loading: false,
   error: null,
   loadingResetMail: false,
@@ -25,6 +28,9 @@ const initialAuthState = {
   loadingReset: false,
   errorReset: null,
   msjReset: null,
+  loadingRegister: false,
+  errorRegister: null,
+  msjRegister: null
 };
 
 // Reducer
@@ -35,7 +41,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: true,
         user: null,
-        error: null,
+        error: null
       };
     }
     case actionTypes.LoginComplete: {
@@ -44,7 +50,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user,
-        error: null,
+        error: null
       };
     }
     case actionTypes.LoginError: {
@@ -53,7 +59,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user: null,
-        error,
+        error
       };
     }
     case actionTypes.Logout: {
@@ -61,7 +67,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: null,
         user: null,
-        error: null,
+        error: null
       };
     }
     case actionTypes.ResetStart: {
@@ -69,7 +75,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: true,
         errorReset: null,
-        msjReset: null,
+        msjReset: null
       };
     }
     case actionTypes.ResetComplete: {
@@ -78,7 +84,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: false,
         errorReset: null,
-        msjReset,
+        msjReset
       };
     }
     case actionTypes.ResetError: {
@@ -87,7 +93,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: false,
         errorReset,
-        msjReset: 'No se encontro el usuario',
+        msjReset: "No se encontro el usuario"
       };
     }
     case actionTypes.ResetSendMailStart: {
@@ -95,7 +101,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: true,
         errorResetMail: null,
-        msjResetMail: null,
+        msjResetMail: null
       };
     }
     case actionTypes.ResetSendMailComplete: {
@@ -104,7 +110,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: false,
         errorResetMail: null,
-        msjResetMail,
+        msjResetMail
       };
     }
     case actionTypes.ResetSendMailError: {
@@ -113,7 +119,33 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: false,
         errorResetMail,
-        msjResetMail: 'No se encontro el usuario',
+        msjResetMail: "No se encontro el usuario"
+      };
+    }
+    case actionTypes.RegisterStart: {
+      return {
+        ...state,
+        loadingRegister: true,
+        errorRegister: null,
+        msjRegister: null
+      };
+    }
+    case actionTypes.RegisterComplete: {
+      const msjRegister = action.data;
+      return {
+        ...state,
+        loadingRegister: false,
+        errorRegister: null,
+        msjRegister
+      };
+    }
+    case actionTypes.RegisterError: {
+      const { error: errorRegister } = action;
+      return {
+        ...state,
+        loadingRegister: false,
+        errorRegister,
+        msjRegister: "No se encontro el usuario"
       };
     }
     default:
@@ -123,22 +155,21 @@ export const reducer = (state = initialAuthState, action) => {
 
 // Action Creators
 export const actions = {
-  login: (user) => ({ type: actionTypes.LoginStart, payload: user }),
+  login: user => ({ type: actionTypes.LoginStart, payload: user }),
   logOut: () => ({ type: actionTypes.Logout }),
-  resetSendMail: (email) => ({ type: actionTypes.ResetSendMailStart, payload: email }),
-  reset: (payload) => ({ type: actionTypes.ResetStart, payload }),
+  resetSendMail: email => ({
+    type: actionTypes.ResetSendMailStart,
+    payload: email
+  }),
+  reset: payload => ({ type: actionTypes.ResetStart, payload }),
+  register: payload => ({ type: actionTypes.RegisterStart, payload })
 };
 // Watchers
 
 export function* loginUser({ payload }) {
   try {
     yield call(clearStorage);
-    const results = yield call(
-      apiCall,
-      'login',
-      payload,
-      'POST',
-    );
+    const results = yield call(apiCall, "login", payload, "POST");
     const data = results.data.data[0];
     yield call(saveUser, data);
     yield put({ type: actionTypes.LoginComplete, data });
@@ -148,38 +179,42 @@ export function* loginUser({ payload }) {
 }
 
 export function* logout() {
-    yield call(clearStorage);
+  yield call(clearStorage);
 }
 
 export function* sendEmailReset({ payload }) {
   yield call(clearStorage);
   try {
-    const results = yield call(
-      apiCall,
-      'sendResetLinkEmail',
-      payload,
-      'POST',
-    );
+    const results = yield call(apiCall, "sendResetLinkEmail", payload, "POST");
     const data = results.data.message;
     yield put({ type: actionTypes.ResetSendMailComplete, data });
   } catch (error) {
-    yield put({ type: actionTypes.ResetSendMailError, error: error.response.data });
+    yield put({
+      type: actionTypes.ResetSendMailError,
+      error: error.response.data
+    });
   }
 }
 
 export function* sendReset({ payload }) {
   yield call(clearStorage);
   try {
-    const results = yield call(
-      apiCall,
-      'reset',
-      payload,
-      'POST',
-    );
+    const results = yield call(apiCall, "reset", payload, "POST");
     const data = results.data.message;
     yield put({ type: actionTypes.ResetComplete, data });
   } catch (error) {
     yield put({ type: actionTypes.ResetError, error: error.response.data });
+  }
+}
+
+export function* registerStart({ payload }) {
+  yield call(clearStorage);
+  try {
+    const results = yield call(apiCall, "sendMailResgister", payload, "POST");
+    const data = results.data.message;
+    yield put({ type: actionTypes.RegisterComplete, data });
+  } catch (error) {
+    yield put({ type: actionTypes.RegisterError, error: error.response.data });
   }
 }
 
@@ -190,4 +225,5 @@ export function* saga() {
   yield takeLatest(actionTypes.Logout, logout);
   yield takeLatest(actionTypes.ResetSendMailStart, sendEmailReset);
   yield takeLatest(actionTypes.ResetStart, sendReset);
+  yield takeLatest(actionTypes.RegisterStart, registerStart);
 }

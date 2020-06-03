@@ -6,7 +6,7 @@ import config from '../../config';
 
 import ResetUser from '../pages/ResetUser';
 import Login2 from '../pages/Login2';
-
+import Register from '../pages/Register';
 
 const Img = styled.img`
   width: ${(props) => props.width || '100%'};
@@ -23,6 +23,7 @@ const Main = ({ children }) => (
         </Link>
       </div>
       <Route exact path="/reset" component={ResetUser} />
+      <Route exact path="/register" component={Register} />
       <Route exact path="/" component={Login2} />
       {children}
     </div>
