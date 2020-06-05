@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../../../store/ducks/hours/loadHours.duck';
+import Loader from 'react-spinners/PropagateLoader';
 import './modal.scss';
 
 const HoursModal = ({ closeModal, title, activity_id }) => {
@@ -8,14 +9,17 @@ const HoursModal = ({ closeModal, title, activity_id }) => {
 
     const {
         user_id,
+        loading,
       } = useSelector((state) => ({
         user_id: state.auth.user.id,
+        loading: state.loadHours.loadingAdd,
       }));
 
     const [state, setState] = useState({
         horas: 0,
         minutos: 0,
-        comentarios: '',
+        fecha: null,
+        comentarios: null,
     });
 
     const [count, setCount] = useState(0);
@@ -35,21 +39,22 @@ const HoursModal = ({ closeModal, title, activity_id }) => {
 
     const handleHours = () => setState({ ...state, horas: count });
     const handleMinutes = (e) => setState({ ...state, minutos: Number(e.target.value) });
+    const handleDate = (e) => setState({ ...state, fecha: e.target.value });
     const handleComments = (e) => setState({ ...state, comentarios: e.target.value });
     const handleSubmit = () => {
         const payload = {
             user_id,
             activity_id,
             hours: (state.horas + (state.minutos / 60)),
-            activity_day: '2020-07-01', // calendario - rango de dias posibles
+            activity_day: '2020-07-01',
             upload_type: process.env.REACT_APP_ID_ENTITY,
+            comentary: state.comentarios,
         };
         dispatch(actions.addHours(payload));
-        closeModal();
     };
 
-    const hoursOptions = [0, 15, 30, 45];
-    const options = hoursOptions.map((o) => <option>{o}</option>);
+    // const hoursOptions = [0, 15, 30, 45];
+    // const options = hoursOptions.map((o) => <option>{o}</option>);
 
     return (
         <div className="modal-content">
@@ -63,7 +68,7 @@ const HoursModal = ({ closeModal, title, activity_id }) => {
                 <form>
                     <div className="form-group">
                         <div className="form-row">
-                            <div className="col col-md-5">
+                            <div className="col col-md-4">
                                 <label htmlFor="hours">Horas</label>
                                 <div className="form-row">
                                     <div className="col-sm-3">
@@ -77,11 +82,15 @@ const HoursModal = ({ closeModal, title, activity_id }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col col-md-3">
+                            {/* <div className="col col-md-2">
                                 <label htmlFor="minutes">Minutos</label>
                                 <select className="form-control" id="minutes" onChange={handleMinutes}>
                                     {options}
                                 </select>
+                            </div> */}
+                            <div className="col col-md-3">
+                                <label htmlFor="dateLog">Fecha</label>
+                                <input type="date" className="form-control" onChange={handleDate} />
                             </div>
                         </div>
                     </div>
@@ -90,9 +99,15 @@ const HoursModal = ({ closeModal, title, activity_id }) => {
                         <textarea className="form-control" id="comments" onChange={handleComments} />
                     </div>
                 </form>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" onClick={closeModal} data-dismiss="modal">Cancelar</button>
-                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+                <div className="modal-footer row justify-content-md-center">
+                    {loading ? (
+                        <Loader size={10} color="#007bff" loading />
+                    ) : (
+                        <>
+                            <button type="button" className="btn btn-secondary" onClick={closeModal} data-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Enviar</button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

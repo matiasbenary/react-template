@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { Link, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdAddAlarm } from 'react-icons/md';
 import { actions as modalAction } from '../../../store/ducks/modal.duck';
@@ -30,7 +30,7 @@ const Activities = () => {
     } = useSelector((state) => ({
         user_id: state.auth.user.id,
         userActivities: state.userActivities.activities,
-        userActivitiesLoading: state.activities.loading,
+        userActivitiesLoading: state.userActivities.loading,
 
     }));
 
@@ -41,7 +41,8 @@ const Activities = () => {
     }, []);
 
     const iconStyle = {
-        color: '#007bff',
+        // color: '#fff',
+        fontSize: '24px',
     };
 
     const columns = useMemo(() => [
@@ -78,7 +79,19 @@ const Activities = () => {
         },
         {
             name: 'Sumar horas',
-            cell: (row) => <h4><MdAddAlarm style={iconStyle} onClick={() => { hoursModal(row.id); }} /></h4>,
+            cell: (row) => {
+                const isDisabled = row.estado_seleccion === 'Seleccionad@';
+                return (!isDisabled ? (
+                <button type="button" className="btn btn-primary btn-sm" onClick={() => { hoursModal(row.id); }}>
+                    <MdAddAlarm style={iconStyle} />
+                </button>
+            ) : (
+                <button type="button" className="btn btn-primary btn-sm" disabled>
+                    <MdAddAlarm style={iconStyle} />
+                </button>
+            )
+            );
+            },
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
@@ -90,9 +103,9 @@ const Activities = () => {
             case 1:
                 return 'Pendiente';
             case 2:
-                return 'Seleccionado';
+                return 'Seleccionad@';
             case 3:
-                return 'No seleccionado';
+                return 'No seleccionad@';
             default:
                 return '';
         }

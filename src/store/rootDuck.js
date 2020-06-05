@@ -7,6 +7,7 @@ import * as modal from './ducks/modal.duck';
 import * as userActivities from './ducks/user/activities.duck';
 import * as activity from './ducks/activity/getActivity.duck';
 import * as loadHours from './ducks/hours/loadHours.duck';
+import * as userActivitiesHours from './ducks/user/activitiesHours.duck';
 
 
 export const rootReducer = (history) => combineReducers({
@@ -17,6 +18,7 @@ export const rootReducer = (history) => combineReducers({
   userActivities: userActivities.reducer,
   activity: activity.reducer,
   loadHours: loadHours.reducer,
+  userActivitiesHours: userActivitiesHours.reducer,
 });
 
 export function* rootSaga() {
@@ -26,5 +28,6 @@ export function* rootSaga() {
     userActivities.saga(),
     activity.saga(),
     loadHours.saga(),
+    userActivitiesHours.saga(),
   ]);
 }

@@ -1,45 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { actions as userActivitiesHoursAction } from '../../../store/ducks/user/activitiesHours.duck';
+import Loading from '../../molecules/Loading';
 import Table from '../../molecules/Table/Table';
 
 const Hours = () => {
     const dispatch = useDispatch();
 
-    const data = [
-        {
-            id: 1,
-            fecha: '2020-05-11',
-            actividad: 'Naves de Cerca',
-            horas: 2,
-            estado: 'Validado',
-        },
-        {
-            id: 2,
-            fecha: '2020-05-12',
-            actividad: 'Naves de Cerca',
-            horas: 3,
-            estado: 'Validado',
-        },
-        {
-            id: 3,
-            fecha: '2020-05-15',
-            actividad: 'Otra actividad',
-            horas: 2.5,
-            estado: 'No validado',
-        },
-        {
-            id: 4,
-            fecha: '2020-05-15',
-            actividad: 'Naves de Cerca',
-            horas: 1,
-            estado: 'Pendiente',
-        },
-    ];
+    const {
+        user_id,
+        userActivitiesHours,
+        userActivitiesHoursLoading,
+    } = useSelector((state) => ({
+        user_id: state.auth.user.id,
+        userActivitiesHours: state.userActivitiesHours.hours,
+        userActivitiesHoursLoading: state.userActivitiesHours.loading,
+    }));
+
+    useEffect(() => {
+        if (!userActivitiesHours) {
+            dispatch(userActivitiesHoursAction.getHours(user_id));
+        }
+    }, []);
+
     const columns = useMemo(() => [
         {
             name: 'Actividad',
             selector: 'actividad',
             sortable: true,
+            cell: (row) => <Link to={row.url}>{row.actividad}</Link>,
         },
         {
             name: 'Fecha',
@@ -59,24 +49,36 @@ const Hours = () => {
             sortable: true,
             right: true,
         },
-        {
-            name: 'Acciones',
-            cell: () => <button type="btn" className="btn btn-primary btn-sm">Ver mas</button>,
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
-        },
     ]);
-    const tableStyles = {
-        // maxWidth: '700px',
-        margin: '20px auto',
-    };
 
-    return (
-        <div className="container">
-            <Table data={data} columns={columns} title="Mis horas" styles={tableStyles} />
-        </div>
-    );
+    const hoursValidation = (validated) => (validated ? 'Validado' : 'No validado');
+
+    if (userActivitiesHoursLoading) {
+        return <Loading />;
+    }
+
+    if (userActivitiesHours) {
+        const tableStyles = {
+            margin: '20px auto',
+        };
+
+        const data = userActivitiesHours.data.map((u) => ({
+            id: u.id,
+            fecha: u.created_at.slice(0, 10),
+            actividad: 'Activity title',
+            horas: u.hours,
+            estado: hoursValidation(u.validated_to),
+            url: `/detail/${u.activity_id}`,
+        }));
+
+        return (
+            <div className="container">
+                <Table data={data} columns={columns} title="Mis horas" styles={tableStyles} />
+            </div>
+        );
+    }
+
+    return null;
 };
 
 export default Hours;
