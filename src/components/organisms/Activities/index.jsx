@@ -81,7 +81,7 @@ const Activities = () => {
             name: 'Sumar horas',
             cell: (row) => {
                 const isDisabled = row.estado_seleccion === 'Seleccionad@';
-                return (!isDisabled ? (
+                return (isDisabled ? (
                 <button type="button" className="btn btn-primary btn-sm" onClick={() => { hoursModal(row.id); }}>
                     <MdAddAlarm style={iconStyle} />
                 </button>
