@@ -8,6 +8,7 @@ const MODAL_TYPES = {
   alert: modalTypes.AlertModal,
   apply: modalTypes.ApplyModal,
   unapply: modalTypes.UnapplyModal,
+  hoursLoad: modalTypes.HoursModal,
 };
 
 const ModalRoot = () => {
