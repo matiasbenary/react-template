@@ -2,12 +2,13 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 
 const Table = ({ data, columns, title, styles }) => (
-    <div className="container">
+    <div>
         <DataTable
             title={title}
             columns={columns}
             data={data}
             pointerOnHover
+            responsive
             style={styles}
         />
     </div>

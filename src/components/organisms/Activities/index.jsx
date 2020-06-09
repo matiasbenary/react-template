@@ -117,7 +117,6 @@ const Activities = () => {
 
     if (userActivities) {
         const tableStyles = {
-            minWidth: '1000px',
             margin: '20px auto',
         };
 
@@ -132,7 +131,7 @@ const Activities = () => {
         }));
 
         return (
-            <div>
+            <div className="container">
                 <Table data={data} columns={columns} title="Mis actividades" styles={tableStyles} />
             </div>
         );
