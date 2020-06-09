@@ -65,7 +65,7 @@ const Hours = () => {
         const data = userActivitiesHours.data.map((u) => ({
             id: u.id,
             fecha: u.created_at.slice(0, 10),
-            actividad: 'Activity title',
+            actividad: (u.activity ? u.activity.title : 'Actividad borrada'),
             horas: u.hours,
             estado: hoursValidation(u.validated_to),
             url: `/detail/${u.activity_id}`,
