@@ -30,9 +30,9 @@ const ApplyModal = ({ closeModal, title, send }) => {
     <div className="modal-body">
       <div className="form-group">
         <label htmlFor="message-text" className="col-form-label">
-          Comentarios:
+          Ingrese un comentario para participar:
         </label>
-        <textarea className="form-control" id="message-text" value={commentary} onChange={onChange} />
+        <textarea style={{ border: (commentary.length ? '' : ('1px solid #dc3545')) }} className="form-control" id="message-text" value={commentary} onChange={onChange} />
       </div>
     </div>
     <div className="modal-footer">
@@ -44,7 +44,7 @@ const ApplyModal = ({ closeModal, title, send }) => {
       >
         Cancelar
       </button>
-      <button type="button" className="btn btn-primary" onClick={save}>
+      <button type="button" className="btn btn-primary" onClick={save} disabled={!commentary.length}>
         Quiero participar
       </button>
     </div>

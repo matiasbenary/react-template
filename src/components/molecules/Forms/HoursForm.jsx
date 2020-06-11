@@ -40,8 +40,10 @@ const HoursForm = ({ closeModal, activity_id }) => {
     minutes: Yup.number()
       .oneOf([0, 15, 30, 45], 'Opción invalida')
       .required('Requerido'),
-    createdOn: Yup.date('Debe ingresar una fecha válida').required('Requerido').nullable(),
-    commentary: Yup.string('kzdljfsflk')
+    createdOn: Yup.date('Debe ingresar una fecha válida')
+      .required('Requerido')
+      .nullable(),
+    commentary: Yup.string('')
       .min(3, 'Agregar comentario')
       .max(300, 'Comentario demasiado extenso')
       .required('Requerido')
