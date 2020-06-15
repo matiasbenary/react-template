@@ -1,7 +1,6 @@
 import axios from "axios";
 import moment from "moment";
 import store from "../index";
-import useGetUserId from "../hooks/api/useGetUserId";
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -29,6 +28,14 @@ const hasExpireToken = expireToken => expireToken !== null;
 const isExpiredToken = expireToken => moment().diff(expireToken) <= 0;
 
 const hasToken = token => token !== null;
+
+const userId = () => {
+  try {
+    return store.getState().auth.user.id;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const getToken = async () => {
   let token = getHeaderLocalStorage();
@@ -65,26 +72,22 @@ export const getToken = async () => {
   return token;
 };
 
-useGetUserId = () => {
-  try {
-    return store.getState().auth.user.id;
-  } catch (error) {
-    return null;
-  }
-};
-
 export const apiCall = async (url, data, method) => {
   const token = await getToken();
+  // console.log(store.getState());
+  const headers = store.getState().auth.user
+    ? {
+        ...token,
+        "User-Id": store.getState().auth.user.id,
+        "Entity-Id": process.env.REACT_APP_ID_ENTITY
+      }
+    : token;
 
   return axios({
     method,
     url: `${BASE_URL}api/${url}`,
     data,
-    headers: {
-      ...token,
-      "User-Id": useGetUserId(),
-      "Entity-Id": process.env.REACT_APP_ID_ENTITY
-    }
+    headers
   });
 };
 
