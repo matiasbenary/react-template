@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import store from "../index";
+import useGetUserId from "../hooks/api/useGetUserId";
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
@@ -64,6 +65,14 @@ export const getToken = async () => {
   return token;
 };
 
+useGetUserId = () => {
+  try {
+    return store.getState().auth.user.id;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const apiCall = async (url, data, method) => {
   const token = await getToken();
 
@@ -73,7 +82,7 @@ export const apiCall = async (url, data, method) => {
     data,
     headers: {
       ...token,
-      "User-Id": store.getState().auth.user.id,
+      "User-Id": useGetUserId(),
       "Entity-Id": process.env.REACT_APP_ID_ENTITY
     }
   });
