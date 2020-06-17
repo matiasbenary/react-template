@@ -1,33 +1,30 @@
-import axios from "axios";
-import moment from "moment";
-import store from "../index";
+import axios from 'axios';
+import moment from 'moment';
+import store from '../index';
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
-const getHeaderLocalStorage = () => JSON.parse(localStorage.getItem("token"));
+const getHeaderLocalStorage = () => JSON.parse(localStorage.getItem('token'));
 
-const setHeaderLocalStorage = res => {
+const setHeaderLocalStorage = (res) => {
   const header = {
-    Authorization: `${res.token_type} ${res.access_token}`
-    // "User-Id": store.getState().auth.user.id
+    Authorization: `${res.token_type} ${res.access_token}`,
   };
-  localStorage.setItem("token", JSON.stringify(header));
+  localStorage.setItem('token', JSON.stringify(header));
 };
 
-const getExpireTokenLocalStorage = () =>
-  JSON.parse(localStorage.getItem("expire_token"));
+const getExpireTokenLocalStorage = () => JSON.parse(localStorage.getItem('expire_token'));
 
-const setExpireTokenLocalStorage = res =>
-  localStorage.setItem(
-    "expire_token",
-    JSON.stringify(moment().add(res.expires_in, "s"))
+const setExpireTokenLocalStorage = (res) => localStorage.setItem(
+    'expire_token',
+    JSON.stringify(moment().add(res.expires_in, 's')),
   );
 
-const hasExpireToken = expireToken => expireToken !== null;
+const hasExpireToken = (expireToken) => expireToken !== null;
 
-const isExpiredToken = expireToken => moment().diff(expireToken) <= 0;
+const isExpiredToken = (expireToken) => moment().diff(expireToken) <= 0;
 
-const hasToken = token => token !== null;
+const hasToken = (token) => token !== null;
 
 const userId = () => {
   try {
@@ -44,22 +41,22 @@ export const getToken = async () => {
 
   if (
     !(
-      hasExpireToken(expireToken) &&
-      isExpiredToken(expireToken) &&
-      hasToken(token)
+      hasExpireToken(expireToken)
+      && isExpiredToken(expireToken)
+      && hasToken(token)
     )
   ) {
     const params = new FormData();
-    params.set("grant_type", "client_credentials");
-    params.set("scope", "*");
-    params.set("client_id", process.env.REACT_APP_API_CLIENT_ID);
-    params.set("client_secret", process.env.REACT_APP_API_CLIENT_SECRET);
+    params.set('grant_type', 'client_credentials');
+    params.set('scope', '*');
+    params.set('client_id', process.env.REACT_APP_API_CLIENT_ID);
+    params.set('client_secret', process.env.REACT_APP_API_CLIENT_SECRET);
     try {
       const res = await axios({
-        method: "post",
+        method: 'post',
         url: `${BASE_URL}oauth/token`,
         data: params,
-        headers: { "content-type": "application/x-www-form-urlencoded" }
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
       });
       setHeaderLocalStorage(res.data);
       setExpireTokenLocalStorage(res.data);
@@ -78,8 +75,8 @@ export const apiCall = async (url, data, method) => {
   const headers = store.getState().auth.user
     ? {
         ...token,
-        "User-Id": store.getState().auth.user.id,
-        "Entity-Id": process.env.REACT_APP_ID_ENTITY
+        'User-Id': store.getState().auth.user.id,
+        'Entity-Id': process.env.REACT_APP_ID_ENTITY,
       }
     : token;
 
@@ -87,12 +84,12 @@ export const apiCall = async (url, data, method) => {
     method,
     url: `${BASE_URL}api/${url}`,
     data,
-    headers
+    headers,
   });
 };
 
-export const saveUser = user => {
-  localStorage.setItem("user", JSON.stringify(user));
+export const saveUser = (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
 };
 
 export const clearStorage = () => {
