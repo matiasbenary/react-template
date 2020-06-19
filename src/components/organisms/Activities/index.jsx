@@ -33,7 +33,6 @@ const Activities = () => {
         userActivitiesLoading: state.userActivities.loading,
 
     }));
-console.log(userActivities);
 
     useEffect(() => {
         if (!userActivities) {
@@ -42,14 +41,19 @@ console.log(userActivities);
     }, []);
 
     const iconStyle = {
-        // color: '#fff',
         fontSize: '24px',
     };
 
     const columns = useMemo(() => [
         {
-            name: 'Entidad',
+            name: 'Entidad de origen',
             selector: 'from_entity',
+            sortable: true,
+            expandableRows: true,
+        },
+        {
+            name: 'Entidad beneficiaria',
+            selector: 'to_entity',
             sortable: true,
             expandableRows: true,
         },
@@ -141,6 +145,7 @@ console.log(userActivities);
             activity_type: a.alternative_type,
             url: `/detail/${a.id}`,
             from_entity: a.fromEntity.bussiness_name,
+            to_entity: a.toEntity.bussiness_name,
             hours_total: a.hoursTotal,
         }));
 
