@@ -1,26 +1,26 @@
-import React, { useEffect, memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTransition, animated } from 'react-spring';
-import moment from 'moment';
-import Card from '../../molecules/Card';
-import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
-import { actions as activitiesAction } from '../../../store/ducks/activities.duck';
-import ActivitiesButtons from '../../molecules/ActivitiesButton';
-import Loading from '../../molecules/Loading';
-import Detail from '../../molecules/Detail';
-import Map from '../../molecules/Map';
+import React, { useEffect, memo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useTransition, animated } from "react-spring";
+import moment from "moment";
+import Card from "../../molecules/Card";
+import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
+import { actions as activitiesAction } from "../../../store/ducks/activities.duck";
+import ActivitiesButtons from "../../molecules/ActivitiesButton";
+import Loading from "../../molecules/Loading";
+import Detail from "../../molecules/Detail";
+import Map from "../../molecules/Map";
 
 const CardsContainer = () => {
   const {
     user_id,
     activities,
     activitiesLoading,
-    userActivities,
-  } = useSelector((state) => ({
+    userActivities
+  } = useSelector(state => ({
     user_id: state.auth.user.id,
     userActivities: state.userActivities.activities,
     activities: state.activities.activities,
-    activitiesLoading: state.activities.loading,
+    activitiesLoading: state.activities.loading
   }));
 
   const dispatch = useDispatch();
@@ -40,12 +40,12 @@ const CardsContainer = () => {
 
   const acts = activities ? activities.data : [];
 
-  const transitions = useTransition(acts, (act) => act.id, {
-    from: { transform: 'translate3d(0,-40px,0)', opacity: 0 },
-    enter: { transform: 'translate3d(0,0px,0)', opacity: 1 },
-    leave: { transform: 'translate3d(0,-40px,0)', opacity: 0 },
+  const transitions = useTransition(acts, act => act.id, {
+    from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
+    enter: { transform: "translate3d(0,0px,0)", opacity: 1 },
+    leave: { transform: "translate3d(0,-40px,0)", opacity: 0 },
     trail: 55,
-    config: { mass: 1, tension: 210, friction: 20 },
+    config: { mass: 1, tension: 210, friction: 20 }
   });
 
   if (activitiesLoading) {
@@ -62,24 +62,23 @@ const CardsContainer = () => {
         />
         <div className="card-columns">
           {transitions.map(({ item, props, key }) => {
-            const isApply = userActivities.data.find((activity) => activity.id === item.id)
-              === undefined;
+            const isApply =
+              userActivities.data.find(activity => activity.id === item.id) ===
+              undefined;
 
-              const deadline = moment(item.deadline);
-              const isEnable = now < deadline;
+            const deadline = moment(item.deadline);
+            const isEnable = now <= deadline;
             return (
               <animated.div key={key} style={props}>
                 <Card
                   key={`cardactivity${item.id}`}
                   title={item.title}
-                  description={(
+                  description={
                     <>
-                      {item.short_description}
-{' '}
-<hr />
+                      {item.short_description} <hr />
                       <Detail activity={item} />
                     </>
-                  )}
+                  }
                   img={item.description_image}
                 >
                   <ActivitiesButtons
