@@ -33,6 +33,7 @@ const Activities = () => {
         userActivitiesLoading: state.userActivities.loading,
 
     }));
+console.log(userActivities);
 
     useEffect(() => {
         if (!userActivities) {
@@ -47,33 +48,45 @@ const Activities = () => {
 
     const columns = useMemo(() => [
         {
-            name: 'Actividad',
-            selector: 'actividad',
+            name: 'Entidad',
+            selector: 'from_entity',
             sortable: true,
             expandableRows: true,
-            cell: (row) => <Link to={row.url}>{row.actividad}</Link>,
+        },
+        {
+            name: 'Actividad',
+            selector: 'activity',
+            sortable: true,
+            expandableRows: true,
+            cell: (row) => <Link to={row.url}>{row.activity}</Link>,
         },
         {
             name: 'Estado',
-            selector: 'estado',
+            selector: 'status',
             sortable: true,
             center: true,
         },
         {
             name: 'Fecha límite de postulación',
-            selector: 'limite_postulacion',
+            selector: 'deadline',
             sortable: true,
             center: true,
         },
         {
             name: 'Estado de selección',
-            selector: 'estado_seleccion',
+            selector: 'selection_status',
             sortable: true,
             center: true,
         },
         {
             name: 'Tipo de actividad',
-            selector: 'tipo_actividad',
+            selector: 'activity_type',
+            sortable: true,
+            center: true,
+        },
+        {
+            name: 'Horas cargadas',
+            selector: 'hours_total',
             sortable: true,
             center: true,
         },
@@ -82,15 +95,14 @@ const Activities = () => {
             cell: (row) => {
                 const isDisabled = row.estado_seleccion === 'Seleccionad@';
                 return (isDisabled ? (
-                <button type="button" className="btn btn-primary btn-sm" onClick={() => { hoursModal(row.id); }}>
-                    <MdAddAlarm style={iconStyle} />
-                </button>
-            ) : (
-                <button type="button" className="btn btn-primary btn-sm" disabled>
-                    <MdAddAlarm style={iconStyle} />
-                </button>
-            )
-            );
+                    <button type="button" className="btn btn-primary btn-sm" onClick={() => { hoursModal(row.id); }}>
+                        <MdAddAlarm style={iconStyle} />
+                    </button>
+                ) : (
+                    <button type="button" className="btn btn-primary btn-sm" disabled>
+                        <MdAddAlarm style={iconStyle} />
+                    </button>
+                ));
             },
             ignoreRowClick: true,
             allowOverflow: true,
@@ -122,12 +134,14 @@ const Activities = () => {
 
         const data = userActivities.data.map((a) => ({
             id: a.id,
-            actividad: a.title,
-            estado: a.status_alias,
-            limite_postulacion: a.deadline.slice(0, 10),
-            estado_seleccion: postulationStatus(a.status_postulation),
-            tipo_actividad: a.alternative_type,
+            activity: a.title,
+            status: a.status_alias,
+            deadline: a.deadline.slice(0, 10),
+            selection_status: postulationStatus(a.status_postulation),
+            activity_type: a.alternative_type,
             url: `/detail/${a.id}`,
+            from_entity: a.fromEntity.bussiness_name,
+            hours_total: a.hoursTotal,
         }));
 
         return (
