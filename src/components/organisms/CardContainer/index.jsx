@@ -53,7 +53,8 @@ const CardsContainer = () => {
   }
 
   if (userActivities && activities) {
-    const now = moment();
+    const now = moment().subtract(1, "days");
+
     return (
       <div className="container mt-4">
         <Card
