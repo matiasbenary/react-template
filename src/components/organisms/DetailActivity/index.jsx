@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
@@ -33,6 +33,7 @@ const DetailActivity = () => {
   const userActivities = useSelector(userActivitiesSelector);
   const loading = useSelector(activityLoadingSelector);
   const user_id = useGetUserId();
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     if (!activity || activity.id !== Number(id)) {
@@ -41,8 +42,9 @@ const DetailActivity = () => {
   }, [activity]);
 
   useEffect(() => {
-    if (!userActivities || activity.id !== Number(id)) {
+    if (!userActivities || !update) {
       dispatch(userActivitiesAction.getActivities(user_id));
+      setUpdate(true);
     }
   }, []);
 
