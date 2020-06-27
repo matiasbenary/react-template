@@ -1,32 +1,32 @@
-import React, { memo, useEffect } from 'react';
-import { useParams } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
-import { createSelector } from 'reselect';
-import moment from 'moment';
-import Card from '../../molecules/Card';
-import { actions } from '../../../store/ducks/activity/getActivity.duck';
-import ActivitiesButtons from '../../molecules/ActivitiesButton';
-import Detail from '../../molecules/Detail';
-import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
-import useGetUserId from '../../../hooks/api/useGetUserId';
-import Loading from '../../molecules/Loading';
+import React, { memo, useEffect } from "react";
+import { useParams } from "react-router";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import moment from "moment";
+import Card from "../../molecules/Card";
+import { actions } from "../../../store/ducks/activity/getActivity.duck";
+import ActivitiesButtons from "../../molecules/ActivitiesButton";
+import Detail from "../../molecules/Detail";
+import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
+import useGetUserId from "../../../hooks/api/useGetUserId";
+import Loading from "../../molecules/Loading";
 
 const activitySelector = createSelector(
-  (state) => state.activity.activity,
-  (activity) => activity,
+  state => state.activity.activity,
+  activity => activity
 );
 
 const activityLoadingSelector = createSelector(
-  (state) => state.activity.loading,
-  (loading) => loading,
+  state => state.activity.loading,
+  loading => loading
 );
 
 const userActivitiesSelector = createSelector(
-  (state) => state.userActivities.activities,
-  (userActivities) => userActivities,
+  state => state.userActivities.activities,
+  userActivities => userActivities
 );
 
-const DetailActivity = memo(() => {
+const DetailActivity = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const activity = useSelector(activitySelector);
@@ -35,13 +35,13 @@ const DetailActivity = memo(() => {
   const user_id = useGetUserId();
 
   useEffect(() => {
-    if (!activity) {
+    if (!activity || activity.id !== Number(id)) {
       dispatch(actions.getActivity(id));
     }
   }, [activity]);
 
   useEffect(() => {
-    if (!userActivities) {
+    if (!userActivities || activity.id !== Number(id)) {
       dispatch(userActivitiesAction.getActivities(user_id));
     }
   }, []);
@@ -51,11 +51,12 @@ const DetailActivity = memo(() => {
   }
 
   if (activity && userActivities) {
-    const isApply = userActivities.data.find((activityLocal) => activityLocal.id == id)
-      === undefined;
-      const now = moment();
-      const deadline = moment(activity.deadline);
-      const isEnable = now < deadline;
+    const isApply =
+      userActivities.data.find(activityLocal => activityLocal.id == id) ===
+      undefined;
+    const now = moment();
+    const deadline = moment(activity.deadline);
+    const isEnable = now < deadline;
     return (
       <div className="container mt-4">
         <div className="row">
@@ -72,16 +73,22 @@ const DetailActivity = memo(() => {
             </Card>
           </div>
           <div className="col-12 mt-4">
-            <Card title="Términos y condiciones" descriptionHtml={activity.terms_and_conditions} />
+            <Card
+              title="Términos y condiciones"
+              descriptionHtml={activity.terms_and_conditions}
+            />
           </div>
           <div className="col-12 my-4">
-            <Card title="Otros datos" description={<Detail activity={activity} />} />
+            <Card
+              title="Otros datos"
+              description={<Detail activity={activity} />}
+            />
           </div>
         </div>
       </div>
     );
   }
   return null;
-});
+};
 
 export default DetailActivity;
