@@ -75,6 +75,7 @@ const Activities = () => {
             selector: 'deadline',
             sortable: true,
             center: true,
+            defaultSortAsc: false,
         },
         {
             name: 'Estado de selección',
