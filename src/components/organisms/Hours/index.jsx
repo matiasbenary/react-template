@@ -19,11 +19,49 @@ const Hours = () => {
     userActivitiesHoursLoading: state.userActivitiesHours.loading
   }));
 
-  useEffect(() => {
-    if (!userActivitiesHours) {
-      dispatch(userActivitiesHoursAction.getHours({ user_id }));
-    }
-  }, []);
+    const {
+        user_id,
+        userActivitiesHours,
+        userActivitiesHoursLoading,
+    } = useSelector((state) => ({
+        user_id: state.auth.user.id,
+        userActivitiesHours: state.userActivitiesHours.hours,
+        userActivitiesHoursLoading: state.userActivitiesHours.loading,
+    }));
+
+    useEffect(() => {
+      if (!userActivitiesHours) {
+          dispatch(userActivitiesHoursAction.getHours(user_id));
+      }
+    }, []);
+
+    const columns = useMemo(() => [
+        {
+            name: 'Actividad',
+            selector: 'actividad',
+            sortable: true,
+            cell: (row) => <Link to={row.url}>{row.actividad}</Link>,
+        },
+        {
+            name: 'Fecha',
+            selector: 'fecha',
+            sortable: true,
+            right: true,
+            defaultSortAsc: false,
+        },
+        {
+            name: 'Horas',
+            selector: 'horas',
+            sortable: true,
+            right: true,
+        },
+        {
+            name: 'Estado',
+            selector: 'estado',
+            sortable: true,
+            right: true,
+        },
+    ]);
 
   useEffect(() => {
     if (userActivitiesHours) {
