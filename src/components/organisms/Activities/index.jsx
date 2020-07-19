@@ -90,11 +90,7 @@ const Activities = () => {
             center: true,
         },
         {
-<<<<<<< HEAD
             name: 'Horas acumuladas',
-=======
-            name: 'Horas cargadas',
->>>>>>> 51bad4f2b321619a326710fa60831704123128c4
             selector: 'hours_total',
             sortable: true,
             center: true,
@@ -152,10 +148,7 @@ const Activities = () => {
             from_entity: a.fromEntity.bussiness_name,
             to_entity: a.toEntity.bussiness_name,
             hours_total: a.hoursTotal,
-<<<<<<< HEAD
             sdg: a.sdg_id,
-=======
->>>>>>> 51bad4f2b321619a326710fa60831704123128c4
         }));
 
         return (
