@@ -65,10 +65,6 @@ const Hours = () => {
   }
 
   if (userActivitiesHours) {
-    const tableStyles = {
-      margin: "20px auto"
-    };
-
     const data = userActivitiesHours.data.map(u => ({
       id: u.id,
       fecha: u.created_at.slice(0, 10),
@@ -79,19 +75,21 @@ const Hours = () => {
     }));
 
     return (
-      <div className="container">
-        <Table
-          data={data}
-          columns={columns}
-          title="Mis horas"
-          styles={tableStyles}
-        />
-        <Pagination
-          meta={meta}
-          action={payload =>
-            userActivitiesHoursAction.getHours({ ...payload, user_id })
-          }
-        />
+      <div className="container mt-4">
+        <div className="card shadow  bg-white rounded">
+          <div className="card-block">
+            <div className="card-body">
+              <Table data={data} columns={columns} title="Mis Horas" />
+              <Pagination
+                meta={meta}
+                action={payload =>
+                  userActivitiesHoursAction.getHours({ ...payload, user_id })
+                }
+                className="d-flex justify-content-end mt-2"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

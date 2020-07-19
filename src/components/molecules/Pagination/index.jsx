@@ -16,7 +16,7 @@ const Item = ({ item, active, goTo }) => {
   );
 };
 
-const Pagination = ({ meta, action }) => {
+const Pagination = ({ meta, action, className = null }) => {
   const dispath = useDispatch();
 
   const before = () => {
@@ -77,16 +77,23 @@ const Pagination = ({ meta, action }) => {
 
     for (let indice = beforeIndiceReal; indice < beforeLimitReal; indice++) {
       aux.push(
-        <Item item={indice} goTo={goTo} active={indice == current_page} />
+        <Item
+          item={indice}
+          goTo={goTo}
+          active={indice == current_page}
+          key={`pagination-${indice}`}
+        />
       );
     }
 
     aux.push(
       <Item
+        key={`pagination-${beforeLimitReal}`}
         item={beforeLimitReal}
         goTo={goTo}
         active={
-          beforeLimitReal < current_page < afterIndiceReal &&
+          beforeLimitReal < current_page &&
+          current_page < afterIndiceReal &&
           current_page == beforeLimitReal
         }
       />
@@ -94,7 +101,12 @@ const Pagination = ({ meta, action }) => {
 
     for (let indice = afterIndiceReal; indice < afterLimitReal; indice++) {
       aux.push(
-        <Item item={indice} goTo={goTo} active={indice == current_page} />
+        <Item
+          item={indice}
+          goTo={goTo}
+          active={indice == current_page}
+          key={`pagination-${indice}`}
+        />
       );
     }
 
@@ -102,42 +114,22 @@ const Pagination = ({ meta, action }) => {
   };
   if (meta) {
     return (
-      <div>
-        {/* <div>desde:{meta.from}</div>
-        <div>hasta:{meta.to}</div>
-        <div>total :{meta.total}</div> */}
+      <div className={className}>
         <ul className="pagination pagination-sm">
           <li
             className={`page-item ${meta.current_page == 1 ? "disabled" : ""}`}
           >
             <button className="page-link" onClick={before}>
-              {/* &laquo; */}
               Anterior
             </button>
           </li>
           {getOtherPages()}
-          {/* <li className="page-item active">
-          <button className="page-link">1</button>
-        </li>
-        <li className="page-item">
-          <button className="page-link">2</button>
-        </li>
-        <li className="page-item">
-          <button className="page-link">3</button>
-        </li>
-        <li className="page-item">
-          <button className="page-link">4</button>
-        </li>
-        <li className="page-item">
-          <button className="page-link">5</button>
-        </li> */}
           <li
             className={`page-item ${
               meta.current_page == meta.last_page ? "disabled" : ""
             }`}
           >
             <button className="page-link" onClick={next}>
-              {/* &raquo; */}
               Siguiente
             </button>
           </li>
