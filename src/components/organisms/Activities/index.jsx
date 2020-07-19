@@ -5,7 +5,7 @@ import { MdAddAlarm } from 'react-icons/md';
 import { actions as modalAction } from '../../../store/ducks/modal.duck';
 import { actions as userActivitiesAction } from '../../../store/ducks/user/activities.duck';
 import Loading from '../../molecules/Loading';
-import Table from '../../molecules/Table/Table';
+import Table from '../../molecules/Table';
 
 const Activities = () => {
     const dispatch = useDispatch();
@@ -90,7 +90,7 @@ const Activities = () => {
             center: true,
         },
         {
-            name: 'Horas cargadas',
+            name: 'Horas acumuladas',
             selector: 'hours_total',
             sortable: true,
             center: true,
@@ -148,6 +148,7 @@ const Activities = () => {
             from_entity: a.fromEntity.bussiness_name,
             to_entity: a.toEntity.bussiness_name,
             hours_total: a.hoursTotal,
+            sdg: a.sdg_id,
         }));
 
         return (
