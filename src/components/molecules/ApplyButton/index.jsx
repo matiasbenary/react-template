@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { actions as modalAction } from "../../../store/ducks/modal.duck";
 import { actions as modalActivities } from "../../../store/ducks/activities.duck";
 

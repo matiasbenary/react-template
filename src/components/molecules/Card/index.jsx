@@ -1,20 +1,13 @@
-import React from 'react';
-import './card.scss';
+import React from "react";
+import "./card.scss";
 
-const createMarkup = (setHtml) => ({ __html: setHtml });
+const createMarkup = setHtml => ({ __html: setHtml });
 
-const setHtml = (setHtml) => (
+const setHtml = setHtml => (
   <div dangerouslySetInnerHTML={createMarkup(setHtml)} />
 );
 
-const Card = ({
-  title,
-  description,
-  descriptionHtml,
-  img,
-  children,
-  detail,
-}) => {
+const Card = ({ title, description, descriptionHtml, img, children }) => {
   const list = null;
   return (
     <div className="card shadow  bg-white rounded">
