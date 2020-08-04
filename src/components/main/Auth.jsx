@@ -1,15 +1,15 @@
-import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import './auth.scss';
-import styled from 'styled-components';
-import config from '../../config';
+import React from "react";
+import { Route, Link, Switch } from "react-router-dom";
+import "./auth.scss";
+import styled from "styled-components";
+import config from "../../config";
 
-import ResetUser from '../pages/ResetUser';
-import Login2 from '../pages/Login2';
-import Register from '../pages/Register';
+import ResetUser from "../pages/ResetUser";
+import Login2 from "../pages/Login2";
+import Register from "../pages/Register";
 
 const Img = styled.img`
-  width: ${(props) => props.width || '100%'};
+  width: ${props => props.width || "100%"};
   margin-bottom: 3rem;
   display: block;
 `;
@@ -22,9 +22,11 @@ const Main = ({ children }) => (
           <Img src={config.logo} width={config.logo_width} alt="logo" />
         </Link>
       </div>
-      <Route exact path="/reset" component={ResetUser} />
-      <Route exact path="/register" component={Register} />
-      <Route exact path="/" component={Login2} />
+      <Switch>
+        <Route exact path="/reset" component={ResetUser} />
+        <Route exact path="/register" component={Register} />
+        <Route path="/" component={Login2} />
+      </Switch>
       {children}
     </div>
   </div>

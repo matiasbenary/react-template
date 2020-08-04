@@ -21,7 +21,7 @@ const Hours = () => {
 
   useEffect(() => {
     if (!userActivitiesHours) {
-        dispatch(userActivitiesHoursAction.getHours(user_id));
+      dispatch(userActivitiesHoursAction.getHours({ user_id }));
     }
   }, []);
 
@@ -63,7 +63,7 @@ const Hours = () => {
   if (userActivitiesHoursLoading) {
     return <Loading />;
   }
-  
+
   if (userActivitiesHours) {
     const data = userActivitiesHours.data.map(u => ({
       id: u.id,
@@ -72,7 +72,7 @@ const Hours = () => {
       horas: u.hours,
       estado: hoursValidation(u.validated_to),
       url: `/detail/${u.activity_id}`,
-      commentary: u.commentary,
+      commentary: u.commentary
     }));
 
     return (

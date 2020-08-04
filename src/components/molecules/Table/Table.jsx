@@ -4,18 +4,11 @@ import { downloadCSV } from "../../../utils/helper";
 
 const Export = ({ onExport }) => (
   <button className="btn btn-primary" onClick={e => onExport(e.target.value)}>
-    Export
+    Exportar
   </button>
 );
 
-const Table = ({
-  data,
-  columns,
-  title,
-  styles,
-  action = null,
-  noTableHead = false
-}) => {
+const Table = ({ data, columns, title, styles }) => {
   const actionsMemo = React.useMemo(() => {
     const blacklist = ["url"];
 
