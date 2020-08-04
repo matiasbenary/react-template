@@ -64,7 +64,7 @@ const Activities = () => {
     {
       name: "Sumar horas",
       cell: row => {
-        const isDisabled = row.estado_seleccion === "Seleccionad@";
+        const isDisabled = row.selection_status === "Seleccionad@";
         return isDisabled ? (
           <button
             type="button"
@@ -113,7 +113,6 @@ const Activities = () => {
   ]);
 
   const postulationStatus = status => {
-    console.log(status);
     switch (status) {
       case 0:
         return "Pendiente";
