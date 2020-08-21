@@ -7,10 +7,17 @@ const setHtml = setHtml => (
   <div dangerouslySetInnerHTML={createMarkup(setHtml)} />
 );
 
-const Card = ({ title, description, descriptionHtml, img, children }) => {
+const Card = ({
+  title,
+  description,
+  descriptionHtml,
+  img,
+  children,
+  style
+}) => {
   const list = null;
   return (
-    <div className="card shadow  bg-white rounded">
+    <div className="card shadow  bg-white rounded" style={style}>
       {img ? (
         <img
           className="card-img-top"

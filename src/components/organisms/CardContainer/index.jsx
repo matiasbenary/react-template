@@ -9,6 +9,7 @@ import ActivitiesButtons from "../../molecules/ActivitiesButton";
 import Loading from "../../molecules/Loading";
 import Detail from "../../molecules/Detail";
 import Map from "../../molecules/Map";
+import VolunteerExperiences from "../../molecules/VolunteerExperiences";
 
 const CardsContainer = () => {
   const {
@@ -38,7 +39,18 @@ const CardsContainer = () => {
     }
   }, []);
 
-  const acts = activities ? activities.data : [];
+  const acts = activities
+    ? activities.data.reduce((acc, activity, index) => {
+        console.log(
+          index % 3,
+          Math.floor(index / 3),
+          (index % 3) * 3 + Math.floor(index / 3),
+          activity.deadline
+        );
+        acc[(index % 3) * 3 + Math.floor(index / 3)] = activity;
+        return acc;
+      }, [])
+    : [];
 
   const transitions = useTransition(acts, act => act.id, {
     from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
@@ -57,10 +69,19 @@ const CardsContainer = () => {
 
     return (
       <div className="container mt-4">
-        <Card
-          description={<Map activities={activities} />}
-          title="Actividades de voluntariado"
-        />
+        <div className="card-deck">
+          <Card
+            description={<Map activities={activities} />}
+            title="Actividades de voluntariado"
+            style={{ flexGrow: 300 }}
+          />
+          <Card
+            description={<VolunteerExperiences activities={activities} />}
+            title="Experiencias de voluntarios"
+            style={{ flexGrow: 250 }}
+          />
+        </div>
+
         <div className="card-columns">
           {transitions.map(({ item, props, key }) => {
             const isApply =

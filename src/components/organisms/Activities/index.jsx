@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { MdAddAlarm } from "react-icons/md";
+import { MdAddAlarm, MdComment } from "react-icons/md";
 import { actions as modalAction } from "../../../store/ducks/modal.duck";
 import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
 import Loading from "../../molecules/Loading";
@@ -55,35 +55,45 @@ const Activities = () => {
     //   expandableRows: true
     // },
     {
-      name: "Actividad",
-      selector: "activity",
-      sortable: true,
-      expandableRows: true,
-      cell: row => <Link to={row.url}>{row.activity}</Link>
-    },
-    {
-      name: "Sumar horas",
+      name: "Acciones",
       cell: row => {
-        const isDisabled = row.selection_status === "Seleccionad@";
-        return isDisabled ? (
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            onClick={() => {
-              hoursModal(row.id);
-            }}
-          >
-            <MdAddAlarm style={iconStyle} />
-          </button>
-        ) : (
-          <button type="button" className="btn btn-primary btn-sm" disabled>
-            <MdAddAlarm style={iconStyle} />
-          </button>
+        return (
+          <>
+            {row.selection_status === "Seleccionad@" && (
+              <button
+                type="button"
+                className="btn btn-primary btn-sm m-1"
+                onClick={() => {
+                  hoursModal(row.id);
+                }}
+              >
+                <MdAddAlarm style={iconStyle} />
+              </button>
+            )}
+            {!row.commentary && row.status === "Terminada" && (
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => {
+                  hoursModal(row.id);
+                }}
+              >
+                <MdComment style={iconStyle} />
+              </button>
+            )}
+          </>
         );
       },
       ignoreRowClick: true,
       allowOverflow: true,
       button: true
+    },
+    {
+      name: "Actividad",
+      selector: "activity",
+      sortable: true,
+      expandableRows: true,
+      cell: row => <Link to={row.url}>{row.activity}</Link>
     },
     {
       name: "Estado",
@@ -146,7 +156,8 @@ const Activities = () => {
       from_entity: a.fromEntity.bussiness_name,
       to_entity: a.toEntity.bussiness_name,
       hours_total: a.hoursTotal,
-      sdg: a.sdg_id
+      sdg: a.sdg_id,
+      commentary: a.commentary
     }));
 
     return (

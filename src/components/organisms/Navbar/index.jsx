@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import './navbar.scss';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import config from '../../../config';
-import { actions } from '../../../store/ducks/auth.duck';
+import React, { useState } from "react";
+import "./navbar.scss";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import config from "../../../config";
+import { actions } from "../../../store/ducks/auth.duck";
 
 const Img = styled.img`
-  width:${(props) => props.width || '200px'};
+  width: ${props => props.width || "200px"};
 `;
 
 const Navbar = ({ email }) => {
@@ -69,9 +69,17 @@ const Navbar = ({ email }) => {
               {email}
               <span className="caret" />
             </button>
-            <ul className={`dropdown-menu dropdown-menu-right mt-2 ${isOpen ? 'show' : null}`}>
+            <ul
+              className={`dropdown-menu dropdown-menu-right mt-2 ${
+                isOpen ? "show" : null
+              }`}
+            >
               <li className="px-5 ">
-                <button type="submit" className="btn btn-primary btn-block" onClick={logout}>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block"
+                  onClick={logout}
+                >
                   Cerrar sesión
                 </button>
               </li>
