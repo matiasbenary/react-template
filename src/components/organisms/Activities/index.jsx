@@ -70,7 +70,7 @@ const Activities = () => {
                 <MdAddAlarm style={iconStyle} />
               </button>
             )}
-            {!row.commentary && row.status === "Terminada" && (
+            {/*!row.commentary && row.status === "Terminada" && (
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
@@ -80,7 +80,7 @@ const Activities = () => {
               >
                 <MdComment style={iconStyle} />
               </button>
-            )}
+            )*/}
           </>
         );
       },

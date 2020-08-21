@@ -13,11 +13,12 @@ const Card = ({
   descriptionHtml,
   img,
   children,
-  style
+  style,
+  className
 }) => {
   const list = null;
   return (
-    <div className="card shadow  bg-white rounded" style={style}>
+    <div className={`card shadow  bg-white rounded ${className}`} style={style}>
       {img ? (
         <img
           className="card-img-top"

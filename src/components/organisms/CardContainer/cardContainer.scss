@@ -1,0 +1,35 @@
+.cardContainer-columns {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-between;
+  /* Your container needs a fixed height, and it
+   * needs to be taller than your tallest column. */
+  height: 100vh;
+  width: 930px;
+  border: 1px solid red;
+}
+
+.cardContainer-columns::before,
+.cardContainer-columns::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}
+
+.card-masory {
+  width: 32%;
+  margin-bottom: 2%;
+}
+
+.card-masory:nth-child(3n) {
+  order: 1;
+  border: 10px solid black;
+}
+
+.card-masory:nth-child(3n + 1) {
+  order: 3;
+}
+.card-masory:nth-child(3n + 2) {
+  order: 2;
+}

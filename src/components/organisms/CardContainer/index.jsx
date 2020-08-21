@@ -10,6 +10,7 @@ import Loading from "../../molecules/Loading";
 import Detail from "../../molecules/Detail";
 import Map from "../../molecules/Map";
 import VolunteerExperiences from "../../molecules/VolunteerExperiences";
+import "./cardContainer.scss";
 
 const CardsContainer = () => {
   const {
@@ -40,25 +41,21 @@ const CardsContainer = () => {
   }, []);
 
   const acts = activities
-    ? activities.data.reduce((acc, activity, index) => {
-        console.log(
-          index % 3,
-          Math.floor(index / 3),
-          (index % 3) * 3 + Math.floor(index / 3),
-          activity.deadline
-        );
+    ? activities.data
+    : /*
+    activities.data.reduce((acc, activity, index) => {
         acc[(index % 3) * 3 + Math.floor(index / 3)] = activity;
         return acc;
-      }, [])
-    : [];
+      }, [])*/
+      [];
 
-  const transitions = useTransition(acts, act => act.id, {
+  /*const transitions = useTransition(acts, act => act.id, {
     from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
     enter: { transform: "translate3d(0,0px,0)", opacity: 1 },
     leave: { transform: "translate3d(0,-40px,0)", opacity: 0 },
     trail: 55,
     config: { mass: 1, tension: 210, friction: 20 }
-  });
+  });*/
 
   if (activitiesLoading) {
     return <Loading />;
@@ -66,7 +63,14 @@ const CardsContainer = () => {
 
   if (userActivities && activities) {
     const now = moment().subtract(1, "days");
+    const aux = Math.floor(activities.data.length / 3);
 
+    const acts = activities
+      ? activities.data.reduce((acc, activity, index) => {
+          acc[(index % aux) * aux + Math.floor(index / aux)] = activity;
+          return acc;
+        }, [])
+      : [];
     return (
       <div className="container mt-4">
         <div className="card-deck">
@@ -75,15 +79,15 @@ const CardsContainer = () => {
             title="Actividades de voluntariado"
             style={{ flexGrow: 300 }}
           />
-          <Card
+          {/*   <Card
             description={<VolunteerExperiences activities={activities} />}
             title="Experiencias de voluntarios"
             style={{ flexGrow: 250 }}
-          />
+          />*/}
         </div>
 
         <div className="card-columns">
-          {transitions.map(({ item, props, key }) => {
+          {acts.map(item => {
             const isApply =
               userActivities.data.find(activity => activity.id === item.id) ===
               undefined;
@@ -91,29 +95,27 @@ const CardsContainer = () => {
             const deadline = moment(item.deadline);
             const isEnable = now <= deadline;
             return (
-              <animated.div key={key} style={props}>
-                <Card
-                  key={`cardactivity${item.id}`}
+              <Card
+                key={`cardactivity${item.id}`}
+                title={item.title}
+                description={
+                  <>
+                    {item.short_description} <hr />
+                    <Detail activity={item} />
+                  </>
+                }
+                img={item.description_image}
+              >
+                <ActivitiesButtons
+                  isEnable={isEnable}
+                  isApply={isApply}
+                  activity_id={item.id}
+                  user_id={user_id}
                   title={item.title}
-                  description={
-                    <>
-                      {item.short_description} <hr />
-                      <Detail activity={item} />
-                    </>
-                  }
-                  img={item.description_image}
-                >
-                  <ActivitiesButtons
-                    isEnable={isEnable}
-                    isApply={isApply}
-                    activity_id={item.id}
-                    user_id={user_id}
-                    title={item.title}
-                    description={item.short_description}
-                    withLink
-                  />
-                </Card>
-              </animated.div>
+                  description={item.short_description}
+                  withLink
+                />
+              </Card>
             );
           })}
         </div>
