@@ -40,15 +40,6 @@ const CardsContainer = () => {
     }
   }, []);
 
-  const acts = activities
-    ? activities.data
-    : /*
-    activities.data.reduce((acc, activity, index) => {
-        acc[(index % 3) * 3 + Math.floor(index / 3)] = activity;
-        return acc;
-      }, [])*/
-      [];
-
   /*const transitions = useTransition(acts, act => act.id, {
     from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
     enter: { transform: "translate3d(0,0px,0)", opacity: 1 },
@@ -63,14 +54,30 @@ const CardsContainer = () => {
 
   if (userActivities && activities) {
     const now = moment().subtract(1, "days");
-    const aux = Math.floor(activities.data.length / 3);
 
-    const acts = activities
-      ? activities.data.reduce((acc, activity, index) => {
-          acc[(index % aux) * aux + Math.floor(index / aux)] = activity;
-          return acc;
-        }, [])
-      : [];
+    /* Invercion de matriz */
+    const columns = Math.floor(activities.data.length / 3);
+    const aux = [];
+    const auxFinal = [];
+    let acts = [];
+    let indice = 0;
+
+    for (let i = 0; columns > i; i++) {
+      indice = i * 3;
+      aux.push(activities.data.slice(indice, indice + 3));
+    }
+
+    for (let x = 0; x < aux.length; x++) {
+      for (let y = 0; y < aux[x].length; y++) {
+        if (!auxFinal[y]) auxFinal[y] = [];
+        auxFinal[y][x] = aux[x][y];
+      }
+    }
+
+    for (let x = 0; x < auxFinal.length; x++) {
+      acts = [...acts, ...auxFinal[x]];
+    }
+
     return (
       <div className="container mt-4">
         <div className="card-deck">
@@ -88,6 +95,7 @@ const CardsContainer = () => {
 
         <div className="card-columns">
           {acts.map(item => {
+            console.log("hi", item);
             const isApply =
               userActivities.data.find(activity => activity.id === item.id) ===
               undefined;
