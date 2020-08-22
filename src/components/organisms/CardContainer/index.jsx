@@ -11,6 +11,7 @@ import Detail from "../../molecules/Detail";
 import Map from "../../molecules/Map";
 import VolunteerExperiences from "../../molecules/VolunteerExperiences";
 import "./cardContainer.scss";
+import { useBreackpoint } from "../../../utils/hooks/useBreackpoin";
 
 const CardsContainer = () => {
   const {
@@ -39,7 +40,7 @@ const CardsContainer = () => {
       dispatch(activitiesAction.getActivities());
     }
   }, []);
-
+  const colums = useBreackpoint();
   /*const transitions = useTransition(acts, act => act.id, {
     from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
     enter: { transform: "translate3d(0,0px,0)", opacity: 1 },
@@ -56,15 +57,18 @@ const CardsContainer = () => {
     const now = moment().subtract(1, "days");
 
     /* Invercion de matriz */
-    const columns = Math.floor(activities.data.length / 3);
+
+    console.log(colums);
+    const row = Math.floor(activities.data.length / colums);
+
     const aux = [];
     const auxFinal = [];
     let acts = [];
     let indice = 0;
 
-    for (let i = 0; columns > i; i++) {
-      indice = i * 3;
-      aux.push(activities.data.slice(indice, indice + 3));
+    for (let i = 0; row > i; i++) {
+      indice = i * colums;
+      aux.push(activities.data.slice(indice, indice + colums));
     }
 
     for (let x = 0; x < aux.length; x++) {
