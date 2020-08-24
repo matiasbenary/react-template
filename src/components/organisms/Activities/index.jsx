@@ -23,6 +23,19 @@ const Activities = () => {
     );
   };
 
+  const commentaryModal = activity_id => {
+    dispatch(
+      modalAction.modalShow({
+        modalProps: {
+          open: true,
+          activity_id,
+          url: "activity/addCommentary"
+        },
+        modalType: "commentary"
+      })
+    );
+  };
+
   const { user_id, userActivities, userActivitiesLoading } = useSelector(
     state => ({
       user_id: state.auth.user.id,
@@ -35,92 +48,85 @@ const Activities = () => {
     if (!userActivities) {
       dispatch(userActivitiesAction.getActivities(user_id));
     }
-  }, []);
+  }, [dispatch, user_id, userActivities]);
 
   const iconStyle = {
     fontSize: "24px"
   };
 
-  const columns = useMemo(() => [
-    // {
-    //   name: "Entidad de origen",
-    //   selector: "from_entity",
-    //   sortable: true,
-    //   expandableRows: true
-    // },
-    // {
-    //   name: "Entidad beneficiaria",
-    //   selector: "to_entity",
-    //   sortable: true,
-    //   expandableRows: true
-    // },
-    {
-      name: "Acciones",
-      cell: row => {
-        return (
-          <>
-            {row.selection_status === "Seleccionad@" && (
-              <button
-                type="button"
-                className="btn btn-primary btn-sm m-1"
-                onClick={() => {
-                  hoursModal(row.id);
-                }}
-              >
-                <MdAddAlarm style={iconStyle} />
-              </button>
-            )}
-            {/*!row.commentary && row.status === "Terminada" && (
-              <button
-                type="button"
-                className="btn btn-primary btn-sm"
-                onClick={() => {
-                  hoursModal(row.id);
-                }}
-              >
-                <MdComment style={iconStyle} />
-              </button>
-            )*/}
-          </>
-        );
+  const columns = useMemo(
+    () => [
+      {
+        name: "Acciones",
+        cell: row => {
+          return (
+            <>
+              {row.selection_status === "Seleccionad@" && (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm m-1"
+                  onClick={() => {
+                    hoursModal(row.id);
+                  }}
+                >
+                  <MdAddAlarm style={iconStyle} />
+                </button>
+              )}
+              {!row.commentary &&
+                row.status === "Terminada" &&
+                row.selection_status === "Seleccionad@" && (
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={() => {
+                      commentaryModal(row.id);
+                    }}
+                  >
+                    <MdComment style={iconStyle} />
+                  </button>
+                )}
+            </>
+          );
+        },
+        ignoreRowClick: true,
+        allowOverflow: true,
+        button: true
       },
-      ignoreRowClick: true,
-      allowOverflow: true,
-      button: true
-    },
-    {
-      name: "Actividad",
-      selector: "activity",
-      sortable: true,
-      expandableRows: true,
-      cell: row => <Link to={row.url}>{row.activity}</Link>
-    },
-    {
-      name: "Estado",
-      selector: "status",
-      sortable: true,
-      center: true
-    },
-    {
-      name: "Fecha límite de postulación",
-      selector: "deadline",
-      sortable: true,
-      center: true,
-      defaultSortAsc: false
-    },
-    {
-      name: "Estado de selección",
-      selector: "selection_status",
-      sortable: true,
-      center: true
-    },
-    {
-      name: "Horas acumuladas",
-      selector: "hours_total",
-      sortable: true,
-      center: true
-    }
-  ]);
+      {
+        name: "Actividad",
+        selector: "activity",
+        sortable: true,
+        expandableRows: true,
+        cell: row => <Link to={row.url}>{row.activity}</Link>
+      },
+      {
+        name: "Estado",
+        selector: "status",
+        sortable: true,
+        center: true
+      },
+      {
+        name: "Fecha límite de postulación",
+        selector: "deadline",
+        sortable: true,
+        center: true,
+        defaultSortAsc: false
+      },
+      {
+        name: "Estado de selección",
+        selector: "selection_status",
+        sortable: true,
+        center: true
+      },
+      {
+        name: "Horas acumuladas",
+        selector: "hours_total",
+        sortable: true,
+        center: true
+      }
+    ],
+    [hoursModal, iconStyle]
+  );
 
   const postulationStatus = status => {
     switch (status) {

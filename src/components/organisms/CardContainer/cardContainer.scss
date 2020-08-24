@@ -16,20 +16,3 @@
   width: 0;
   order: 2;
 }
-
-.card-masory {
-  width: 32%;
-  margin-bottom: 2%;
-}
-
-.card-masory:nth-child(3n) {
-  order: 1;
-  border: 10px solid black;
-}
-
-.card-masory:nth-child(3n + 1) {
-  order: 3;
-}
-.card-masory:nth-child(3n + 2) {
-  order: 2;
-}

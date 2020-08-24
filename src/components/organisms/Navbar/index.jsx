@@ -54,9 +54,12 @@ const Navbar = ({ email }) => {
 
         <ul className="nav navbar-nav flex-row justify-content-between">
           <li className="nav-item order-2 order-md-1">
-            <a href="#" className="nav-link" title="settings">
-              <i className="fa fa-cog fa-fw fa-lg" />
-            </a>
+            <div>
+              <div classname="nav-link" title="settings">
+                <i classname="fa fa-cog fa-fw fa-lg"></i>
+              </div>
+              <i classname="fa fa-cog fa-fw fa-lg"></i>
+            </div>
           </li>
           <li className="dropdown order-1">
             <button

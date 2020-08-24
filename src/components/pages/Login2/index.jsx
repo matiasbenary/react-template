@@ -1,44 +1,44 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import Loader from 'react-spinners/PropagateLoader';
-import { Link } from 'react-router-dom';
-import { actions } from '../../../store/ducks/auth.duck';
-import WarningSpan from '../../molecules/WarningSpan';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import Loader from "react-spinners/PropagateLoader";
+import { Link } from "react-router-dom";
+import { actions } from "../../../store/ducks/auth.duck";
+import WarningSpan from "../../molecules/WarningSpan";
 
 const Login = () => {
-  const { loading, error } = useSelector((state) => ({
+  const { loading, error } = useSelector(state => ({
     loading: state.auth.loading,
-    error: state.auth.error,
+    error: state.auth.error
   }));
 
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Email Invalido')
-        .required('Requerido'),
-      password: Yup.string().required('Requerido'),
+        .email("Email Invalido")
+        .required("Requerido"),
+      password: Yup.string().required("Requerido")
     }),
-    onSubmit: (values) => {
+    onSubmit: values => {
       dispatch(actions.login(values));
-    },
+    }
   });
 
   useEffect(() => {
     if (error) {
       formik.setErrors({
         ...formik.errors,
-        message: 'Usuario o Clave incorrecta',
+        message: "Usuario o Clave incorrecta"
       });
     }
-  }, [error]);
+  }, [error, formik]);
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -56,7 +56,7 @@ const Login = () => {
             type="email"
             name="email"
             className="login__input"
-            {...formik.getFieldProps('email')}
+            {...formik.getFieldProps("email")}
           />
           {formik.touched.email && formik.errors.email ? (
             <WarningSpan msj={formik.errors.email} />
@@ -72,7 +72,7 @@ const Login = () => {
             type="password"
             name="password"
             className="login__input"
-            {...formik.getFieldProps('password')}
+            {...formik.getFieldProps("password")}
           />
           {formik.touched.password && formik.errors.password ? (
             <WarningSpan msj={formik.errors.password} />
@@ -86,11 +86,11 @@ const Login = () => {
         {loading ? (
           <div
             style={{
-              height: '38px',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              height: "38px",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             <Loader size={15} color="#007bff" loading />

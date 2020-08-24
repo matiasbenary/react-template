@@ -80,7 +80,7 @@ const Pagination = ({ meta, action, className = null }) => {
         <Item
           item={indice}
           goTo={goTo}
-          active={indice == current_page}
+          active={indice === current_page}
           key={`pagination-${indice}`}
         />
       );
@@ -94,7 +94,7 @@ const Pagination = ({ meta, action, className = null }) => {
         active={
           beforeLimitReal < current_page &&
           current_page < afterIndiceReal &&
-          current_page == beforeLimitReal
+          current_page === beforeLimitReal
         }
       />
     );
@@ -104,7 +104,7 @@ const Pagination = ({ meta, action, className = null }) => {
         <Item
           item={indice}
           goTo={goTo}
-          active={indice == current_page}
+          active={indice === current_page}
           key={`pagination-${indice}`}
         />
       );
@@ -117,7 +117,7 @@ const Pagination = ({ meta, action, className = null }) => {
       <div className={className}>
         <ul className="pagination pagination-sm">
           <li
-            className={`page-item ${meta.current_page == 1 ? "disabled" : ""}`}
+            className={`page-item ${meta.current_page === 1 ? "disabled" : ""}`}
           >
             <button className="page-link" onClick={before}>
               Anterior
@@ -126,7 +126,7 @@ const Pagination = ({ meta, action, className = null }) => {
           {getOtherPages()}
           <li
             className={`page-item ${
-              meta.current_page == meta.last_page ? "disabled" : ""
+              meta.current_page === meta.last_page ? "disabled" : ""
             }`}
           >
             <button className="page-link" onClick={next}>

@@ -14,9 +14,9 @@ const Card = ({
   img,
   children,
   style,
-  className
+  className,
+  classNameDescription
 }) => {
-  const list = null;
   return (
     <div className={`card shadow  bg-white rounded ${className}`} style={style}>
       {img ? (
@@ -31,7 +31,9 @@ const Card = ({
       <div className="card-block">
         <div className="card-body">
           {img ? <h5 className="card-title mt-3">{title}</h5> : null}
-          <div>{description || setHtml(descriptionHtml)}</div>
+          <div className={classNameDescription}>
+            {description || setHtml(descriptionHtml)}
+          </div>
         </div>
       </div>
       {children && <div className="card-footer">{children}</div>}

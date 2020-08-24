@@ -23,40 +23,43 @@ const Hours = () => {
     if (!userActivitiesHours) {
       dispatch(userActivitiesHoursAction.getHours({ user_id }));
     }
-  }, []);
+  }, [dispatch, user_id, userActivitiesHours]);
 
   useEffect(() => {
     if (userActivitiesHours) {
       setMeta(userActivitiesHours.meta);
     }
-  }, [userActivitiesHours]);
+  }, [userActivitiesHours, setMeta]);
 
-  const columns = useMemo(() => [
-    {
-      name: "Actividad",
-      selector: "actividad",
-      sortable: true,
-      cell: row => <Link to={row.url}>{row.actividad}</Link>
-    },
-    {
-      name: "Fecha",
-      selector: "fecha",
-      sortable: true,
-      right: true
-    },
-    {
-      name: "Horas",
-      selector: "horas",
-      sortable: true,
-      right: true
-    },
-    {
-      name: "Estado",
-      selector: "estado",
-      sortable: true,
-      right: true
-    }
-  ]);
+  const columns = useMemo(
+    () => [
+      {
+        name: "Actividad",
+        selector: "actividad",
+        sortable: true,
+        cell: row => <Link to={row.url}>{row.actividad}</Link>
+      },
+      {
+        name: "Fecha",
+        selector: "fecha",
+        sortable: true,
+        right: true
+      },
+      {
+        name: "Horas",
+        selector: "horas",
+        sortable: true,
+        right: true
+      },
+      {
+        name: "Estado",
+        selector: "estado",
+        sortable: true,
+        right: true
+      }
+    ],
+    []
+  );
 
   const hoursValidation = validated => (validated ? "Validado" : "No validado");
 

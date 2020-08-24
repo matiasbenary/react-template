@@ -1,32 +1,40 @@
-import React from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./VolunteerExperiences.scss";
-const comments = [
-  {
-    comment:
-      "Recomiendo la experiencia de participar, conocer como trabaja el Banco de Alimentos, el esfuerzo que realizan tanto los voluntarios como aquellos que forman parte de la organización, aportando nuestro tiempo y colaboración.",
-    quote: "Por ABRAHAM, NATALIA ROCIO – ¡Clasificación de alimentos en Munro!"
-  },
-  {
-    comment:
-      "Muy gratificante!!! Agradezco mucho la oportunidad que me brindaron de participar en esta actividad.",
-    quote:
-      "Por GOMEZ, MONICA GABRIELA – Adaptación de libros para que sean accesibles a personas ciegas"
-  },
-  {
-    comment:
-      "Muy linda experiencia y la organizacion de todo! re feliz de poder participar! :)",
-    quote:
-      "Por FICA MILLAN, YANET PAMELA – ¡Clasificación de alimentos en Munro!"
-  }
-];
+import { apiCall } from "../../../crud/api.crud";
+import Card from "../Card";
+
+const url = `activity/getCommentary?filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}`;
 
 const VolunteerExperiences = () => {
-  return comments.map((comment, index) => (
-    <div className={`${index ? "commentContainer" : ""} test`}>
-      <p className="font-weight-light text-md comment">{comment.comment}</p>
-      <small class="font-italic text-sm quote">{comment.quote}</small>
-    </div>
-  ));
+  const [commentary, setCommentary] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await apiCall(url, null, "GET");
+      setCommentary(response.data.data);
+    };
+
+    fetchData();
+  }, []);
+
+  if (commentary.length === 0) return null;
+  return (
+    <Card
+      description={commentary.map((commentary, index) => (
+        <div className={`${index ? "commentContainer" : ""} test`}>
+          <p className="font-weight-light text-md comment">
+            {commentary.commentary}
+          </p>
+          <small class="font-italic text-sm quote text-primary">
+            {commentary.name} <p>{commentary.title}</p>
+          </small>
+        </div>
+      ))}
+      title="Experiencias de voluntarios"
+      style={{ flexGrow: 100 }}
+      classNameDescription="cardCommentary"
+    />
+  );
 };
 
-export default VolunteerExperiences;
+export default React.memo(VolunteerExperiences);

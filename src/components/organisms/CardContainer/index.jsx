@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useTransition, animated } from "react-spring";
 import moment from "moment";
 import Card from "../../molecules/Card";
 import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
@@ -12,6 +11,35 @@ import Map from "../../molecules/Map";
 import VolunteerExperiences from "../../molecules/VolunteerExperiences";
 import "./cardContainer.scss";
 import { useBreackpoint } from "../../../utils/hooks/useBreackpoin";
+
+const invercionMatriz = (data, columns) => {
+  if (data.length < columns) return data;
+
+  const row = Math.floor(data.length / columns);
+
+  const aux = [];
+  const auxFinal = [];
+  let acts = [];
+  let indice = 0;
+
+  for (let i = 0; row > i; i++) {
+    indice = i * columns;
+    aux.push(data.slice(indice, indice + columns));
+  }
+
+  for (let x = 0; x < aux.length; x++) {
+    for (let y = 0; y < aux[x].length; y++) {
+      if (!auxFinal[y]) auxFinal[y] = [];
+      auxFinal[y][x] = aux[x][y];
+    }
+  }
+
+  for (let x = 0; x < auxFinal.length; x++) {
+    acts = [...acts, ...auxFinal[x]];
+  }
+
+  return acts;
+};
 
 const CardsContainer = () => {
   const {
@@ -32,22 +60,15 @@ const CardsContainer = () => {
     if (!userActivities) {
       dispatch(userActivitiesAction.getActivities(user_id));
     }
-  }, []);
+  }, [user_id, dispatch, userActivities]);
 
   useEffect(() => {
     //   // props.getUsers();as
     if (!activities) {
       dispatch(activitiesAction.getActivities());
     }
-  }, []);
+  }, [dispatch, activities]);
   const colums = useBreackpoint();
-  /*const transitions = useTransition(acts, act => act.id, {
-    from: { transform: "translate3d(0,-40px,0)", opacity: 0 },
-    enter: { transform: "translate3d(0,0px,0)", opacity: 1 },
-    leave: { transform: "translate3d(0,-40px,0)", opacity: 0 },
-    trail: 55,
-    config: { mass: 1, tension: 210, friction: 20 }
-  });*/
 
   if (activitiesLoading) {
     return <Loading />;
@@ -58,29 +79,7 @@ const CardsContainer = () => {
 
     /* Invercion de matriz */
 
-    console.log(colums);
-    const row = Math.floor(activities.data.length / colums);
-
-    const aux = [];
-    const auxFinal = [];
-    let acts = [];
-    let indice = 0;
-
-    for (let i = 0; row > i; i++) {
-      indice = i * colums;
-      aux.push(activities.data.slice(indice, indice + colums));
-    }
-
-    for (let x = 0; x < aux.length; x++) {
-      for (let y = 0; y < aux[x].length; y++) {
-        if (!auxFinal[y]) auxFinal[y] = [];
-        auxFinal[y][x] = aux[x][y];
-      }
-    }
-
-    for (let x = 0; x < auxFinal.length; x++) {
-      acts = [...acts, ...auxFinal[x]];
-    }
+    const acts = invercionMatriz(activities.data, colums);
 
     return (
       <div className="container mt-4">
@@ -88,18 +87,13 @@ const CardsContainer = () => {
           <Card
             description={<Map activities={activities} />}
             title="Actividades de voluntariado"
-            style={{ flexGrow: 300 }}
+            style={{ flexGrow: 200 }}
           />
-          {/*   <Card
-            description={<VolunteerExperiences activities={activities} />}
-            title="Experiencias de voluntarios"
-            style={{ flexGrow: 250 }}
-          />*/}
+          <VolunteerExperiences />
         </div>
 
         <div className="card-columns">
           {acts.map(item => {
-            console.log("hi", item);
             const isApply =
               userActivities.data.find(activity => activity.id === item.id) ===
               undefined;

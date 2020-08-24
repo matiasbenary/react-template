@@ -22,7 +22,7 @@ const Table = ({ data, columns, title, styles }) => {
     );
 
     return <Export onExport={() => downloadCSV(info)} />;
-  }, []);
+  }, [data]);
 
   return (
     <DataTable

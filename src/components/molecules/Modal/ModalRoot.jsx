@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactModal from 'react-modal';
-import { useSelector, useDispatch } from 'react-redux';
-import { actions } from '../../../store/ducks/modal.duck';
-import modalTypes from '.';
+import React from "react";
+import ReactModal from "react-modal";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../../store/ducks/modal.duck";
+import modalTypes from ".";
 
 const MODAL_TYPES = {
   alert: modalTypes.AlertModal,
   apply: modalTypes.ApplyModal,
   unapply: modalTypes.UnapplyModal,
   hoursLoad: modalTypes.HoursModal,
+  commentary: modalTypes.CommentaryModal
 };
 
 const ModalRoot = () => {
-  const { modalType, modalProps } = useSelector((state) => state.modal);
+  const { modalType, modalProps } = useSelector(state => state.modal);
   const dispatch = useDispatch();
-
 
   if (!modalType) {
     return null;

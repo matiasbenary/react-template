@@ -1,3 +1,8 @@
+.cardCommentary {
+  overflow-y: scroll;
+  height: 250px;
+}
+
 .commentContainer {
   margin-top: 0.25rem !important;
 }
@@ -5,6 +10,8 @@
 .comment {
   font-size: 13px;
   margin: 0;
+  border-left: solid 2px black;
+  padding-left: 5px;
 }
 .quote {
   font-size: 11px;

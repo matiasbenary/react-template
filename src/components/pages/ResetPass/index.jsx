@@ -66,7 +66,7 @@ const ResetPass = () => {
         message: "Email o url invalido"
       });
     }
-  }, [error]);
+  }, [error, formik]);
 
   return (
     <form onSubmit={formik.handleSubmit}>

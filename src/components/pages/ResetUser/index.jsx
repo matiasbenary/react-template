@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { createSelector } from 'reselect';
-import Loader from 'react-spinners/PropagateLoader';
-import { Link } from 'react-router-dom';
-import { actions } from '../../../store/ducks/auth.duck';
-import WarningSpan from '../../molecules/WarningSpan';
-import SuccessSpan from '../../molecules/SuccessSpan';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { createSelector } from "reselect";
+import Loader from "react-spinners/PropagateLoader";
+import { Link } from "react-router-dom";
+import { actions } from "../../../store/ducks/auth.duck";
+import WarningSpan from "../../molecules/WarningSpan";
+import SuccessSpan from "../../molecules/SuccessSpan";
 
-const loadingReset = (state) => state.auth.loadingResetMail;
-const msjReset = (state) => state.auth.msjResetMail;
-const errorReset = (state) => state.auth.errorResetMail;
+const loadingReset = state => state.auth.loadingResetMail;
+const msjReset = state => state.auth.msjResetMail;
+const errorReset = state => state.auth.errorResetMail;
 
-const loadingSelector = () => createSelector(loadingReset, (loading) => loading);
+const loadingSelector = () => createSelector(loadingReset, loading => loading);
 
-const msjSelector = () => createSelector(msjReset, (msj) => msj);
+const msjSelector = () => createSelector(msjReset, msj => msj);
 
-const errorSelector = () => createSelector(errorReset, (error) => error);
+const errorSelector = () => createSelector(errorReset, error => error);
 
 const Reset = () => {
   const loading = useSelector(loadingSelector());
@@ -28,26 +28,26 @@ const Reset = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: ""
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email('Email Invalido')
-        .required('Requerido'),
+        .email("Email Invalido")
+        .required("Requerido")
     }),
-    onSubmit: (values) => {
+    onSubmit: values => {
       dispatch(actions.resetSendMail(values));
-    },
+    }
   });
 
   useEffect(() => {
     if (error) {
       formik.setErrors({
         ...formik.errors,
-        message: 'Usuario incorrecto',
+        message: "Usuario incorrecto"
       });
     }
-  }, [error]);
+  }, [error, formik]);
   return (
     <form onSubmit={formik.handleSubmit}>
       <span className="login__label">
@@ -72,7 +72,7 @@ const Reset = () => {
             type="email"
             name="email"
             className="login__input"
-            {...formik.getFieldProps('email')}
+            {...formik.getFieldProps("email")}
           />
 
           {formik.touched.email && formik.errors.email ? (
@@ -84,18 +84,18 @@ const Reset = () => {
         {loading ? (
           <div
             style={{
-              height: '38px',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              height: "38px",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             <Loader size={15} color="#007bff" loading />
           </div>
         ) : !error && msj ? (
           <Link className="btn btn-primary btn__login" to="/">
-              Ir al login
+            Ir al login
           </Link>
         ) : (
           <button className="btn btn-primary btn__login" type="submit">
