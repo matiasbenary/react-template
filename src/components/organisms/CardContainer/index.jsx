@@ -15,8 +15,9 @@ import { useBreackpoint } from "../../../utils/hooks/useBreackpoin";
 const invercionMatriz = (data, columns) => {
   if (data.length < columns) return data;
 
-  const row = Math.floor(data.length / columns);
+  const row = Math.ceil(data.length / columns);
 
+  console.log(row);
   const aux = [];
   const auxFinal = [];
   let acts = [];
