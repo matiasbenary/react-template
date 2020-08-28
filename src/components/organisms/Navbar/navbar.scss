@@ -1,16 +1,13 @@
-@import '../../../scss/variables';
+@import "../../../scss/variables";
 
-.navbar{
-    padding: 0.5rem 5rem;
+.navbar {
+  padding: 0.5rem 5rem;
 
-    img{
-        width: 100px;
-    }
+  img {
+    width: 100px;
+  }
 }
 
-
-
-
-
-
-
+.dropdown-menu {
+  width: 300px;
+}

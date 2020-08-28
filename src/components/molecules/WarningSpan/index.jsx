@@ -1,7 +1,7 @@
-import React from 'react';
-import { TiWarningOutline } from 'react-icons/ti';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from "react";
+import { TiWarningOutline } from "react-icons/ti";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Div = styled.div`
   color: hsl(344, 59%, 52%);
@@ -16,15 +16,15 @@ const Div = styled.div`
   }
 `;
 
-const index = ({ msj }) => (
+const WarningSpan = ({ msj }) => (
   <Div>
     <TiWarningOutline className="icon" />
     <span className="msj">{msj}</span>
   </Div>
 );
 
-index.propTypes = {
-  msj: PropTypes.string,
+WarningSpan.propTypes = {
+  msj: PropTypes.string
 };
 
-export default index;
+export default WarningSpan;

@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import Card from "../../molecules/Card";
-import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
-import { actions as activitiesAction } from "../../../store/ducks/activities.duck";
-import ActivitiesButtons from "../../molecules/ActivitiesButton";
-import Loading from "../../molecules/Loading";
-import Detail from "../../molecules/Detail";
-import Map from "../../molecules/Map";
-import VolunteerExperiences from "../../molecules/VolunteerExperiences";
+import Card from "../../../molecules/Card";
+import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
+import { actions as activitiesAction } from "../../../../store/ducks/activities.duck";
+import ActivitiesButtons from "../../../molecules/ActivitiesButton";
+import Loading from "../../../molecules/Loading";
+import Detail from "../../../molecules/Detail";
+import Map from "../../../molecules/Map";
+
+import VolunteerExperiences from "../../../molecules/VolunteerExperiences";
 import "./cardContainer.scss";
-import { useBreackpoint } from "../../../utils/hooks/useBreackpoin";
+import { useBreackpoint } from "../../../../utils/hooks/useBreackpoint";
 
 const invercionMatriz = (data, columns) => {
   if (data.length < columns) return data;
 
   const row = Math.ceil(data.length / columns);
 
-  console.log(row);
   const aux = [];
   const auxFinal = [];
   let acts = [];

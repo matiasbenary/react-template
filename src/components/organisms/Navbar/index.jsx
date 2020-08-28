@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import config from "../../../config";
 import { actions } from "../../../store/ducks/auth.duck";
+import { BsPerson } from "react-icons/bs";
 
 const Img = styled.img`
   width: ${props => props.width || "200px"};
 `;
 
-const Navbar = ({ email }) => {
+const Navbar = ({ name }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const node = useRef();
+
+  const handleClick = e => {
+    if (node.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -52,13 +72,16 @@ const Navbar = ({ email }) => {
         <span className="navbar-toggler-icon" />
       </button> */}
 
-        <ul className="nav navbar-nav flex-row justify-content-between">
+        <ul
+          className="nav navbar-nav flex-row justify-content-between"
+          ref={node}
+        >
           <li className="nav-item order-2 order-md-1">
             <div>
-              <div classname="nav-link" title="settings">
-                <i classname="fa fa-cog fa-fw fa-lg"></i>
+              <div className="nav-link" title="settings">
+                <i className="fa fa-cog fa-fw fa-lg"></i>
               </div>
-              <i classname="fa fa-cog fa-fw fa-lg"></i>
+              <i className="fa fa-cog fa-fw fa-lg"></i>
             </div>
           </li>
           <li className="dropdown order-1">
@@ -66,18 +89,22 @@ const Navbar = ({ email }) => {
               type="button"
               id="dropdownMenu1"
               data-toggle="dropdown"
-              className="btn btn-link dropdown-toggle"
+              className="btn btn-link dropdown-toggle d-flex align-items-center"
               onClick={toogleMenu}
             >
-              {email}
+              <BsPerson className="mr-1" /> {name}
               <span className="caret" />
             </button>
             <ul
-              className={`dropdown-menu dropdown-menu-right mt-2 ${
+              className={`dropdown-menu dropdown-menu-right mt-2 px-4 ${
                 isOpen ? "show" : null
               }`}
             >
-              <li className="px-5 ">
+              <li className="pt-2 pb-1">
+                <Link to="/security">Cambiar contraseña</Link>
+              </li>
+              <hr />
+              <li className="pt-2 pb-1">
                 <button
                   type="submit"
                   className="btn btn-primary btn-block"

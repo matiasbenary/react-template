@@ -3,13 +3,13 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import moment from "moment";
-import Card from "../../molecules/Card";
-import { actions } from "../../../store/ducks/activity/getActivity.duck";
-import ActivitiesButtons from "../../molecules/ActivitiesButton";
-import Detail from "../../molecules/Detail";
-import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
-import useGetUserId from "../../../hooks/api/useGetUserId";
-import Loading from "../../molecules/Loading";
+import Card from "../../../molecules/Card";
+import { actions } from "../../../../store/ducks/activity/getActivity.duck";
+import ActivitiesButtons from "../../../molecules/ActivitiesButton";
+import Detail from "../../../molecules/Detail";
+import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
+import useGetUserId from "../../../../hooks/api/useGetUserId";
+import Loading from "../../../molecules/Loading";
 
 const activitySelector = createSelector(
   state => state.activity.activity,

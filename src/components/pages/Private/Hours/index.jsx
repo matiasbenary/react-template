@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { actions as userActivitiesHoursAction } from "../../../store/ducks/user/activitiesHours.duck";
-import Loading from "../../molecules/Loading";
-import Table from "../../molecules/Table/Table";
-import Pagination from "../../molecules/Pagination";
+import { actions as userActivitiesHoursAction } from "../../../../store/ducks/user/activitiesHours.duck";
+import Loading from "../../../molecules/Loading";
+import Table from "../../../molecules/Table/Table";
+import Pagination from "../../../molecules/Pagination";
 
 const Hours = () => {
   const dispatch = useDispatch();

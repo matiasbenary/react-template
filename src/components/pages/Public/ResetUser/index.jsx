@@ -2,32 +2,41 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { createSelector } from "reselect";
 import Loader from "react-spinners/PropagateLoader";
 import { Link } from "react-router-dom";
-import { actions } from "../../../store/ducks/auth.duck";
-import WarningSpan from "../../molecules/WarningSpan";
+import { actions } from "../../../../store/ducks/auth.duck";
+import WarningSpan from "../../../molecules/WarningSpan";
+import SuccessSpan from "../../../molecules/SuccessSpan";
 
-const Login = () => {
-  const { loading, error } = useSelector(state => ({
-    loading: state.auth.loading,
-    error: state.auth.error
-  }));
+const loadingReset = state => state.auth.loadingResetMail;
+const msjReset = state => state.auth.msjResetMail;
+const errorReset = state => state.auth.errorResetMail;
+
+const loadingSelector = () => createSelector(loadingReset, loading => loading);
+
+const msjSelector = () => createSelector(msjReset, msj => msj);
+
+const errorSelector = () => createSelector(errorReset, error => error);
+
+const Reset = () => {
+  const loading = useSelector(loadingSelector());
+  const msj = useSelector(msjSelector());
+  const error = useSelector(errorSelector());
 
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: ""
+      email: ""
     },
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Email Invalido")
-        .required("Requerido"),
-      password: Yup.string().required("Requerido")
+        .required("Requerido")
     }),
     onSubmit: values => {
-      dispatch(actions.login(values));
+      dispatch(actions.resetSendMail(values));
     }
   });
 
@@ -35,19 +44,26 @@ const Login = () => {
     if (error) {
       formik.setErrors({
         ...formik.errors,
-        message: "Usuario o Clave incorrecta"
+        message: "Usuario incorrecto"
       });
     }
   }, [error, formik]);
-
   return (
     <form onSubmit={formik.handleSubmit}>
-      <span className="login__title_text">Inicia sesión en tu cuenta</span>
-      {formik.errors.message ? (
-        <WarningSpan msj={formik.errors.message} />
-      ) : null}
+      <span className="login__label">
+        Introduce la dirección de correo electrónico asociada a tu cuenta y te
+        enviaremos un vínculo para restablecer tu contraseña.
+      </span>
+      <br />
       <div className="login__inputs">
         <div className="login__input_group">
+          {formik.errors.message ? (
+            <WarningSpan msj={formik.errors.message} />
+          ) : null}
+
+          {!error && msj ? (
+            <SuccessSpan msj="¡Se ha enviado un link a tu mail para restablecer tu contraseña!" />
+          ) : null}
           <label htmlFor="username" className="login__label">
             Correo electrónico
           </label>
@@ -58,28 +74,10 @@ const Login = () => {
             className="login__input"
             {...formik.getFieldProps("email")}
           />
+
           {formik.touched.email && formik.errors.email ? (
             <WarningSpan msj={formik.errors.email} />
           ) : null}
-        </div>
-        <div className="login__input_group">
-          <label htmlFor="password" className="login__label">
-            <span>Contraseña </span>
-            <Link to="reset">¿No recuerdas la contraseña?</Link>
-          </label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className="login__input"
-            {...formik.getFieldProps("password")}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <WarningSpan msj={formik.errors.password} />
-          ) : null}
-          <div className="login__label">
-            <Link to="register">¿Todavía no tenés cuenta? Registrarme</Link>
-          </div>
         </div>
       </div>
       <div className="login__buttons">
@@ -95,6 +93,10 @@ const Login = () => {
           >
             <Loader size={15} color="#007bff" loading />
           </div>
+        ) : !error && msj ? (
+          <Link className="btn btn-primary btn__login" to="/">
+            Ir al login
+          </Link>
         ) : (
           <button className="btn btn-primary btn__login" type="submit">
             Continuar
@@ -105,6 +107,6 @@ const Login = () => {
   );
 };
 
-Login.propTypes = {};
+Reset.propTypes = {};
 
-export default Login;
+export default Reset;

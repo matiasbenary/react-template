@@ -4,10 +4,10 @@ import "./auth.scss";
 import styled from "styled-components";
 import config from "../../config";
 
-import ResetUser from "../pages/ResetUser";
-import Login2 from "../pages/Login2";
-import Register from "../pages/Register";
-import ResetPass from "../pages/ResetPass";
+import ResetUser from "../pages/Public/ResetUser";
+import Login from "../pages/Public/Login";
+import Register from "../pages/Public/Register";
+import ResetPass from "../pages/Public/ResetPass";
 
 const Img = styled.img`
   width: ${props => props.width || "100%"};
@@ -27,7 +27,7 @@ const Main = () => (
         <Route exact path="/reset" component={ResetUser} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/password/reset/:id" component={ResetPass} />
-        <Route path="/" component={Login2} />
+        <Route path="/" component={Login} />
       </Switch>
     </div>
   </div>

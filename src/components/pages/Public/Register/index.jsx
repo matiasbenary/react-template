@@ -1,37 +1,37 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
-import Loader from 'react-spinners/PropagateLoader';
-import { actions } from '../../../store/ducks/auth.duck';
-import WarningSpan from '../../molecules/WarningSpan';
-import SuccessSpan from '../../molecules/SuccessSpan';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import Loader from "react-spinners/PropagateLoader";
+import { actions } from "../../../../store/ducks/auth.duck";
+import WarningSpan from "../../../molecules/WarningSpan";
+import SuccessSpan from "../../../molecules/SuccessSpan";
 
 const Schema = Yup.object({
   email: Yup.string()
-    .email('Email Invalido')
-    .required('Requerido'),
-  name: Yup.string().required('Requerido'),
+    .email("Email Invalido")
+    .required("Requerido"),
+  name: Yup.string().required("Requerido")
 });
 
 const Register = () => {
-  const { loading, error, msj } = useSelector((state) => ({
+  const { loading, error, msj } = useSelector(state => ({
     loading: state.auth.loadingRegister,
     error: state.auth.errorRegister,
-    msj: state.auth.msjRegister,
+    msj: state.auth.msjRegister
   }));
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      bussiness_name: '',
+      name: "",
+      email: "",
+      bussiness_name: ""
       // type: 'persona',
     },
     validationSchema: Schema,
-    onSubmit: (values) => {
+    onSubmit: values => {
       dispatch(actions.register(values));
-    },
+    }
   });
 
   return (
@@ -54,7 +54,7 @@ const Register = () => {
             type="email"
             name="email"
             className="login__input"
-            {...formik.getFieldProps('email')}
+            {...formik.getFieldProps("email")}
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ const Register = () => {
           type="text"
           name="name"
           className="login__input"
-          {...formik.getFieldProps('name')}
+          {...formik.getFieldProps("name")}
         />
       </div>
       {formik.touched.name && formik.errors.name ? (
@@ -86,7 +86,7 @@ const Register = () => {
           type="text"
           name="bussiness_name"
           className="login__input"
-          {...formik.getFieldProps('bussiness_name')}
+          {...formik.getFieldProps("bussiness_name")}
         />
       </div>
 
@@ -107,11 +107,11 @@ const Register = () => {
       {loading ? (
         <div
           style={{
-            height: '38px',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            height: "38px",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
           <Loader size={15} color="#007bff" loading />

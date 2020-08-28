@@ -6,9 +6,10 @@ import { createSelector } from "reselect";
 import Loader from "react-spinners/PropagateLoader";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { actions } from "../../../store/ducks/auth.duck";
-import WarningSpan from "../../molecules/WarningSpan";
-import SuccessSpan from "../../molecules/SuccessSpan";
+import { actions } from "../../../../store/ducks/auth.duck";
+//import { actions } from "../../../../store/ducks/auth.duck";
+import WarningSpan from "../../../molecules/WarningSpan";
+import SuccessSpan from "../../../molecules/SuccessSpan";
 
 const Schema = Yup.object({
   email: Yup.string()

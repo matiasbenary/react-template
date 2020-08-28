@@ -1,7 +1,7 @@
-import React from 'react';
-import { TiTickOutline } from 'react-icons/ti';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from "react";
+import { TiTickOutline } from "react-icons/ti";
+import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Div = styled.div`
   color: hsl(134, 61%, 41%);
@@ -16,15 +16,15 @@ const Div = styled.div`
   }
 `;
 
-const index = ({ msj }) => (
+const SuccessSpan = ({ msj }) => (
   <Div>
     <TiTickOutline className="icon" />
     <span className="msj">{msj}</span>
   </Div>
 );
 
-index.propTypes = {
-  msj: PropTypes.string,
+SuccessSpan.propTypes = {
+  msj: PropTypes.string
 };
 
-export default index;
+export default SuccessSpan;

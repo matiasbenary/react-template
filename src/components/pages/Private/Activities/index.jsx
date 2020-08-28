@@ -2,10 +2,10 @@ import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { MdAddAlarm, MdComment } from "react-icons/md";
-import { actions as modalAction } from "../../../store/ducks/modal.duck";
-import { actions as userActivitiesAction } from "../../../store/ducks/user/activities.duck";
-import Loading from "../../molecules/Loading";
-import Table from "../../molecules/Table";
+import { actions as modalAction } from "../../../../store/ducks/modal.duck";
+import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
+import Loading from "../../../molecules/Loading";
+import Table from "../../../molecules/Table";
 
 const Activities = () => {
   const dispatch = useDispatch();
