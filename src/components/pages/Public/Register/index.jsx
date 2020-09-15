@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 import { FaAsterisk, FaCheck, FaExclamationCircle } from "react-icons/fa";
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Email Invalido")
-    .required("Requerido"),
-  name: Yup.string().required("Requerido")
+  email: Yup.string().email("Email Invalido").required("Requerido"),
+  name: Yup.string().required("Requerido"),
 });
 
 const stateError = {
   email: false,
-  name: false
+  name: false,
 };
 
 const Register = () => {
@@ -33,7 +31,7 @@ const Register = () => {
       await schema.validate({ email, name }, { abortEarly: false });
     } catch (err) {
       let errorList = {};
-      err.inner.forEach(e => {
+      err.inner.forEach((e) => {
         if (e.path === "email") {
           errorList = { ...errorList, email: e.message };
         } else if (e.path === "name") {
@@ -48,7 +46,7 @@ const Register = () => {
     const payload = {
       email,
       name,
-      bussiness_name: business
+      bussiness_name: business,
     };
     try {
       await apiCall("sendMailResgister", payload, "POST");
@@ -75,7 +73,7 @@ const Register = () => {
           type="text"
           className={`input-text ${error.email && "input-text--danger"}`}
           placeholder="usuario@email.com"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           value={email}
           name="email"
         />
@@ -88,7 +86,7 @@ const Register = () => {
           type="text"
           className={`input-text ${error.name && "input-text--danger"}`}
           placeholder="Ej: Juan Peréz"
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           value={name}
           name="name"
         />
@@ -101,7 +99,7 @@ const Register = () => {
           type="text"
           className="input-text"
           placeholder="Ej: Civic House"
-          onChange={e => setBusiness(e.target.value)}
+          onChange={(e) => setBusiness(e.target.value)}
           value={business}
           name="business"
         />
@@ -110,7 +108,8 @@ const Register = () => {
           <div className="d-flex mt-2">
             <FaCheck className="mr-2 icon icon--ok"></FaCheck>
             <span className="msj msj--ok">
-              Te hemos enviado un correo de confirmación.
+              Un administrador revisará tu registro y te enviaremos un mail para
+              confirmar tu usuario.
             </span>
           </div>
         )}
