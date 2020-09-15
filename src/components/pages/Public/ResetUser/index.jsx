@@ -1,112 +1,89 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
+import React, { useState } from 'react'
 import * as Yup from "yup";
-import { createSelector } from "reselect";
-import Loader from "react-spinners/PropagateLoader";
-import { Link } from "react-router-dom";
-import { actions } from "../../../../store/ducks/auth.duck";
-import WarningSpan from "../../../molecules/WarningSpan";
-import SuccessSpan from "../../../molecules/SuccessSpan";
+import { apiCall } from "../../../../crud/api.crud";
+import { Link } from 'react-router-dom';
+import { FaCheck } from 'react-icons/fa';
 
-const loadingReset = state => state.auth.loadingResetMail;
-const msjReset = state => state.auth.msjResetMail;
-const errorReset = state => state.auth.errorResetMail;
+const schema = Yup.string()
+  .email()
+  .required();
 
-const loadingSelector = () => createSelector(loadingReset, loading => loading);
+const ResetUser = () => {
+  const [email,setEmail]= useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(false);
 
-const msjSelector = () => createSelector(msjReset, msj => msj);
-
-const errorSelector = () => createSelector(errorReset, error => error);
-
-const Reset = () => {
-  const loading = useSelector(loadingSelector());
-  const msj = useSelector(msjSelector());
-  const error = useSelector(errorSelector());
-
-  const dispatch = useDispatch();
-
-  const formik = useFormik({
-    initialValues: {
-      email: ""
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Email Invalido")
-        .required("Requerido")
-    }),
-    onSubmit: values => {
-      dispatch(actions.resetSendMail(values));
+  const handleOnKeyDown = e => {
+    if (e.keyCode === 13) {
+      sendEmailReset();
     }
-  });
+  };
 
-  useEffect(() => {
-    if (error) {
-      formik.setErrors({
-        ...formik.errors,
-        message: "Usuario incorrecto"
-      });
+  const sendEmailReset = async () => {
+    setLoading(true);
+    setError(false);
+    const valid = await schema.isValid(email);
+    if (!valid) {
+      setLoading(false);
+      setError(true);
+      return;
     }
-  }, [error, formik]);
+
+    const payload = {
+      email
+    }
+    try{
+      await apiCall(`sendResetLinkEmail`, payload, "POST");
+      setStatus(true);
+    }catch(err){
+      setError(true);
+    }finally{
+      setLoading(false);
+    }
+
+
+  };
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <span className="login__label">
-        Introduce la dirección de correo electrónico asociada a tu cuenta y te
-        enviaremos un vínculo para restablecer tu contraseña.
-      </span>
-      <br />
-      <div className="login__inputs">
-        <div className="login__input_group">
-          {formik.errors.message ? (
-            <WarningSpan msj={formik.errors.message} />
-          ) : null}
+    <>
+      <h5 className="mt-2 mb-4">Introduce tu correo electrónico y te enviaremos un vínculo para restablecer tu contraseña</h5>
+      <div className="mb-5 col-12 p-0">
+        <label className="pl-2">Correo electrónico </label>
+        <input
+          type="text"
+          className={`input-text ${error && "input-text--danger"}`}
+          placeholder="usuario@email.com"
+          onChange={e => setEmail(e.target.value)}
+          onKeyDown={handleOnKeyDown}
+          value={email}
+        />
 
-          {!error && msj ? (
-            <SuccessSpan msj="¡Se ha enviado un link a tu mail para restablecer tu contraseña!" />
-          ) : null}
-          <label htmlFor="username" className="login__label">
-            Correo electrónico
-          </label>
-          <input
-            id="username"
-            type="email"
-            name="email"
-            className="login__input"
-            {...formik.getFieldProps("email")}
-          />
-
-          {formik.touched.email && formik.errors.email ? (
-            <WarningSpan msj={formik.errors.email} />
-          ) : null}
-        </div>
-      </div>
-      <div className="login__buttons">
-        {loading ? (
-          <div
-            style={{
-              height: "38px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Loader size={15} color="#007bff" loading />
+        {error && (
+          <span className="span span--error">Revisa tu correo</span>
+        )}
+        {status && (
+          <div className="d-flex mt-2">
+            <FaCheck className="mr-2 icon icon--ok"></FaCheck>
+<span className="msj msj--ok">Se ha enviado un link a tu correo para
+          restablecer tu contraseña!</span>
           </div>
-        ) : !error && msj ? (
-          <Link className="btn btn-primary btn__login" to="/">
-            Ir al login
-          </Link>
-        ) : (
-          <button className="btn btn-primary btn__login" type="submit">
-            Continuar
-          </button>
         )}
       </div>
-    </form>
-  );
-};
 
-Reset.propTypes = {};
+      <div className="d-flex justify-content-around w-100">
+        <Link
+          to="/"
+          className="button button--white mt-3 mb-5"
+        >
+          Volver
+        </Link>
+        <button className="button mt-3 mb-5" onClick={sendEmailReset}>
+        {loading ? "Validando..." : "Siguiente"}
+        </button>
+      </div>
 
-export default Reset;
+    </>
+  )
+}
+
+export default ResetUser

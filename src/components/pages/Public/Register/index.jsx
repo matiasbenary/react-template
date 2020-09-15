@@ -1,129 +1,137 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { useFormik } from "formik";
-import Loader from "react-spinners/PropagateLoader";
-import { actions } from "../../../../store/ducks/auth.duck";
-import WarningSpan from "../../../molecules/WarningSpan";
-import SuccessSpan from "../../../molecules/SuccessSpan";
+import { apiCall } from "../../../../crud/api.crud";
+import { Link } from "react-router-dom";
+import { FaAsterisk, FaCheck, FaExclamationCircle } from "react-icons/fa";
 
-const Schema = Yup.object({
+const schema = Yup.object().shape({
   email: Yup.string()
     .email("Email Invalido")
     .required("Requerido"),
   name: Yup.string().required("Requerido")
 });
 
-const Register = () => {
-  const { loading, error, msj } = useSelector(state => ({
-    loading: state.auth.loadingRegister,
-    error: state.auth.errorRegister,
-    msj: state.auth.msjRegister
-  }));
-  const dispatch = useDispatch();
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      bussiness_name: ""
-      // type: 'persona',
-    },
-    validationSchema: Schema,
-    onSubmit: values => {
-      dispatch(actions.register(values));
-    }
-  });
+const stateError = {
+  email: false,
+  name: false
+};
 
+const Register = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [business, setBusiness] = useState("");
+  const [error, setError] = useState(stateError);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(false);
+
+  const resetPassword = async () => {
+    setLoading(true);
+    setError(stateError);
+    setStatus(false);
+
+    try {
+      await schema.validate({ email, name }, { abortEarly: false });
+    } catch (err) {
+      let errorList = {};
+      err.inner.forEach(e => {
+        if (e.path === "email") {
+          errorList = { ...errorList, email: e.message };
+        } else if (e.path === "name") {
+          errorList = { ...errorList, password: e.message };
+        }
+      });
+      setError(errorList);
+      setLoading(false);
+      return;
+    }
+
+    const payload = {
+      email,
+      name,
+      bussiness_name: business
+    };
+    try {
+      await apiCall("sendMailResgister", payload, "POST");
+      setStatus(true);
+      setError(stateError);
+    } catch (err) {
+      setError({ ...stateError, server: true });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <span className="login__label">
-        Introduce la dirección de correo electrónico asociada a tu cuenta y te
-        enviaremos un vínculo para restablecer tu contraseña.
-      </span>
-      {!error && msj ? (
-        <SuccessSpan msj="¡Se ha enviado un caso,en breve te enviaremos un email para confirmar el usuario" />
-      ) : null}
-      <br />
-      <div className="login__inputs">
-        <div className="login__input_group">
-          <label htmlFor="username" className="login__label">
-            Correo electrónico
-          </label>
-          <input
-            id="username"
-            type="email"
-            name="email"
-            className="login__input"
-            {...formik.getFieldProps("email")}
-          />
+    <>
+      <h5 className="mt-2 mb-4">Restablecer contraseña</h5>
+      <div className="col-12 p-0">
+        <div className={`d-flex mb-2 ${!status && "mb-4"}`}>
+          <FaAsterisk className="icon-required"></FaAsterisk>
+          <span className="span span--error">Campos obligatorios</span>
         </div>
-      </div>
-      {formik.touched.email && formik.errors.email ? (
-        <WarningSpan msj={formik.errors.email} />
-      ) : null}
-      <div className="login__input_group">
-        <label htmlFor="name" className="login__label">
-          Nombre completo
+        <label className="pl-2 d-flex justify-content-between align-items-end">
+          Correo electrónico <FaAsterisk className="icon-required"></FaAsterisk>
         </label>
         <input
-          id="name"
           type="text"
-          name="name"
-          className="login__input"
-          {...formik.getFieldProps("name")}
+          className={`input-text ${error.email && "input-text--danger"}`}
+          placeholder="usuario@email.com"
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+          name="email"
         />
-      </div>
-      {formik.touched.name && formik.errors.name ? (
-        <WarningSpan msj={formik.errors.name} />
-      ) : null}
+        {error.email && <span className="span span--error">{error.email}</span>}
 
-      <div className="login__input_group">
-        <label htmlFor="name" className="login__label">
+        <label className="pl-2 d-flex justify-content-between align-items-end mt-3">
+          Nombre y Apellido <FaAsterisk className="icon-required"></FaAsterisk>
+        </label>
+        <input
+          type="text"
+          className={`input-text ${error.name && "input-text--danger"}`}
+          placeholder="Ej: Juan Peréz"
+          onChange={e => setName(e.target.value)}
+          value={name}
+          name="name"
+        />
+        {error.email && <span className="span span--error">{error.email}</span>}
+
+        <label className="pl-2 d-flex justify-content-between align-items-end mt-3">
           Nombre organización (Opcional)
         </label>
         <input
-          id="bussiness_name"
           type="text"
-          name="bussiness_name"
-          className="login__input"
-          {...formik.getFieldProps("bussiness_name")}
+          className="input-text"
+          placeholder="Ej: Civic House"
+          onChange={e => setBusiness(e.target.value)}
+          value={business}
+          name="business"
         />
+
+        {status && (
+          <div className="d-flex mt-2">
+            <FaCheck className="mr-2 icon icon--ok"></FaCheck>
+            <span className="msj msj--ok">
+              Te hemos enviado un correo de confirmación.
+            </span>
+          </div>
+        )}
+
+        {error.server && (
+          <div className="d-flex mt-2">
+            <FaExclamationCircle className="mr-2 icon icon--error"></FaExclamationCircle>
+            <span className="msj msj--error">Error</span>
+          </div>
+        )}
       </div>
 
-      {/* <div className="login__input_group">
-        <div className="form-group">
-          <select
-            className="form-control"
-            id="exampleFormControlSelect1"
-            name="type"
-            {...formik.getFieldProps('type')}
-          >
-            <option value="persona">Soy una persona</option>
-            <option value="organizacion">Soy una organización</option>
-          </select>
-        </div>
-      </div> */}
-
-      {loading ? (
-        <div
-          style={{
-            height: "38px",
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <Loader size={15} color="#007bff" loading />
-        </div>
-      ) : (
-        <div className="login__buttons">
-          <button className="btn btn-primary btn__login" type="submit">
-            Continuar
-          </button>
-        </div>
-      )}
-    </form>
+      <div className="d-flex justify-content-around w-100 mt-4">
+        <Link to="/" className="button button--white">
+          Ir al login
+        </Link>
+        <button className="button" onClick={resetPassword}>
+          {loading ? "Validando..." : "Siguiente"}
+        </button>
+      </div>
+    </>
   );
 };
 

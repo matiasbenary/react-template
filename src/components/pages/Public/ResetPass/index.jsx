@@ -1,159 +1,191 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useFormik } from "formik";
+import React, { useState } from "react";
 import * as Yup from "yup";
-import { createSelector } from "reselect";
-import Loader from "react-spinners/PropagateLoader";
-import { useParams } from "react-router";
-import { Link } from "react-router-dom";
-import { actions } from "../../../../store/ducks/auth.duck";
-//import { actions } from "../../../../store/ducks/auth.duck";
-import WarningSpan from "../../../molecules/WarningSpan";
-import SuccessSpan from "../../../molecules/SuccessSpan";
+import { apiCall } from "../../../../crud/api.crud";
+import { Link, useParams } from "react-router-dom";
+import {
+  FaAsterisk,
+  FaCheck,
+  FaExclamationCircle,
+  FaEye,
+  FaEyeSlash
+} from "react-icons/fa";
 
-const Schema = Yup.object({
+const schema = Yup.object().shape({
   email: Yup.string()
-    .email("Email Invalido")
-    .required("Requerido"),
-  password: Yup.string()
-    .required("Requerido")
-    .min(8, "Debe contener al menos 8 caracteres."),
-  password_confirmation: Yup.string()
-    .required("Requerido")
-    .when("password", {
-      is: val => !!(val && val.length > 0),
-      then: Yup.string().oneOf(
-        [Yup.ref("password")],
-        "Debe coincidir con la contraseña"
-      )
-    })
+    .email("Email invalido")
+    .required("Es requerido"),
+  password: Yup.string().required("Es requerido"),
+  passwordConfirmation: Yup.string()
+    .oneOf([Yup.ref("password"), "las contraseñas no coiciden"])
+    .required("Es requerido")
 });
 
-const loadingReset = state => state.auth.loadingReset;
-const msjReset = state => state.auth.msjReset;
-const errorReset = state => state.auth.errorReset;
+const stateError = {
+  email: false,
+  password: false,
+  confirmations: false,
+  server: false
+};
 
-const loadingSelector = () => createSelector(loadingReset, loading => loading);
-
-const msjSelector = () => createSelector(msjReset, msj => msj);
-
-const errorSelector = () => createSelector(errorReset, error => error);
-
-const ResetPass = () => {
+const ResetUser = () => {
+  const [email, setEmail] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [error, setError] = useState(stateError);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(false);
   const { id } = useParams();
-  const loading = useSelector(loadingSelector());
-  const msj = useSelector(msjSelector());
-  const error = useSelector(errorSelector());
 
-  const dispatch = useDispatch();
+  const changeShowPass = () => {
+    setShowPass(!showPass);
+  };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      password_confirmation: ""
-    },
-    validationSchema: Schema,
-    onSubmit: values => {
-      const payload = { ...values, token: id };
-      dispatch(actions.reset(payload));
-    }
-  });
+  const resetPassword = async () => {
+    setLoading(true);
+    setError(stateError);
+    setStatus(false);
 
-  useEffect(() => {
-    if (error) {
-      formik.setErrors({
-        ...formik.errors,
-        message: "Email o url invalido"
+    try {
+      await schema.validate(
+        { email, password, passwordConfirmation },
+        { abortEarly: false }
+      );
+    } catch (err) {
+      let errorList = {};
+      err.inner.forEach(e => {
+        if (e.path === "email") {
+          errorList = { ...errorList, email: e.message };
+        } else if (e.path === "password") {
+          errorList = { ...errorList, password: e.message };
+        } else if (e.path === "passwordConfirmation") {
+          errorList = {
+            ...errorList,
+            confirmations: "Tus contraseñas deben coincidir"
+          };
+        }
       });
+      setError(errorList);
+      setLoading(false);
+      return;
     }
-  }, [error, formik]);
 
+    const payload = {
+      email,
+      password,
+      password_confirmation: passwordConfirmation,
+      token: id
+    };
+
+    try {
+      const response = await apiCall("reset", payload, "POST");
+      setStatus(true);
+      setError(stateError);
+    } catch (err) {
+      setError({ ...stateError, server: true });
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <span className="login__title_text">Restablecer Contraseña</span>
-      <div className="login__inputs">
-        {formik.errors.message ? (
-          <WarningSpan msj={formik.errors.message} />
-        ) : null}
+    <>
+      <h5 className="mt-2 mb-4">Restablecer contraseña</h5>
+      <div className="col-12 p-0">
+        <div className={`d-flex mb-2 ${!status && "mb-4"}`}>
+          <FaAsterisk className="icon-required"></FaAsterisk>
+          <span className="span span--error">Campos obligatorios</span>
+        </div>
+        <label className="pl-2 d-flex justify-content-between align-items-end">
+          Correo electrónico <FaAsterisk className="icon-required"></FaAsterisk>
+        </label>
+        <input
+          type="text"
+          className={`input-text ${error.email && "input-text--danger"}`}
+          placeholder="usuario@email.com"
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+          name="email"
+        />
+        {error.email && <span className="span span--error">{error.email}</span>}
 
-        {!error && msj ? (
-          <SuccessSpan msj="¡Se ha restablecido tu contraseña con exito!" />
-        ) : null}
-        <div className="login__input_group">
-          <label htmlFor="username" className="login__label">
-            Correo electrónico
-          </label>
+        <label className="pl-2 d-flex justify-content-between align-items-end mt-3">
+          Contraseñas <FaAsterisk className="icon-required"></FaAsterisk>
+        </label>
+        <div className="password-wrapper">
           <input
-            id="username"
-            type="email"
-            name="email"
-            className="login__input"
-            {...formik.getFieldProps("email")}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <WarningSpan msj={formik.errors.email} />
-          ) : null}
-        </div>
-        <div className="login__input_group">
-          <label htmlFor="password" className="login__label">
-            <span>Contraseña </span>
-          </label>
-          <input
-            id="password"
-            type="password"
+            type={showPass ? "text" : "password"}
+            className={`input-text ${error.password && "input-text--danger"}`}
+            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+            onChange={e => setPassword(e.target.value)}
+            value={password}
             name="password"
-            className="login__input"
-            {...formik.getFieldProps("password")}
-            autoComplete="new-password"
           />
-          {formik.touched.password && formik.errors.password ? (
-            <WarningSpan msj={formik.errors.password} />
-          ) : null}
+          {showPass ? (
+            <FaEyeSlash
+              className="password-eye"
+              onClick={changeShowPass}
+            ></FaEyeSlash>
+          ) : (
+            <FaEye className="password-eye" onClick={changeShowPass}></FaEye>
+          )}
         </div>
-        <div className="login__input_group">
-          <label htmlFor="password_confirmation" className="login__label">
-            <span>Confirmar Contraseña </span>
-          </label>
+        {error.password && (
+          <span className="span span--error pt-1">{error.password}</span>
+        )}
+
+        <label className="pl-2 d-flex justify-content-between align-items-end mt-1">
+          Confirmar contraseña{" "}
+          <FaAsterisk className="icon-required"></FaAsterisk>
+        </label>
+
+        <div className="password-wrapper">
           <input
-            id="password_confirmation"
-            type="password"
-            name="password_confirmation"
-            className="login__input"
-            {...formik.getFieldProps("password_confirmation")}
-            autoComplete="new-password"
+            type={showPass ? "text" : "password"}
+            className={`input-text ${error.confirmations &&
+              "input-text--danger"}`}
+            placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+            onChange={e => setPasswordConfirmation(e.target.value)}
+            value={passwordConfirmation}
+            name="passwordConfirmation"
           />
-          {formik.touched.password_confirmation &&
-          formik.errors.password_confirmation ? (
-            <WarningSpan msj={formik.errors.password_confirmation} />
-          ) : null}
+          {showPass ? (
+            <FaEyeSlash
+              className="password-eye"
+              onClick={changeShowPass}
+            ></FaEyeSlash>
+          ) : (
+            <FaEye className="password-eye" onClick={changeShowPass}></FaEye>
+          )}
         </div>
-      </div>
-      <div className="login__buttons">
-        {loading ? (
-          <div
-            style={{
-              height: "38px",
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Loader size={15} color="#007bff" loading />
+        {error.confirmations && (
+          <span className="span span--error pt-1">{error.confirmations}</span>
+        )}
+
+        {status && (
+          <div className="d-flex mt-2">
+            <FaCheck className="mr-2 icon icon--ok"></FaCheck>
+            <span className="msj msj--ok">Se restablecio tu contraseña!</span>
           </div>
-        ) : !error && msj ? (
-          <Link className="btn btn-primary btn__login" to="/">
-            Ir a iniciar Sesión
-          </Link>
-        ) : (
-          <button className="btn btn-primary btn__login" type="submit">
-            Continuar
-          </button>
+        )}
+
+        {error.server && (
+          <div className="d-flex mt-2">
+            <FaExclamationCircle className="mr-2 icon icon--error"></FaExclamationCircle>
+            <span className="msj msj--error">Error</span>
+          </div>
         )}
       </div>
-    </form>
+
+      <div className="d-flex justify-content-around w-100 mt-4">
+        <Link to="/" className="button button--white">
+          Ir al login
+        </Link>
+        <button className="button" onClick={resetPassword}>
+          {loading ? "Validando..." : "Siguiente"}
+        </button>
+      </div>
+    </>
   );
 };
 
-export default ResetPass;
+export default ResetUser;

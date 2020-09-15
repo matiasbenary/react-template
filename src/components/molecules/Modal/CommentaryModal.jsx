@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./modal.scss";
-import { useSelector } from "react-redux";
-import { apiCall } from "../../../crud/api.crud";
-import StepOne from "./commentaryModal.jsx/StepOne";
-import StepTwo from "./commentaryModal.jsx/StepTwo";
+import StepOne from "./commentaryModal/StepOne";
+import StepTwo from "./commentaryModal/StepTwo";
 
 const CommentaryModal = ({ closeModal, url, activity_id }) => {
   const [commentary, setCommentary] = useState("");
