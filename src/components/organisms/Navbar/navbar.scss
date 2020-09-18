@@ -8,6 +8,27 @@
   }
 }
 
+.selected{
+  text-decoration: underline;
+}
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .dropdown-menu {
-  width: 300px;
+  width: 150px;
+  padding: 0px
+}
+
+.item-menu{
+  cursor: pointer;
+  color: #000000;
+  &:hover{
+    color: #007bff;
+    text-decoration: underline;
+  }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./navbar.scss";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import config from "../../../config";
@@ -48,13 +48,19 @@ const Navbar = ({ name }) => {
       <div className="container">
         <ul className="nav navbar-nav flex-row justify-content-between">
           <li className="px-3">
-            <Link to="/">Inicio</Link>
+            <NavLink exact activeClassName="selected" to="/">
+              Inicio
+            </NavLink>
           </li>
           <li className="px-3">
-            <Link to="/actividad">Mis actividades</Link>
+            <NavLink activeClassName="selected" to="/actividad">
+              Mis actividades
+            </NavLink>
           </li>
           <li className="px-3">
-            <Link to="/horas">Mis horas</Link>
+            <NavLink activeClassName="selected" to="/horas">
+              Mis horas
+            </NavLink>
           </li>
         </ul>
         <Link to="/" className="navbar-brand">
@@ -75,6 +81,7 @@ const Navbar = ({ name }) => {
         <ul
           className="nav navbar-nav flex-row justify-content-between"
           ref={node}
+
         >
           <li className="nav-item order-2 order-md-1">
             <div>
@@ -96,22 +103,16 @@ const Navbar = ({ name }) => {
               <span className="caret" />
             </button>
             <ul
-              className={`dropdown-menu dropdown-menu-right mt-2 px-4 ${
+              className={`dropdown-menu rounded ${
                 isOpen ? "show" : null
               }`}
             >
-              <li className="pt-2 pb-1">
-                <Link to="/security">Cambiar contraseña</Link>
+              <li className="flex my-2">
+                <Link className="item-menu" to="/security">Mi perfil</Link>
               </li>
-              <hr />
-              <li className="pt-2 pb-1">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                  onClick={logout}
-                >
-                  Cerrar sesión
-                </button>
+              <hr className="m-0"/>
+              <li className="flex my-2">
+                <span className="item-menu" onClick={logout}>Cerrar Sesión</span>
               </li>
             </ul>
           </li>
