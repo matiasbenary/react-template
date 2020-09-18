@@ -7,7 +7,7 @@ import Activities from "../pages/Private/Activities";
 import Hours from "../pages/Private/Hours";
 import ModalRoot from "../molecules/Modal/ModalRoot";
 import DetailActivity from "../pages/Private/DetailActivity";
-import Security from "../pages/Private/Security";
+import Profile from "../pages/Private/Profile";
 
 const Main = () => {
   const user = useSelector(state => state.auth.user);
@@ -18,7 +18,7 @@ const Main = () => {
       <Route exact path="/" component={CardConstainer} />
       <Route exact path="/actividad" component={Activities} />
       <Route exact path="/horas" component={Hours} />
-      <Route exact path="/security" component={Security} />
+      <Route exact path="/profile"><Profile user={user} /></Route>
       <ModalRoot />
     </div>
   );

@@ -50,7 +50,6 @@ export const actions = {
 // Watchers
 
 export function* changePass({ payload }) {
-  console.log("holaa");
   try {
     const results = yield call(apiCall, "changePass", payload, "POST");
     yield put({ type: actionTypes.ChangePassComplete, results });

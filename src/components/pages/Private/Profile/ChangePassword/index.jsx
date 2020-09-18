@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import SuccessSpan from "../../../molecules/SuccessSpan";
-import WarningSpan from "../../../molecules/WarningSpan";
+import SuccessSpan from "../../../../molecules/SuccessSpan";
+import WarningSpan from "../../../../molecules/WarningSpan";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { actions } from "../../../../store/ducks/security/index.duck";
+import { actions } from "../../../../../store/ducks/security/index.duck";
 import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 
@@ -32,7 +32,7 @@ const statusSelector = () => createSelector(status, status => status);
 
 const errorSelector = () => createSelector(error, error => error);
 
-const Security = () => {
+const ChangePassword = () => {
   const { user_id } = useSelector(state => ({
     user_id: state.auth.user.id
   }));
@@ -40,7 +40,6 @@ const Security = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("hola");
     dispatch(actions.clear());
   }, []);
 
@@ -131,4 +130,4 @@ const Security = () => {
   );
 };
 
-export default Security;
+export default ChangePassword;

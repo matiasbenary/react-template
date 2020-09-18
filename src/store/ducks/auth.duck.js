@@ -15,7 +15,13 @@ export const actionTypes = {
   ResetError: "[AUTH] RESET ERROR",
   RegisterStart: "[AUTH] REGISTER START",
   RegisterComplete: "[AUTH] REGISTER COMPLETE",
-  RegisterError: "[AUTH] REGISTER ERROR"
+  RegisterError: "[AUTH] REGISTER ERROR",
+  ProfileChangeStart: "[AUTH] PROFILE CHANGE START",
+  ProfileChangeComplete: "[AUTH] PROFILE CHANGE COMPLETE",
+  ProfileChangeError: "[AUTH] PROFILE CHANGE ERROR",
+  OdsChangeStart: "[AUTH] ODS CHANGE START",
+  OdsChangeComplete: "[AUTH] ODS CHANGE COMPLETE",
+  OdsChangeError: "[AUTH] ODS CHANGE ERROR",
 };
 
 const initialAuthState = {
@@ -148,6 +154,52 @@ export const reducer = (state = initialAuthState, action) => {
         msjRegister: "No se encontro el usuario"
       };
     }
+    case actionTypes.ProfileChangeStart: {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    }
+    case actionTypes.ProfileChangeComplete: {
+      const user = action.data;
+      return {
+        ...state,
+        loading: false,
+        user,
+        error: null
+      };
+    }
+    case actionTypes.ProfileChangeError: {
+      return {
+        ...state,
+        loading: false,
+        error: true
+      };
+    }
+    case actionTypes.OdsChangeStart: {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    }
+    case actionTypes.OdsChangeComplete: {
+      const user = action.data;
+      return {
+        ...state,
+        loading: false,
+        user,
+        error: null
+      };
+    }
+    case actionTypes.OdsChangeError: {
+      return {
+        ...state,
+        loading: false,
+        error: true
+      };
+    }
     default:
       return state;
   }
@@ -162,7 +214,9 @@ export const actions = {
     payload: email
   }),
   reset: payload => ({ type: actionTypes.ResetStart, payload }),
-  register: payload => ({ type: actionTypes.RegisterStart, payload })
+  register: payload => ({ type: actionTypes.RegisterStart, payload }),
+  chageProfile: payload => ({ type: actionTypes.ProfileChangeStart,payload}),
+  chageOds: payload => ({ type: actionTypes.OdsChangeStart,payload})
 };
 // Watchers
 
@@ -218,6 +272,28 @@ export function* registerStart({ payload }) {
   }
 }
 
+export function* chageProfile({payload}){
+  try {
+    const results = yield call(apiCall, "profile", payload, "POST");
+    const data = results.data.data[0];
+    yield call(saveUser, data);
+    yield put({ type: actionTypes.ProfileChangeComplete, data });
+  } catch (error) {
+    yield put({ type: actionTypes.ProfileChangeError});
+  }
+}
+
+export function* chageOds({payload}){
+  try {
+    const results = yield call(apiCall, "ods", payload, "POST");
+    const data = results.data.data[0];
+    yield call(saveUser, data);
+    yield put({ type: actionTypes.OdsChangeComplete, data });
+  } catch (error) {
+    yield put({ type: actionTypes.OdsChangeError});
+  }
+}
+
 // Watchers
 
 export function* saga() {
@@ -226,4 +302,6 @@ export function* saga() {
   yield takeLatest(actionTypes.ResetSendMailStart, sendEmailReset);
   yield takeLatest(actionTypes.ResetStart, sendReset);
   yield takeLatest(actionTypes.RegisterStart, registerStart);
+  yield takeLatest(actionTypes.ProfileChangeStart, chageProfile);
+  yield takeLatest(actionTypes.OdsChangeStart, chageOds);
 }

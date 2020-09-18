@@ -108,7 +108,7 @@ const Navbar = ({ name }) => {
               }`}
             >
               <li className="flex my-2">
-                <Link className="item-menu" to="/security">Mi perfil</Link>
+                <Link className="item-menu" to="/profile">Mi perfil</Link>
               </li>
               <hr className="m-0"/>
               <li className="flex my-2">
