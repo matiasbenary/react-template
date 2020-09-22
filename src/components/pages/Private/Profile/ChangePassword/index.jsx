@@ -66,51 +66,55 @@ const ChangePassword = () => {
           <div className="card-header">Cambiar contraseña</div>
           <div className="card-block">
             <div className="card-body">
-              <div className="login__inputs">
-                {formik.errors.message ? (
-                  <WarningSpan msj={formik.errors.message} />
-                ) : null}
-
-                {!error && status ? (
-                  <SuccessSpan msj="¡Se ha cambiado tu contraseña con exito!" />
-                ) : null}
-                <div className="login__input_group">
+              <div class="form-row">
+                <div class="form-group col-md-6">
                   <label htmlFor="password" className="login__label">
                     <span>Contraseña </span>
                   </label>
-                  <input
-                    id="password"
-                    type="password"
-                    name="password"
-                    className="login__input"
-                    {...formik.getFieldProps("password")}
-                    autoComplete="new-password"
-                  />
-                  {formik.touched.password && formik.errors.password ? (
-                    <WarningSpan msj={formik.errors.password} />
+                  {formik.errors.message ? (
+                    <WarningSpan msj={formik.errors.message} />
                   ) : null}
+
+                  {!error && status ? (
+                    <SuccessSpan msj="¡Se ha cambiado tu contraseña con exito!" />
+                  ) : null}
+                  <div className="login__input_group">
+                    <input
+                      id="password"
+                      type="password"
+                      name="password"
+                      className="form-control"
+                      {...formik.getFieldProps("password")}
+                      autoComplete="new-password"
+                    />
+                    {formik.touched.password && formik.errors.password ? (
+                      <WarningSpan msj={formik.errors.password} />
+                    ) : null}
+                  </div>
                 </div>
+                <div class="form-group col-md-6">
+                <label htmlFor="password_confirmation" className="login__label">
+                  <span>Confirmar Contraseña </span>
+                </label>
                 <div className="login__input_group">
-                  <label
-                    htmlFor="password_confirmation"
-                    className="login__label"
-                  >
-                    <span>Confirmar Contraseña </span>
-                  </label>
-                  <input
-                    id="password_confirmation"
-                    type="password"
-                    name="password_confirmation"
-                    className="login__input"
-                    {...formik.getFieldProps("password_confirmation")}
-                    autoComplete="new-password"
-                  />
-                  {formik.touched.password_confirmation &&
-                  formik.errors.password_confirmation ? (
-                    <WarningSpan msj={formik.errors.password_confirmation} />
-                  ) : null}
-                </div>
+
+                <input
+                  id="password_confirmation"
+                  type="password"
+                  name="password_confirmation"
+                  className="form-control"
+                  {...formik.getFieldProps("password_confirmation")}
+                  autoComplete="new-password"
+                />
+                {formik.touched.password_confirmation &&
+                formik.errors.password_confirmation ? (
+                  <WarningSpan msj={formik.errors.password_confirmation} />
+                ) : null}
               </div>
+                  </div>
+              </div>
+
+
             </div>
           </div>
           <div className="card-footer">
