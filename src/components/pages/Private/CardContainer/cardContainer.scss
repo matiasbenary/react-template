@@ -6,6 +6,18 @@
 }
 
 .cardContainer-columns {
-  margin: 8px;
-  width: 30%;
+  margin: 0px 8px;
+  width: 100%;
+}
+
+.cardContainer-columns:first-of-type {
+  margin: 0 8px 0 0;
+}
+
+.cardContainer-columns:last-of-type {
+  margin: 0 0 0 8px;
+}
+
+.cardContainer-columns:only-of-type {
+  margin: 0;
 }
