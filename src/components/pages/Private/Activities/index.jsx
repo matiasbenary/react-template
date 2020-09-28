@@ -10,37 +10,37 @@ import Table from "../../../molecules/Table";
 const Activities = () => {
   const dispatch = useDispatch();
 
-  const hoursModal = activity_id => {
+  const hoursModal = (activity_id) => {
     dispatch(
       modalAction.modalShow({
         modalProps: {
           open: true,
           title: "Carga de horas",
-          activity_id
+          activity_id,
         },
-        modalType: "hoursLoad"
+        modalType: "hoursLoad",
       })
     );
   };
 
-  const commentaryModal = activity_id => {
+  const commentaryModal = (activity_id) => {
     dispatch(
       modalAction.modalShow({
         modalProps: {
           open: true,
           activity_id,
-          url: "activity/addCommentary"
+          url: "activity/addCommentary",
         },
-        modalType: "commentary"
+        modalType: "commentary",
       })
     );
   };
 
   const { user_id, userActivities, userActivitiesLoading } = useSelector(
-    state => ({
+    (state) => ({
       user_id: state.auth.user.id,
       userActivities: state.userActivities.activities,
-      userActivitiesLoading: state.userActivities.loading
+      userActivitiesLoading: state.userActivities.loading,
     })
   );
 
@@ -51,14 +51,14 @@ const Activities = () => {
   }, [dispatch, user_id, userActivities]);
 
   const iconStyle = {
-    fontSize: "24px"
+    fontSize: "24px",
   };
 
   const columns = useMemo(
     () => [
       {
         name: "Acciones",
-        cell: row => {
+        cell: (row) => {
           return (
             <>
               {row.selection_status === "Seleccionad@" && (
@@ -90,45 +90,45 @@ const Activities = () => {
         },
         ignoreRowClick: true,
         allowOverflow: true,
-        button: true
+        button: true,
       },
       {
         name: "Actividad",
         selector: "activity",
         sortable: true,
         expandableRows: true,
-        cell: row => <Link to={row.url}>{row.activity}</Link>
+        cell: (row) => <Link to={row.url}>{row.activity}</Link>,
       },
       {
         name: "Estado",
         selector: "status",
         sortable: true,
-        center: true
+        center: true,
       },
       {
         name: "Fecha límite de postulación",
         selector: "deadline",
         sortable: true,
         center: true,
-        defaultSortAsc: false
+        defaultSortAsc: false,
       },
       {
         name: "Estado de selección",
         selector: "selection_status",
         sortable: true,
-        center: true
+        center: true,
       },
       {
         name: "Horas acumuladas por el equipo",
         selector: "hours_total",
         sortable: true,
-        center: true
-      }
+        center: true,
+      },
     ],
     [hoursModal, iconStyle]
   );
 
-  const postulationStatus = status => {
+  const postulationStatus = (status) => {
     switch (status) {
       case 0:
         return "Pendiente";
@@ -149,10 +149,10 @@ const Activities = () => {
 
   if (userActivities) {
     const tableStyles = {
-      margin: "20px auto"
+      margin: "20px auto",
     };
 
-    const data = userActivities.data.map(a => ({
+    const data = userActivities.data.map((a) => ({
       id: a.id,
       activity: a.title,
       status: a.status_alias,
@@ -163,7 +163,7 @@ const Activities = () => {
       to_entity: a.toEntity.bussiness_name,
       hours_total: a.hoursTotal,
       sdg: a.sdg_id,
-      commentary: a.commentary
+      commentary: a.commentary,
     }));
 
     return (

@@ -11,8 +11,8 @@ const MyMapComponent = withGoogleMap(({ activities }) => (
     defaultCenter={{ lat: -31.4200832, lng: -64.18877609999998 }}
   >
     {activities &&
-      activities.map(activity =>
-        activity.locations.map(location => (
+      activities.map((activity) =>
+        activity.locations.map((location) => (
           <Marker location={location} activity={activity} />
         ))
       )}

@@ -1,33 +1,41 @@
-import React, { useState, useEffect, memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { createSelector } from 'reselect';
-import { actions as modalAction } from '../../../store/ducks/modal.duck';
-import { actions as modalActivities } from '../../../store/ducks/activities.duck';
-import ApplyButton from '../ApplyButton';
+import React, { useState, useEffect, memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { createSelector } from "reselect";
+import { actions as modalAction } from "../../../store/ducks/modal.duck";
+import { actions as modalActivities } from "../../../store/ducks/activities.duck";
+import ApplyButton from "../ApplyButton";
 
 const applyIdSelector = (state) => state.activities.applyId;
 const applyMsjSelector = (state) => state.activities.apply;
 
-const applySelector = (activity_id) => createSelector(
+const applySelector = (activity_id) =>
+  createSelector(
     applyIdSelector,
     applyMsjSelector,
-    (id, msj) => activity_id == id && msj !== '',
+    (id, msj) => activity_id == id && msj !== ""
   );
 
 const unapplyIdSelector = (state) => state.activities.unapplyId;
 const unapplyMsjSelector = (state) => state.activities.unapply;
 
-const unapplySelector = (activity_id) => createSelector(
+const unapplySelector = (activity_id) =>
+  createSelector(
     unapplyIdSelector,
     unapplyMsjSelector,
-    (id, msj) => activity_id == id && msj !== '',
+    (id, msj) => activity_id == id && msj !== ""
   );
 
 const ActivitiesButtons = memo(
   ({
- user_id, activity_id, isApply, title, description, withLink, isEnable,
-}) => {
+    user_id,
+    activity_id,
+    isApply,
+    title,
+    description,
+    withLink,
+    isEnable,
+  }) => {
     const dispatch = useDispatch();
 
     const [toggleButton, setToggleButton] = useState(isApply);
@@ -61,12 +69,12 @@ const ActivitiesButtons = memo(
                     user_id,
                     activity_id,
                   },
-                }),
+                })
               );
             },
           },
-          modalType: 'unapply',
-        }),
+          modalType: "unapply",
+        })
       );
     };
     return (
@@ -99,7 +107,7 @@ const ActivitiesButtons = memo(
         ) : null}
       </div>
     );
-  },
+  }
 );
 
 export default ActivitiesButtons;

@@ -36,7 +36,7 @@ const initialAuthState = {
   msjReset: null,
   loadingRegister: false,
   errorRegister: null,
-  msjRegister: null
+  msjRegister: null,
 };
 
 // Reducer
@@ -47,7 +47,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: true,
         user: null,
-        error: null
+        error: null,
       };
     }
     case actionTypes.LoginComplete: {
@@ -56,7 +56,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user,
-        error: null
+        error: null,
       };
     }
     case actionTypes.LoginError: {
@@ -65,7 +65,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user: null,
-        error
+        error,
       };
     }
     case actionTypes.Logout: {
@@ -73,7 +73,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: null,
         user: null,
-        error: null
+        error: null,
       };
     }
     case actionTypes.ResetStart: {
@@ -81,7 +81,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: true,
         errorReset: null,
-        msjReset: null
+        msjReset: null,
       };
     }
     case actionTypes.ResetComplete: {
@@ -90,7 +90,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: false,
         errorReset: null,
-        msjReset
+        msjReset,
       };
     }
     case actionTypes.ResetError: {
@@ -99,7 +99,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingReset: false,
         errorReset,
-        msjReset: "No se encontro el usuario"
+        msjReset: "No se encontro el usuario",
       };
     }
     case actionTypes.ResetSendMailStart: {
@@ -107,7 +107,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: true,
         errorResetMail: null,
-        msjResetMail: null
+        msjResetMail: null,
       };
     }
     case actionTypes.ResetSendMailComplete: {
@@ -116,7 +116,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: false,
         errorResetMail: null,
-        msjResetMail
+        msjResetMail,
       };
     }
     case actionTypes.ResetSendMailError: {
@@ -125,7 +125,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingResetMail: false,
         errorResetMail,
-        msjResetMail: "No se encontro el usuario"
+        msjResetMail: "No se encontro el usuario",
       };
     }
     case actionTypes.RegisterStart: {
@@ -133,7 +133,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingRegister: true,
         errorRegister: null,
-        msjRegister: null
+        msjRegister: null,
       };
     }
     case actionTypes.RegisterComplete: {
@@ -142,7 +142,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingRegister: false,
         errorRegister: null,
-        msjRegister
+        msjRegister,
       };
     }
     case actionTypes.RegisterError: {
@@ -151,7 +151,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingRegister: false,
         errorRegister,
-        msjRegister: "No se encontro el usuario"
+        msjRegister: "No se encontro el usuario",
       };
     }
     case actionTypes.ProfileChangeStart: {
@@ -167,14 +167,14 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user,
-        error: null
+        error: null,
       };
     }
     case actionTypes.ProfileChangeError: {
       return {
         ...state,
         loading: false,
-        error: true
+        error: true,
       };
     }
     case actionTypes.OdsChangeStart: {
@@ -190,14 +190,14 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         user,
-        error: null
+        error: null,
       };
     }
     case actionTypes.OdsChangeError: {
       return {
         ...state,
         loading: false,
-        error: true
+        error: true,
       };
     }
     default:
@@ -207,16 +207,19 @@ export const reducer = (state = initialAuthState, action) => {
 
 // Action Creators
 export const actions = {
-  login: user => ({ type: actionTypes.LoginStart, payload: user }),
+  login: (user) => ({ type: actionTypes.LoginStart, payload: user }),
   logOut: () => ({ type: actionTypes.Logout }),
-  resetSendMail: email => ({
+  resetSendMail: (email) => ({
     type: actionTypes.ResetSendMailStart,
-    payload: email
+    payload: email,
   }),
-  reset: payload => ({ type: actionTypes.ResetStart, payload }),
-  register: payload => ({ type: actionTypes.RegisterStart, payload }),
-  chageProfile: payload => ({ type: actionTypes.ProfileChangeStart,payload}),
-  chageOds: payload => ({ type: actionTypes.OdsChangeStart,payload})
+  reset: (payload) => ({ type: actionTypes.ResetStart, payload }),
+  register: (payload) => ({ type: actionTypes.RegisterStart, payload }),
+  chageProfile: (payload) => ({
+    type: actionTypes.ProfileChangeStart,
+    payload,
+  }),
+  chageOds: (payload) => ({ type: actionTypes.OdsChangeStart, payload }),
 };
 // Watchers
 
@@ -245,7 +248,7 @@ export function* sendEmailReset({ payload }) {
   } catch (error) {
     yield put({
       type: actionTypes.ResetSendMailError,
-      error: error.response.data
+      error: error.response.data,
     });
   }
 }
@@ -272,25 +275,25 @@ export function* registerStart({ payload }) {
   }
 }
 
-export function* chageProfile({payload}){
+export function* chageProfile({ payload }) {
   try {
     const results = yield call(apiCall, "profile", payload, "POST");
     const data = results.data.data[0];
     yield call(saveUser, data);
     yield put({ type: actionTypes.ProfileChangeComplete, data });
   } catch (error) {
-    yield put({ type: actionTypes.ProfileChangeError});
+    yield put({ type: actionTypes.ProfileChangeError });
   }
 }
 
-export function* chageOds({payload}){
+export function* chageOds({ payload }) {
   try {
     const results = yield call(apiCall, "ods", payload, "POST");
     const data = results.data.data[0];
     yield call(saveUser, data);
     yield put({ type: actionTypes.OdsChangeComplete, data });
   } catch (error) {
-    yield put({ type: actionTypes.OdsChangeError});
+    yield put({ type: actionTypes.OdsChangeError });
   }
 }
 

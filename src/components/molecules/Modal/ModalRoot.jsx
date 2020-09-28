@@ -9,11 +9,11 @@ const MODAL_TYPES = {
   apply: modalTypes.ApplyModal,
   unapply: modalTypes.UnapplyModal,
   hoursLoad: modalTypes.HoursModal,
-  commentary: modalTypes.CommentaryModal
+  commentary: modalTypes.CommentaryModal,
 };
 
 const ModalRoot = () => {
-  const { modalType, modalProps } = useSelector(state => state.modal);
+  const { modalType, modalProps } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
   if (!modalType) {

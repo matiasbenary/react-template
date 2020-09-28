@@ -1,9 +1,9 @@
-import { createSelector } from 'reselect';
-import { useSelector } from 'react-redux';
+import { createSelector } from "reselect";
+import { useSelector } from "react-redux";
 
 const userActivitiesSelector = createSelector(
   (state) => state.userActivities.activities,
-  (userActivities) => userActivities,
+  (userActivities) => userActivities
 );
 
 const useGetUserActivities = () => useSelector(userActivitiesSelector);

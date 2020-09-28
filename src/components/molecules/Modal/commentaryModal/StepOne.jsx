@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const StepOne = ({ commentary, setCommentary, closeModal, setStep }) => {
   const [count, setCount] = useState(180);
 
-  const onChange = e => {
+  const onChange = (e) => {
     const value = e.target.value;
     setCommentary(value);
     if (180 - value.length >= 0) setCount(180 - value.length);

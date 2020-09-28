@@ -12,18 +12,18 @@ import useGetUserId from "../../../../hooks/api/useGetUserId";
 import Loading from "../../../molecules/Loading";
 
 const activitySelector = createSelector(
-  state => state.activity.activity,
-  activity => activity
+  (state) => state.activity.activity,
+  (activity) => activity
 );
 
 const activityLoadingSelector = createSelector(
-  state => state.activity.loading,
-  loading => loading
+  (state) => state.activity.loading,
+  (loading) => loading
 );
 
 const userActivitiesSelector = createSelector(
-  state => state.userActivities.activities,
-  userActivities => userActivities
+  (state) => state.userActivities.activities,
+  (userActivities) => userActivities
 );
 
 const DetailActivity = () => {
@@ -54,7 +54,7 @@ const DetailActivity = () => {
 
   if (activity && userActivities) {
     const isApply =
-      userActivities.data.find(activityLocal => activityLocal.id == id) ===
+      userActivities.data.find((activityLocal) => activityLocal.id == id) ===
       undefined;
     const now = moment();
     const deadline = moment(activity.deadline);

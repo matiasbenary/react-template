@@ -4,13 +4,13 @@ import { apiCall } from "../../../crud/api.crud";
 export const actionTypes = {
   GetActivityStart: "[ACTIVITY] GET START",
   GetActivityComplete: "[ACTIVITY] GET COMPLETE",
-  GetActivityError: "[ACTIVITY] GET ERROR"
+  GetActivityError: "[ACTIVITY] GET ERROR",
 };
 
 const initialAuthState = {
   loading: false,
   activity: null,
-  error: ""
+  error: "",
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -28,7 +28,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         activity: null,
-        error
+        error,
       };
     }
     default:
@@ -37,7 +37,7 @@ export const reducer = (state = initialAuthState, action) => {
 };
 
 export const actions = {
-  getActivity: id => ({ type: actionTypes.GetActivityStart, id })
+  getActivity: (id) => ({ type: actionTypes.GetActivityStart, id }),
 };
 // Watchers
 

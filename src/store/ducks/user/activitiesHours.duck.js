@@ -4,13 +4,13 @@ import { apiCall } from "../../../crud/api.crud";
 export const actionTypes = {
   GetActivityHoursStart: "[USER HOURS] GET START",
   GetActivityHoursComplete: "[USER HOURS] GET COMPLETE",
-  GetActivityHoursError: "[USER HOURS] GET ERROR"
+  GetActivityHoursError: "[USER HOURS] GET ERROR",
 };
 
 const initialAuthState = {
   loading: false,
   hours: null,
-  error: null
+  error: null,
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -29,10 +29,10 @@ export const reducer = (state = initialAuthState, action) => {
 };
 
 export const actions = {
-  getHours: payload => ({
+  getHours: (payload) => ({
     type: actionTypes.GetActivityHoursStart,
-    payload
-  })
+    payload,
+  }),
 };
 
 export function* getHoursState({ payload }) {

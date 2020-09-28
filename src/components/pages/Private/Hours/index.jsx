@@ -12,11 +12,11 @@ const Hours = () => {
   const {
     user_id,
     userActivitiesHours,
-    userActivitiesHoursLoading
-  } = useSelector(state => ({
+    userActivitiesHoursLoading,
+  } = useSelector((state) => ({
     user_id: state.auth.user.id,
     userActivitiesHours: state.userActivitiesHours.hours,
-    userActivitiesHoursLoading: state.userActivitiesHours.loading
+    userActivitiesHoursLoading: state.userActivitiesHours.loading,
   }));
 
   useEffect(() => {
@@ -37,45 +37,46 @@ const Hours = () => {
         name: "Actividad",
         selector: "actividad",
         sortable: true,
-        cell: row => <Link to={row.url}>{row.actividad}</Link>
+        cell: (row) => <Link to={row.url}>{row.actividad}</Link>,
       },
       {
         name: "Fecha",
         selector: "fecha",
         sortable: true,
-        right: true
+        right: true,
       },
       {
         name: "Horas",
         selector: "horas",
         sortable: true,
-        right: true
+        right: true,
       },
       {
         name: "Estado",
         selector: "estado",
         sortable: true,
-        right: true
-      }
+        right: true,
+      },
     ],
     []
   );
 
-  const hoursValidation = validated => (validated ? "Validado" : "No validado");
+  const hoursValidation = (validated) =>
+    validated ? "Validado" : "No validado";
 
   if (userActivitiesHoursLoading) {
     return <Loading />;
   }
 
   if (userActivitiesHours) {
-    const data = userActivitiesHours.data.map(u => ({
+    const data = userActivitiesHours.data.map((u) => ({
       id: u.id,
       fecha: u.created_at.slice(0, 10),
       actividad: u.activity ? u.activity.title : "Actividad borrada",
       horas: u.hours,
       estado: hoursValidation(u.validated_to),
       url: `/detail/${u.activity_id}`,
-      commentary: u.commentary
+      commentary: u.commentary,
     }));
 
     return (
@@ -86,7 +87,7 @@ const Hours = () => {
               <Table data={data} columns={columns} title="Mis Horas" />
               <Pagination
                 meta={meta}
-                action={payload =>
+                action={(payload) =>
                   userActivitiesHoursAction.getHours({ ...payload, user_id })
                 }
                 className="d-flex justify-content-end mt-2"

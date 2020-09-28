@@ -6,8 +6,8 @@ import Auth from "./components/main/Auth";
 import ResetPass from "./components/pages/Public/ResetPass/index";
 
 const Routing = () => {
-  const { user } = useSelector(state => ({
-    user: state.auth.user
+  const { user } = useSelector((state) => ({
+    user: state.auth.user,
   }));
 
   return (

@@ -24,7 +24,7 @@ const WarningSpan = ({ msj }) => (
 );
 
 WarningSpan.propTypes = {
-  msj: PropTypes.string
+  msj: PropTypes.string,
 };
 
 export default WarningSpan;

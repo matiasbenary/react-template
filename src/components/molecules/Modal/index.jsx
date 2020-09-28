@@ -9,6 +9,6 @@ const modalTypes = {
   ApplyModal,
   UnapplyModal,
   HoursModal,
-  CommentaryModal
+  CommentaryModal,
 };
 export default modalTypes;

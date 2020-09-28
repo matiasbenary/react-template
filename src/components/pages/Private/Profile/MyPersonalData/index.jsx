@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../../../../store/ducks/auth.duck";
 
 const MyPersonalData = ({
-  user: { name, email, marital_status, id_type, id_number, id }
+  user: { name, email, marital_status, id_type, id_number, id },
 }) => {
   const [profile, setProfile] = useState({
     name,
@@ -11,15 +11,15 @@ const MyPersonalData = ({
     marital_status,
     id_type,
     id_number,
-    id
+    id,
   });
-  const { loading, error } = useSelector(state => ({
+  const { loading, error } = useSelector((state) => ({
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
   }));
   const dispatch = useDispatch();
 
-  const changeHandler = e => {
+  const changeHandler = (e) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
   };
@@ -32,13 +32,13 @@ const MyPersonalData = ({
     { label: "Soltero/a", value: "Soltero" },
     { label: "Casado/a", value: "Casado" },
     { label: "Viudo/a", value: "Viudo" },
-    { label: "Divorciado/a", value: "Divorciado" }
+    { label: "Divorciado/a", value: "Divorciado" },
   ];
 
   const idTypes = [
     { label: "DNI", value: "DNI" },
     { label: "LE", value: "LE" },
-    { label: "PASAPORTE", value: "PASAPORTE" }
+    { label: "PASAPORTE", value: "PASAPORTE" },
   ];
 
   return (
@@ -88,7 +88,7 @@ const MyPersonalData = ({
                     {!profile.marital_status && (
                       <option selected>Sin definir</option>
                     )}
-                    {maritalStatus.map(option => (
+                    {maritalStatus.map((option) => (
                       <option
                         value={option.value}
                         selected={option.value === profile.marital_status}
@@ -109,7 +109,7 @@ const MyPersonalData = ({
                     onChange={changeHandler}
                   >
                     {!profile.id_type && <option selected>Sin definir</option>}
-                    {idTypes.map(option => (
+                    {idTypes.map((option) => (
                       <option
                         value={option.value}
                         selected={option.value === profile.id_type}

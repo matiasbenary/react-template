@@ -8,15 +8,15 @@ const ApplyButton = ({
   activity_id,
   title,
   description,
-  disabled
+  disabled,
 }) => {
   const dispatch = useDispatch();
 
-  const sendApplyInfo = postulation_reason => {
+  const sendApplyInfo = (postulation_reason) => {
     const payload = {
       postulation_reason,
       user_id,
-      activity_id
+      activity_id,
     };
     dispatch(modalActivities.applyActivity({ payload }));
   };
@@ -28,9 +28,9 @@ const ApplyButton = ({
           open: true,
           title,
           message: description,
-          send: postulation_reason => sendApplyInfo(postulation_reason)
+          send: (postulation_reason) => sendApplyInfo(postulation_reason),
         },
-        modalType: "apply"
+        modalType: "apply",
       })
     );
   };

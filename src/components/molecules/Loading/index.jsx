@@ -1,14 +1,14 @@
-import React from 'react';
-import Loader from 'react-spinners/PropagateLoader';
+import React from "react";
+import Loader from "react-spinners/PropagateLoader";
 
 const index = () => (
   <div
     className="mt-5"
     style={{
-      height: '100vh',
-      width: '100vw',
-      display: 'flex',
-      justifyContent: 'center',
+      height: "100vh",
+      width: "100vw",
+      display: "flex",
+      justifyContent: "center",
     }}
   >
     <Loader size={15} color="#007bff" loading />

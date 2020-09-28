@@ -8,7 +8,7 @@ import { actions } from "../../../store/ducks/auth.duck";
 import { BsPerson } from "react-icons/bs";
 
 const Img = styled.img`
-  width: ${props => props.width || "200px"};
+  width: ${(props) => props.width || "200px"};
 `;
 
 const Navbar = ({ name }) => {
@@ -16,7 +16,7 @@ const Navbar = ({ name }) => {
 
   const node = useRef();
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (node.current.contains(e.target)) {
       // inside click
       return;
@@ -81,7 +81,6 @@ const Navbar = ({ name }) => {
         <ul
           className="nav navbar-nav flex-row justify-content-between"
           ref={node}
-
         >
           <li className="nav-item order-2 order-md-1">
             <div>
@@ -102,17 +101,17 @@ const Navbar = ({ name }) => {
               <BsPerson className="mr-1" /> {name}
               <span className="caret" />
             </button>
-            <ul
-              className={`dropdown-menu rounded ${
-                isOpen ? "show" : null
-              }`}
-            >
+            <ul className={`dropdown-menu rounded ${isOpen ? "show" : null}`}>
               <li className="flex my-2">
-                <Link className="item-menu" to="/profile">Mi perfil</Link>
+                <Link className="item-menu" to="/profile">
+                  Mi perfil
+                </Link>
               </li>
-              <hr className="m-0"/>
+              <hr className="m-0" />
               <li className="flex my-2">
-                <span className="item-menu" onClick={logout}>Cerrar Sesión</span>
+                <span className="item-menu" onClick={logout}>
+                  Cerrar Sesión
+                </span>
               </li>
             </ul>
           </li>

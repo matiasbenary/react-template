@@ -1,6 +1,6 @@
-import Logo from './logo.png';
+import Logo from "./logo.png";
 
 export default {
   logo: Logo,
-  logo_width: '350px',
+  logo_width: "350px",
 };

@@ -1,7 +1,7 @@
 // actions
 export const actionTypes = {
-  modalShow: '[MODAL] SHOW',
-  modalHide: '[MODAL] HIDDEN',
+  modalShow: "[MODAL] SHOW",
+  modalHide: "[MODAL] HIDDEN",
 };
 
 const initialState = {
@@ -27,7 +27,6 @@ const initialState = {
 //   }
 // });
 
-
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.modalShow: {
@@ -46,6 +45,10 @@ export const reducer = (state = initialState, action) => {
 
 // Action Creators
 export const actions = {
-  modalShow: ({ modalType, modalProps }) => ({ type: actionTypes.modalShow, modalType, modalProps }),
+  modalShow: ({ modalType, modalProps }) => ({
+    type: actionTypes.modalShow,
+    modalType,
+    modalProps,
+  }),
   modalHide: () => ({ type: actionTypes.modalHide }),
 };

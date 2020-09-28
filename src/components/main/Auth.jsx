@@ -10,7 +10,7 @@ import Register from "../pages/Public/Register";
 import ResetPass from "../pages/Public/ResetPass/index.jsx";
 
 const Img = styled.img`
-  width: ${props => props.width || "300px"};
+  width: ${(props) => props.width || "300px"};
   margin-bottom: 3rem;
   display: block;
 `;

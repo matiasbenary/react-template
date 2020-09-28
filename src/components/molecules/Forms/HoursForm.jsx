@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Field, Form, Formik } from 'formik';
-import * as Yup from 'yup';
-import { CustomDateInput, CustomTextarea } from './CustomInputs';
-import { actions } from '../../../store/ducks/hours/loadHours.duck';
-import './forms.scss';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { CustomDateInput, CustomTextarea } from "./CustomInputs";
+import { actions } from "../../../store/ducks/hours/loadHours.duck";
+import "./forms.scss";
 
 const HoursForm = ({ closeModal, activity_id }) => {
   const [count, setCount] = useState(0);
@@ -36,17 +36,17 @@ const HoursForm = ({ closeModal, activity_id }) => {
   };
 
   const validationForm = Yup.object({
-    hours: Yup.number().required('Requerido'),
+    hours: Yup.number().required("Requerido"),
     minutes: Yup.number()
-      .oneOf([0, 15, 30, 45], 'Opción invalida')
-      .required('Requerido'),
-    createdOn: Yup.date('Debe ingresar una fecha válida')
-      .required('Requerido')
+      .oneOf([0, 15, 30, 45], "Opción invalida")
+      .required("Requerido"),
+    createdOn: Yup.date("Debe ingresar una fecha válida")
+      .required("Requerido")
       .nullable(),
-    commentary: Yup.string('')
-      .min(3, 'Agregar comentario')
-      .max(300, 'Comentario demasiado extenso')
-      .required('Requerido')
+    commentary: Yup.string("")
+      .min(3, "Agregar comentario")
+      .max(300, "Comentario demasiado extenso")
+      .required("Requerido")
       .nullable(),
   });
 
@@ -76,9 +76,7 @@ const HoursForm = ({ closeModal, activity_id }) => {
       }}
       enableReinitialize
     >
-      {({
- values, handleSubmit, handleChange, isSubmitting,
-}) => (
+      {({ values, handleSubmit, handleChange, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="form-row">
@@ -155,7 +153,7 @@ const HoursForm = ({ closeModal, activity_id }) => {
               Cancelar
             </button>
             <button type="submit" className="btn btn-primary">
-              {isSubmitting ? 'Enviando...' : 'Enviar'}
+              {isSubmitting ? "Enviando..." : "Enviar"}
             </button>
           </div>
         </Form>

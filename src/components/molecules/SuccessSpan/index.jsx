@@ -24,7 +24,7 @@ const SuccessSpan = ({ msj }) => (
 );
 
 SuccessSpan.propTypes = {
-  msj: PropTypes.string
+  msj: PropTypes.string,
 };
 
 export default SuccessSpan;

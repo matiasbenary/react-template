@@ -6,9 +6,9 @@ export const BASE_URL = process.env.REACT_APP_API_URL;
 
 const getHeaderLocalStorage = () => JSON.parse(localStorage.getItem("token"));
 
-const setHeaderLocalStorage = res => {
+const setHeaderLocalStorage = (res) => {
   const header = {
-    Authorization: `${res.token_type} ${res.access_token}`
+    Authorization: `${res.token_type} ${res.access_token}`,
   };
   localStorage.setItem("token", JSON.stringify(header));
 };
@@ -16,17 +16,17 @@ const setHeaderLocalStorage = res => {
 const getExpireTokenLocalStorage = () =>
   JSON.parse(localStorage.getItem("expire_token"));
 
-const setExpireTokenLocalStorage = res =>
+const setExpireTokenLocalStorage = (res) =>
   localStorage.setItem(
     "expire_token",
     JSON.stringify(moment().add(res.expires_in, "s"))
   );
 
-const hasExpireToken = expireToken => expireToken !== null;
+const hasExpireToken = (expireToken) => expireToken !== null;
 
-const isExpiredToken = expireToken => moment().diff(expireToken) <= 0;
+const isExpiredToken = (expireToken) => moment().diff(expireToken) <= 0;
 
-const hasToken = token => token !== null;
+const hasToken = (token) => token !== null;
 
 /*
 const userId = () => {
@@ -59,7 +59,7 @@ export const getToken = async () => {
         method: "post",
         url: `${BASE_URL}oauth/token`,
         data: params,
-        headers: { "content-type": "application/x-www-form-urlencoded" }
+        headers: { "content-type": "application/x-www-form-urlencoded" },
       });
       setHeaderLocalStorage(res.data);
       setExpireTokenLocalStorage(res.data);
@@ -79,7 +79,7 @@ export const apiCall = async (url, data, method) => {
     ? {
         ...token,
         "User-Id": store.getState().auth.user.id,
-        "Entity-Id": process.env.REACT_APP_ID_ENTITY
+        "Entity-Id": process.env.REACT_APP_ID_ENTITY,
       }
     : token;
 
@@ -87,11 +87,11 @@ export const apiCall = async (url, data, method) => {
     method,
     url: `${BASE_URL}api/${url}`,
     data,
-    headers
+    headers,
   });
 };
 
-export const saveUser = user => {
+export const saveUser = (user) => {
   localStorage.setItem("user", JSON.stringify(user));
 };
 

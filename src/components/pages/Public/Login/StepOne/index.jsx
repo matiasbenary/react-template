@@ -3,15 +3,13 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { apiCall } from "../../../../../crud/api.crud";
 
-const schema = Yup.string()
-  .email()
-  .required();
+const schema = Yup.string().email().required();
 
 const StepOne = ({ next, email, setEmail }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleOnKeyDown = e => {
+  const handleOnKeyDown = (e) => {
     if (e.keyCode === 13) {
       setNextStep();
     }
@@ -46,14 +44,12 @@ const StepOne = ({ next, email, setEmail }) => {
           type="text"
           className={`input-text ${error && "input-text--danger"}`}
           placeholder="usuario@email.com"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           onKeyDown={handleOnKeyDown}
           value={email}
           name="email"
         />
-        {error && (
-          <span className="span span--error">Revisa tu correo</span>
-        )}
+        {error && <span className="span span--error">Revisa tu correo</span>}
       </div>
 
       <button className="button mt-3 mb-5 w-100" onClick={setNextStep}>

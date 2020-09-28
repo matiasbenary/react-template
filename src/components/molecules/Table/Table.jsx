@@ -3,7 +3,7 @@ import DataTable from "react-data-table-component";
 import { downloadCSV } from "../../../utils/helper";
 
 const Export = ({ onExport }) => (
-  <button className="btn btn-primary" onClick={e => onExport(e.target.value)}>
+  <button className="btn btn-primary" onClick={(e) => onExport(e.target.value)}>
     Exportar
   </button>
 );
@@ -12,9 +12,9 @@ const Table = ({ data, columns, title, styles }) => {
   const actionsMemo = React.useMemo(() => {
     const blacklist = ["url"];
 
-    const info = data.map(dat =>
+    const info = data.map((dat) =>
       Object.keys(dat)
-        .filter(key => !blacklist.includes(key))
+        .filter((key) => !blacklist.includes(key))
         .reduce((obj, key) => {
           obj[key] = dat[key];
           return obj;

@@ -6,8 +6,8 @@ import { actions as userActivitiesAction } from "../../../../store/ducks/user/ac
 const StepTwo = ({ commentary, setStep, activity_id, closeModal, url }) => {
   const dispatch = useDispatch();
 
-  const { user_id } = useSelector(state => ({
-    user_id: state.auth.user.id
+  const { user_id } = useSelector((state) => ({
+    user_id: state.auth.user.id,
   }));
 
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +24,7 @@ const StepTwo = ({ commentary, setStep, activity_id, closeModal, url }) => {
     const payload = {
       activity_id,
       user_id,
-      commentary
+      commentary,
     };
     setIsLoading(true);
     setIsResponse(await apiCall(url, payload, "POST"));

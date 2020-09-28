@@ -14,7 +14,7 @@ const Marker = ({ location, activity }) => {
       key={location.id}
       position={{
         lat: parseFloat(location.location_lat),
-        lng: parseFloat(location.location_lng)
+        lng: parseFloat(location.location_lng),
       }}
       defaultTitle={location.address}
       onClick={openInfo}

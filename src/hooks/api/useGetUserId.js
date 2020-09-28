@@ -1,9 +1,9 @@
-import { createSelector } from 'reselect';
-import { useSelector } from 'react-redux';
+import { createSelector } from "reselect";
+import { useSelector } from "react-redux";
 
 const userIdSelector = createSelector(
   (state) => state.auth.user.id,
-  (userId) => userId,
+  (userId) => userId
 );
 
 const useGetUserId = () => useSelector(userIdSelector);

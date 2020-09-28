@@ -4,5 +4,5 @@ import Icon from "./icon.png";
 export default {
   logo: Logo,
   icon: Icon,
-  title: "Actividades de voluntariado"
+  title: "Actividades de voluntariado",
 };

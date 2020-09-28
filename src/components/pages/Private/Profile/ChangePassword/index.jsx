@@ -14,27 +14,27 @@ const Schema = Yup.object({
   password_confirmation: Yup.string()
     .required("Requerido")
     .when("password", {
-      is: val => !!(val && val.length > 0),
+      is: (val) => !!(val && val.length > 0),
       then: Yup.string().oneOf(
         [Yup.ref("password")],
         "Debe coincidir con la contraseña"
-      )
-    })
+      ),
+    }),
 });
 
-const loading = state => state.security.loading;
-const error = state => state.security.error;
-const status = state => state.security.status;
+const loading = (state) => state.security.loading;
+const error = (state) => state.security.error;
+const status = (state) => state.security.status;
 
-const loadingSelector = () => createSelector(loading, loading => loading);
+const loadingSelector = () => createSelector(loading, (loading) => loading);
 
-const statusSelector = () => createSelector(status, status => status);
+const statusSelector = () => createSelector(status, (status) => status);
 
-const errorSelector = () => createSelector(error, error => error);
+const errorSelector = () => createSelector(error, (error) => error);
 
 const ChangePassword = () => {
-  const { user_id } = useSelector(state => ({
-    user_id: state.auth.user.id
+  const { user_id } = useSelector((state) => ({
+    user_id: state.auth.user.id,
   }));
 
   const dispatch = useDispatch();
@@ -50,13 +50,13 @@ const ChangePassword = () => {
   const formik = useFormik({
     initialValues: {
       password: "",
-      password_confirmation: ""
+      password_confirmation: "",
     },
     validationSchema: Schema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       const payload = { ...values, user_id };
       dispatch(actions.changePass(payload));
-    }
+    },
   });
 
   return (
@@ -93,28 +93,28 @@ const ChangePassword = () => {
                   </div>
                 </div>
                 <div class="form-group col-md-6">
-                <label htmlFor="password_confirmation" className="login__label">
-                  <span>Confirmar Contraseña </span>
-                </label>
-                <div className="login__input_group">
-
-                <input
-                  id="password_confirmation"
-                  type="password"
-                  name="password_confirmation"
-                  className="form-control"
-                  {...formik.getFieldProps("password_confirmation")}
-                  autoComplete="new-password"
-                />
-                {formik.touched.password_confirmation &&
-                formik.errors.password_confirmation ? (
-                  <WarningSpan msj={formik.errors.password_confirmation} />
-                ) : null}
-              </div>
+                  <label
+                    htmlFor="password_confirmation"
+                    className="login__label"
+                  >
+                    <span>Confirmar Contraseña </span>
+                  </label>
+                  <div className="login__input_group">
+                    <input
+                      id="password_confirmation"
+                      type="password"
+                      name="password_confirmation"
+                      className="form-control"
+                      {...formik.getFieldProps("password_confirmation")}
+                      autoComplete="new-password"
+                    />
+                    {formik.touched.password_confirmation &&
+                    formik.errors.password_confirmation ? (
+                      <WarningSpan msj={formik.errors.password_confirmation} />
+                    ) : null}
                   </div>
+                </div>
               </div>
-
-
             </div>
           </div>
           <div className="card-footer">

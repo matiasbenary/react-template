@@ -1,4 +1,4 @@
-export const convertArrayOfObjectsToCSV = array => {
+export const convertArrayOfObjectsToCSV = (array) => {
   let result;
 
   const columnDelimiter = ",";
@@ -9,9 +9,9 @@ export const convertArrayOfObjectsToCSV = array => {
   result += keys.join(columnDelimiter);
   result += lineDelimiter;
 
-  array.forEach(item => {
+  array.forEach((item) => {
     let ctr = 0;
-    keys.forEach(key => {
+    keys.forEach((key) => {
       if (ctr > 0) result += columnDelimiter;
 
       result += item[key];
@@ -24,7 +24,7 @@ export const convertArrayOfObjectsToCSV = array => {
   return result;
 };
 
-export const downloadCSV = array => {
+export const downloadCSV = (array) => {
   const link = document.createElement("a");
   let csv = convertArrayOfObjectsToCSV(array);
   if (csv == null) return;

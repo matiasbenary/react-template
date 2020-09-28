@@ -5,13 +5,13 @@ export const actionTypes = {
   ChangePassStart: "[CHANGE PASS] START",
   ChangePassComplete: "[CHANGE PASS] COMPLETE",
   ChangePassError: "[CHANGE PASS] ERROR",
-  ChangePassClear: "[CHANGE PASS] CLEAR"
+  ChangePassClear: "[CHANGE PASS] CLEAR",
 };
 
 const initialAuthState = {
   loading: false,
   status: null,
-  error: ""
+  error: "",
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -29,7 +29,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loading: false,
         status: null,
-        error
+        error,
       };
     }
     case actionTypes.ChangePassClear: {
@@ -41,11 +41,11 @@ export const reducer = (state = initialAuthState, action) => {
 };
 
 export const actions = {
-  changePass: payload => ({
+  changePass: (payload) => ({
     type: actionTypes.ChangePassStart,
-    payload
+    payload,
   }),
-  clear: () => ({ type: actionTypes.ChangePassClear })
+  clear: () => ({ type: actionTypes.ChangePassClear }),
 };
 // Watchers
 

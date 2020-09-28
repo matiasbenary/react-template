@@ -1,9 +1,8 @@
 import React from "react";
-import "./card.scss";
 
-const createMarkup = setHtml => ({ __html: setHtml });
+const createMarkup = (setHtml) => ({ __html: setHtml });
 
-const setHtml = setHtml => (
+const setHtml = (setHtml) => (
   <div dangerouslySetInnerHTML={createMarkup(setHtml)} />
 );
 
@@ -15,7 +14,7 @@ const Card = ({
   children,
   style,
   className,
-  classNameDescription
+  classNameDescription,
 }) => {
   return (
     <div className={`card shadow  bg-white rounded ${className}`} style={style}>

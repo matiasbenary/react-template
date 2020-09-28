@@ -10,7 +10,7 @@ import * as loadHours from "./ducks/hours/loadHours.duck";
 import * as userActivitiesHours from "./ducks/user/activitiesHours.duck";
 import * as security from "./ducks/security/index.duck";
 
-export const rootReducer = history =>
+export const rootReducer = (history) =>
   combineReducers({
     router: connectRouter(history),
     auth: auth.reducer,
@@ -20,7 +20,7 @@ export const rootReducer = history =>
     activity: activity.reducer,
     loadHours: loadHours.reducer,
     userActivitiesHours: userActivitiesHours.reducer,
-    security: security.reducer
+    security: security.reducer,
   });
 
 export function* rootSaga() {
@@ -31,6 +31,6 @@ export function* rootSaga() {
     activity.saga(),
     loadHours.saga(),
     userActivitiesHours.saga(),
-    security.saga()
+    security.saga(),
   ]);
 }

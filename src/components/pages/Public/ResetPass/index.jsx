@@ -7,24 +7,22 @@ import {
   FaCheck,
   FaExclamationCircle,
   FaEye,
-  FaEyeSlash
+  FaEyeSlash,
 } from "react-icons/fa";
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Email invalido")
-    .required("Es requerido"),
+  email: Yup.string().email("Email invalido").required("Es requerido"),
   password: Yup.string().required("Es requerido"),
   passwordConfirmation: Yup.string()
     .oneOf([Yup.ref("password"), "las contraseñas no coiciden"])
-    .required("Es requerido")
+    .required("Es requerido"),
 });
 
 const stateError = {
   email: false,
   password: false,
   confirmations: false,
-  server: false
+  server: false,
 };
 
 const ResetUser = () => {
@@ -53,7 +51,7 @@ const ResetUser = () => {
       );
     } catch (err) {
       let errorList = {};
-      err.inner.forEach(e => {
+      err.inner.forEach((e) => {
         if (e.path === "email") {
           errorList = { ...errorList, email: e.message };
         } else if (e.path === "password") {
@@ -61,7 +59,7 @@ const ResetUser = () => {
         } else if (e.path === "passwordConfirmation") {
           errorList = {
             ...errorList,
-            confirmations: "Tus contraseñas deben coincidir"
+            confirmations: "Tus contraseñas deben coincidir",
           };
         }
       });
@@ -74,7 +72,7 @@ const ResetUser = () => {
       email,
       password,
       password_confirmation: passwordConfirmation,
-      token: id
+      token: id,
     };
 
     try {
@@ -102,7 +100,7 @@ const ResetUser = () => {
           type="text"
           className={`input-text ${error.email && "input-text--danger"}`}
           placeholder="usuario@email.com"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           value={email}
           name="email"
         />
@@ -116,7 +114,7 @@ const ResetUser = () => {
             type={showPass ? "text" : "password"}
             className={`input-text ${error.password && "input-text--danger"}`}
             placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
             name="password"
           />
@@ -141,10 +139,11 @@ const ResetUser = () => {
         <div className="password-wrapper">
           <input
             type={showPass ? "text" : "password"}
-            className={`input-text ${error.confirmations &&
-              "input-text--danger"}`}
+            className={`input-text ${
+              error.confirmations && "input-text--danger"
+            }`}
             placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
-            onChange={e => setPasswordConfirmation(e.target.value)}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
             value={passwordConfirmation}
             name="passwordConfirmation"
           />

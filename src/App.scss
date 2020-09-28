@@ -1,10 +1,9 @@
+@import "./scss/main";
 
-@import './scss/main';
-
-@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap/scss/bootstrap.scss";
 
 .card-columns {
- margin-top: 1.5rem;
+  margin-top: 1.5rem;
   @include media-breakpoint-only(sm) {
     column-count: 2;
   }
@@ -12,11 +11,9 @@
   @include media-breakpoint-only(md) {
     column-count: 2;
   }
-
 }
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800&display=swap");
 
-body{
-  font-family: 'Open Sans', sans-serif;
+body {
+  font-family: "Open Sans", sans-serif;
 }
-

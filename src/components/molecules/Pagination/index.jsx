@@ -27,7 +27,7 @@ const Pagination = ({ meta, action, className = null }) => {
     dispath(action({ pages: meta.current_page + 1 }));
   };
 
-  const goTo = $page => {
+  const goTo = ($page) => {
     dispath(action({ pages: $page }));
   };
 

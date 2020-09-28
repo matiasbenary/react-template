@@ -45,7 +45,7 @@ const invercionMatriz = (data, columns) => {
   indice = 0;
 
   for (let i = 0; columns > i; i++) {
-    limit = resto <= i && i != 0 ? indice + row - 1 : indice + row;
+    limit = resto <= i && i !== 0 ? indice + row - 1 : indice + row;
     aux.push(acts.slice(indice, limit));
     indice = limit;
   }
@@ -58,12 +58,12 @@ const CardsContainer = () => {
     user_id,
     activities,
     activitiesLoading,
-    userActivities
-  } = useSelector(state => ({
+    userActivities,
+  } = useSelector((state) => ({
     user_id: state.auth.user.id,
     userActivities: state.userActivities.activities,
     activities: state.activities.activities,
-    activitiesLoading: state.activities.loading
+    activitiesLoading: state.activities.loading,
   }));
 
   const dispatch = useDispatch();
@@ -105,12 +105,12 @@ const CardsContainer = () => {
         </div>
 
         <div className="columnMaster">
-          {actividadesColumnas.map(acts => (
+          {actividadesColumnas.map((acts) => (
             <div className="cardContainer-columns">
-              {acts.map(item => {
+              {acts.map((item) => {
                 const isApply =
                   userActivities.data.find(
-                    activity => activity.id === item.id
+                    (activity) => activity.id === item.id
                   ) === undefined;
 
                 const deadline = moment(item.deadline);
