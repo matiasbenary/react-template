@@ -18,10 +18,12 @@ const invercionMatriz = (data, columns) => {
 
   const row = Math.ceil(data.length / columns);
 
-  const aux = [];
+  let aux = [];
   const auxFinal = [];
   let acts = [];
   let indice = 0;
+  let limit = 0;
+  const resto = acts.length % columns;
 
   for (let i = 0; row > i; i++) {
     indice = i * columns;
@@ -39,7 +41,16 @@ const invercionMatriz = (data, columns) => {
     acts = [...acts, ...auxFinal[x]];
   }
 
-  return acts;
+  aux = [];
+  indice = 0;
+
+  for (let i = 0; columns > i; i++) {
+    limit = resto <= i && i != 0 ? indice + row - 1 : indice + row;
+    aux.push(acts.slice(indice, limit));
+    indice = limit;
+  }
+
+  return aux;
 };
 
 const CardsContainer = () => {
@@ -80,7 +91,7 @@ const CardsContainer = () => {
 
     /* Invercion de matriz */
 
-    const acts = invercionMatriz(activities.data, colums);
+    const actividadesColumnas = invercionMatriz(activities.data, colums);
 
     return (
       <div className="container mt-4">
@@ -93,38 +104,44 @@ const CardsContainer = () => {
           <VolunteerExperiences />
         </div>
 
-        <div className="card-columns">
-          {acts.map(item => {
-            const isApply =
-              userActivities.data.find(activity => activity.id === item.id) ===
-              undefined;
+        <div className="columnMaster">
+          {actividadesColumnas.map(acts => (
+            <div className="cardContainer-columns">
+              {acts.map(item => {
+                const isApply =
+                  userActivities.data.find(
+                    activity => activity.id === item.id
+                  ) === undefined;
 
-            const deadline = moment(item.deadline);
-            const isEnable = now <= deadline;
-            return (
-              <Card
-                key={`cardactivity${item.id}`}
-                title={item.title}
-                description={
-                  <>
-                    {item.short_description} <hr />
-                    <Detail activity={item} />
-                  </>
-                }
-                img={item.description_image}
-              >
-                <ActivitiesButtons
-                  isEnable={isEnable}
-                  isApply={isApply}
-                  activity_id={item.id}
-                  user_id={user_id}
-                  title={item.title}
-                  description={item.short_description}
-                  withLink
-                />
-              </Card>
-            );
-          })}
+                const deadline = moment(item.deadline);
+                const isEnable = now <= deadline;
+                return (
+                  <Card
+                    key={`cardactivity${item.id}`}
+                    title={item.title}
+                    className="mb-3"
+                    description={
+                      <>
+                        {item.short_description} <hr />
+                        <Detail activity={item} />
+                      </>
+                    }
+                    img={item.description_image}
+                  >
+                    <ActivitiesButtons
+                      isEnable={isEnable}
+                      isApply={isApply}
+                      activity_id={item.id}
+                      user_id={user_id}
+                      title={item.title}
+                      description={item.short_description}
+                      withLink
+                    />
+                  </Card>
+                );
+              })}
+            </div>
+          ))}
         </div>
       </div>
     );
