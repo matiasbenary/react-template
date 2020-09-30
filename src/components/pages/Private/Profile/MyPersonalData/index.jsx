@@ -4,7 +4,7 @@ import { actions } from "../../../../../store/ducks/auth.duck";
 import GooglePlaceAutocomplete from "../../../../molecules/GooglePlaceAutocomplete";
 
 const getMainAddress = (address) => {
-  if (!address.length) return { address_info: "", address: "" };
+  if (!address && !address.length) return { address_info: "", address: "" };
 
   return address.filter((fil) => fil.is_main_address)[0];
 };
