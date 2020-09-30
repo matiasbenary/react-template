@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../../../../store/ducks/auth.duck";
+import GooglePlaceAutocomplete from "../../../../molecules/GooglePlaceAutocomplete";
+
+const getMainAddress = (address) => {
+  if (!address.length) return { address_info: "", address: "" };
+
+  return address.filter((fil) => fil.is_main_address)[0];
+};
 
 const MyPersonalData = ({
-  user: { name, email, marital_status, id_type, id_number, id },
+  user: { name, email, marital_status, id_type, id_number, id, addresses },
 }) => {
   const [profile, setProfile] = useState({
     name,
@@ -12,12 +19,18 @@ const MyPersonalData = ({
     id_type,
     id_number,
     id,
+    address_info: getMainAddress(addresses).address_info,
   });
+
   const { loading, error } = useSelector((state) => ({
     loading: state.auth.loading,
     error: state.auth.error,
   }));
   const dispatch = useDispatch();
+
+  const [addressForm, setAddress] = useState({
+    address: getMainAddress(addresses).address,
+  });
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -25,7 +38,9 @@ const MyPersonalData = ({
   };
 
   const submit = () => {
-    dispatch(actions.chageProfile(profile));
+    const payload = { ...profile, ...addressForm };
+
+    dispatch(actions.chageProfile(payload));
   };
 
   const maritalStatus = [
@@ -128,6 +143,28 @@ const MyPersonalData = ({
                     placeholder="EJ: 1111111"
                     value={profile.id_number}
                     name="id_number"
+                    onChange={changeHandler}
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label>Dirección</label>
+                  <GooglePlaceAutocomplete
+                    className="form-control"
+                    query={addressForm}
+                    setQuery={setAddress}
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="address_info123">Piso - Dpto</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address_info123"
+                    placeholder="usuario@emai.com"
+                    value={profile.address_info}
+                    name="address_info"
                     onChange={changeHandler}
                   />
                 </div>

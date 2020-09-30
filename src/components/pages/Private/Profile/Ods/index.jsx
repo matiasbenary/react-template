@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../../../../../store/ducks/auth.duck";
 
-const Ods = ({ ods ,userId}) => {
-  const { loading, error } = useSelector(state => ({
+const Ods = ({ ods, userId }) => {
+  const { loading, error } = useSelector((state) => ({
     loading: state.auth.loading,
-    error: state.auth.error
+    error: state.auth.error,
   }));
   const dispatch = useDispatch();
 
@@ -26,25 +26,25 @@ const Ods = ({ ods ,userId}) => {
     "Vida submarina (Objetivo 14)",
     "Vida de ecosistemas terrestres (Objetivo 15)",
     "Paz, justicia e instituciones sólidas (Objetivo 16)",
-    "Alianzas para lograr los objetivos (Objetivo 17)"
+    "Alianzas para lograr los objetivos (Objetivo 17)",
   ];
 
-  const listIds = ods.map(od => {
+  const listIds = ods.map((od) => {
     return od.id;
   });
 
   const [odsForm, setOdsForm] = useState(listIds);
 
-  const changeHandler = e => {
+  const changeHandler = (e) => {
     const value = Number(e.target.value);
     if (odsForm.includes(value)) {
-      setOdsForm(odsForm.filter(od => od != value));
+      setOdsForm(odsForm.filter((od) => od != value));
     } else {
       setOdsForm([...odsForm, value]);
     }
   };
   const submit = () => {
-    dispatch(actions.chageOds({categoriesIds:odsForm,id:userId}));
+    dispatch(actions.chageOds({ categoriesIds: odsForm, id: userId }));
   };
 
   return (
@@ -56,7 +56,7 @@ const Ods = ({ ods ,userId}) => {
             <div className="form-group  m-form__group">
               <div className="row ml-4">
                 {list.map((ods, index) => (
-                  <div className="col-lg-4 mb-4">
+                  <div className="col-lg-4 mb-4" key={`odsId-${index}`}>
                     <input
                       className="form-check-input"
                       type="checkbox"

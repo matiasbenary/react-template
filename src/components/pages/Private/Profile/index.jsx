@@ -5,10 +5,6 @@ import ChangePassword from "./ChangePassword";
 import MyPersonalData from "./MyPersonalData";
 
 const Profile = ({ user }) => {
-  /*
-
-   */
-  console.log(user);
   return (
     <>
       <ChangePassword></ChangePassword>
