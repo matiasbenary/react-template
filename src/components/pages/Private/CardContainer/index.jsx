@@ -14,8 +14,6 @@ import "./cardContainer.scss";
 import { useBreackpoint } from "../../../../utils/hooks/useBreackpoint";
 
 const invercionMatriz = (data, columns) => {
-  if (data.length < columns) return data;
-
   const row = Math.ceil(data.length / columns);
 
   let aux = [];
