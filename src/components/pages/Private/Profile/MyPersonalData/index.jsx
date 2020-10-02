@@ -55,7 +55,30 @@ const MyPersonalData = ({
     { label: "LE", value: "LE" },
     { label: "PASAPORTE", value: "PASAPORTE" },
   ];
-
+  /*
+ <div class="form-row">
+   <div class="form-group col-md-6">
+     <label>Dirección</label>
+     <GooglePlaceAutocomplete
+       className="form-control"
+       query={addressForm}
+       setQuery={setAddress}
+     />
+   </div>
+   <div class="form-group col-md-6">
+     <label for="address_info123">Piso - Dpto</label>
+     <input
+       type="text"
+       class="form-control"
+       id="address_info123"
+       placeholder="usuario@emai.com"
+       value={profile.address_info}
+       name="address_info"
+       onChange={changeHandler}
+     />
+   </div>
+ </div>;
+*/
   return (
     <div className="container mt-4">
       <div className="card shadow  bg-white rounded">
@@ -143,28 +166,6 @@ const MyPersonalData = ({
                     placeholder="EJ: 1111111"
                     value={profile.id_number}
                     name="id_number"
-                    onChange={changeHandler}
-                  />
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label>Dirección</label>
-                  <GooglePlaceAutocomplete
-                    className="form-control"
-                    query={addressForm}
-                    setQuery={setAddress}
-                  />
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="address_info123">Piso - Dpto</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="address_info123"
-                    placeholder="usuario@emai.com"
-                    value={profile.address_info}
-                    name="address_info"
                     onChange={changeHandler}
                   />
                 </div>

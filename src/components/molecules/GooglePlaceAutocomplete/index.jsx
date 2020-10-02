@@ -31,7 +31,6 @@ const formatQuery = (addressObject) => {
     "sublocality_level_1",
   ];
 
-  console.log(addressObject.address_components);
   addressObject.address_components.forEach((address) => {
     const type = address.types[0];
 
