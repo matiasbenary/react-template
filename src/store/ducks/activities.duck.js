@@ -109,7 +109,10 @@ export const reducer = (state = initialAuthState, action) => {
 };
 
 export const actions = {
-  getActivities: () => ({ type: actionTypes.GetActivitiesStart }),
+  getActivities: (payload = {}) => ({
+    type: actionTypes.GetActivitiesStart,
+    payload,
+  }),
   applyActivity: ({ payload }) => ({
     type: actionTypes.ApplyActivityStart,
     payload,
@@ -121,11 +124,12 @@ export const actions = {
 };
 // Watchers
 
-export function* getActivitiesState() {
+export function* getActivitiesState({ payload }) {
+  const setPage = payload.pages ? `page[number]=${payload.pages}` : "";
   try {
     const results = yield call(
       apiCall,
-      `activity/?filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}&filter[status]=1,2&include=locations`,
+      `activity/?${setPage}&filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}&filter[status]=1,2&include=locations`,
       null,
       "GET"
     );

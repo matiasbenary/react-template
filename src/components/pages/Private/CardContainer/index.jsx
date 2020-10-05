@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import Card from "../../../molecules/Card";
@@ -8,6 +8,7 @@ import ActivitiesButtons from "../../../molecules/ActivitiesButton";
 import Loading from "../../../molecules/Loading";
 import Detail from "../../../molecules/Detail";
 import Map from "../../../molecules/Map";
+import Pagination from "../../../molecules/Pagination";
 
 import VolunteerExperiences from "../../../molecules/VolunteerExperiences";
 import "./cardContainer.scss";
@@ -64,6 +65,8 @@ const CardsContainer = () => {
     activitiesLoading: state.activities.loading,
   }));
 
+  const [meta, setMeta] = useState({});
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -78,6 +81,13 @@ const CardsContainer = () => {
       dispatch(activitiesAction.getActivities());
     }
   }, [dispatch, activities]);
+
+  useEffect(() => {
+    if (activities) {
+      setMeta(activities.meta);
+    }
+  }, [activities, setMeta]);
+
   const colums = useBreackpoint();
 
   if (activitiesLoading) {
@@ -141,6 +151,11 @@ const CardsContainer = () => {
             </div>
           ))}
         </div>
+        <Pagination
+          meta={meta}
+          action={(payload) => activitiesAction.getActivities(payload)}
+          className="d-flex justify-content-end mt-2"
+        />
       </div>
     );
   }
