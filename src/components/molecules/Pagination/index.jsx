@@ -91,11 +91,7 @@ const Pagination = ({ meta, action, className = null }) => {
         key={`pagination-${beforeLimitReal}`}
         item={beforeLimitReal}
         goTo={goTo}
-        active={
-          beforeLimitReal < current_page &&
-          current_page < afterIndiceReal &&
-          current_page === beforeLimitReal
-        }
+        active={current_page === beforeLimitReal}
       />
     );
 

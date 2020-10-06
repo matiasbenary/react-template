@@ -76,11 +76,10 @@ const CardsContainer = () => {
   }, [user_id, dispatch, userActivities]);
 
   useEffect(() => {
-    //   // props.getUsers();as
     if (!activities) {
       dispatch(activitiesAction.getActivities());
     }
-  }, [dispatch, activities]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (activities) {
@@ -111,7 +110,11 @@ const CardsContainer = () => {
           />
           <VolunteerExperiences />
         </div>
-
+        <Pagination
+          meta={meta}
+          action={(payload) => activitiesAction.getActivities(payload)}
+          className="d-flex justify-content-end mt-5"
+        />
         <div className="columnMaster">
           {actividadesColumnas.map((acts) => (
             <div className="cardContainer-columns">
