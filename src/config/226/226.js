@@ -5,7 +5,7 @@ export default {
   logo: Logo,
   icon: Icon,
   title: "Voluntariado",
-  location_zoom: 8,
-  location_lng: -58,
-  location_lat: -34.6
+  location_zoom: 3,
+  location_lng: -64.18877609999998,
+  location_lat: -31.4200832
 };
