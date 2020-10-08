@@ -5,4 +5,5 @@ export default {
   logo: Logo,
   icon: Icon,
   title: "Voluntariado empujar",
+
 };

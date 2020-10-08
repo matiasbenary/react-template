@@ -2,13 +2,14 @@ import React from "react";
 import { withGoogleMap, GoogleMap } from "react-google-maps";
 
 import Marker from "./Marker";
+import config from "../../../config";
 
 const { google } = window;
 
 const MyMapComponent = withGoogleMap(({ activities }) => (
   <GoogleMap
-    defaultZoom={3}
-    defaultCenter={{ lat: -31.4200832, lng: -64.18877609999998 }}
+    defaultZoom={config.location_zoom}
+    defaultCenter={{ lat: config.location_lat, lng: config.location_lng }}
   >
     {activities &&
       activities.map((activity) =>
