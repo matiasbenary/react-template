@@ -22,7 +22,6 @@ const invercionMatriz = (data, columns) => {
   let acts = [];
   let indice = 0;
   let limit = 0;
-  const resto = acts.length % columns;
 
   for (let i = 0; row > i; i++) {
     indice = i * columns;
@@ -42,13 +41,21 @@ const invercionMatriz = (data, columns) => {
 
   aux = [];
   indice = 0;
+  console.log(acts.map(t=>t.id),row)
+  /*
+  0: (4) [138, 121, 48, 119]
+1: (3) [49, 157, 156]
+2: (3) [122, 96, 158]
 
+
+(11) [138, 121, 48, 119, 49, 157, 156, 122, 96, 158, 52] / 3 4  10 3,666666667
+  */
   for (let i = 0; columns > i; i++) {
-    limit = resto <= i && i !== 0 ? indice + row - 1 : indice + row;
+    limit =  indice + row;
     aux.push(acts.slice(indice, limit));
     indice = limit;
   }
-
+  console.log(aux.map(test=>test.map(t=>t.id)))
   return aux;
 };
 

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Marker = ({ location, activity }) => {
   const [open, setOpen] = useState(false);
   const openInfo = () => {
-    setOpen(true);
+    setOpen(!open);
   };
 
   return (
