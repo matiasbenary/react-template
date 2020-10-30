@@ -60,8 +60,11 @@ const Register = () => {
   };
   return (
     <>
-      <h5 className="mt-2 mb-4">Restablecer contraseña</h5>
+      <h5 className="mt-2 mb-4">Creá tu cuenta</h5>
       <div className="col-12 p-0">
+        <label className="pl-2 d-flex justify-content-between align-items-end">
+        Completá tus datos por favor
+        </label>
         <div className={`d-flex mb-2 ${!status && "mb-4"}`}>
           <FaAsterisk className="icon-required"></FaAsterisk>
           <span className="span span--error">Campos obligatorios</span>
