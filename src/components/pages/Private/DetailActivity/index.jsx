@@ -5,7 +5,7 @@ import { createSelector } from "reselect";
 import moment from "moment";
 import Card from "../../../molecules/Card";
 import { actions } from "../../../../store/ducks/activity/getActivity.duck";
-import ActivitiesButtons from "../../../molecules/ActivitiesButton";
+import ActivitiesButtons from "../../../molecules/ActivitiesButtons";
 import Detail from "../../../molecules/Detail";
 import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
 import useGetUserId from "../../../../hooks/api/useGetUserId";
@@ -64,14 +64,7 @@ const DetailActivity = () => {
         <div className="row">
           <div className="col-12">
             <Card title={activity.title} descriptionHtml={activity.description}>
-              <ActivitiesButtons
-                isApply={isApply}
-                activity_id={id}
-                user_id={user_id}
-                title={activity.title}
-                description={activity.short_description}
-                isEnable={isEnable}
-              />
+            <ActivitiesButtons activity={activity} userId={user_id} isEnable={isEnable} isApply={isApply} />
             </Card>
           </div>
           <div className="col-12 mt-4">
