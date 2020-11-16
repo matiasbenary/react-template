@@ -1,89 +1,158 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
-import { createSelector } from "reselect";
-import moment from "moment";
-import Card from "../../../molecules/Card";
-import { actions } from "../../../../store/ducks/activity/getActivity.duck";
-import ActivitiesButtons from "../../../molecules/ActivitiesButtons";
-import Detail from "../../../molecules/Detail";
-import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
+import styled from "styled-components";
+import { apiCall } from "../../../../crud/api.crud";
 import useGetUserId from "../../../../hooks/api/useGetUserId";
+import ActivitiesButtons from "../../../molecules/ActivitiesButtons";
+import { useHistory } from "react-router-dom";
+
 import Loading from "../../../molecules/Loading";
+import Button from "../../../molecules/Button";
+import moment from "moment";
 
-const activitySelector = createSelector(
-  (state) => state.activity.activity,
-  (activity) => activity
-);
+const Img = styled.img`
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 40px;
+`;
 
-const activityLoadingSelector = createSelector(
-  (state) => state.activity.loading,
-  (loading) => loading
-);
+const Container = styled.div`
+  display: flex;
+`;
 
-const userActivitiesSelector = createSelector(
-  (state) => state.userActivities.activities,
-  (userActivities) => userActivities
+const LeftContainer = styled.div`
+  display: inline-block;
+  width: 30%;
+  margin-right: 40px;
+
+  .strong {
+    font-weight: bold;
+    margin: 0 5px 5px 0;
+  }
+`;
+const RigthContainer = styled.div`
+  display: inline-block;
+  width: 60%;
+
+  hr {
+    border: 2px solid #c4c4c4;
+    border-radius: 5px;
+  }
+`;
+
+const Buttons = styled.div`
+display:flex;
+justify-content:flex-end;
+align-items: center;
+`
+
+const createMarkup = (setHtml) => ({ __html: setHtml });
+
+const setHtml = (setHtml) => (
+  <div dangerouslySetInnerHTML={createMarkup(setHtml)} />
 );
 
 const DetailActivity = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const activity = useSelector(activitySelector);
-  const userActivities = useSelector(userActivitiesSelector);
-  const loading = useSelector(activityLoadingSelector);
-  const user_id = useGetUserId();
-  const [update, setUpdate] = useState(false);
+  const userId = useGetUserId();
+  const [activity, setActivity] = useState(null);
+  const [activitiesUser, setActivitiesUser] = useState(null);
 
   useEffect(() => {
-    if (!activity || activity.id !== Number(id)) {
-      dispatch(actions.getActivity(id));
-    }
-  }, [activity]);
-
-  useEffect(() => {
-    if (!userActivities || !update) {
-      dispatch(userActivitiesAction.getActivities(user_id));
-      setUpdate(true);
-    }
+    apiCall(`activity/${id}?include=locations`, null, "GET").then((response) =>
+      setActivity(response.data.data[0])
+    );
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (activity && userActivities) {
-    const isApply =
-      userActivities.data.find((activityLocal) => activityLocal.id == id) ===
-      undefined;
-    const now = moment();
-    const deadline = moment(activity.deadline);
-    const isEnable = now < deadline;
-    return (
-      <div className="container mt-4">
-        <div className="row">
-          <div className="col-12">
-            <Card title={activity.title} descriptionHtml={activity.description}>
-            <ActivitiesButtons activity={activity} userId={user_id} isEnable={isEnable} isApply={isApply} />
-            </Card>
-          </div>
-          <div className="col-12 mt-4">
-            <Card
-              title="Términos y condiciones"
-              descriptionHtml={activity.terms_and_conditions}
-            />
-          </div>
-          <div className="col-12 my-4">
-            <Card
-              title="Otros datos"
-              description={<Detail activity={activity} />}
-            />
-          </div>
-        </div>
-      </div>
+  useEffect(() => {
+    apiCall(`user/${userId}/activities`, null, "GET").then((response) =>
+      setActivitiesUser(response.data)
     );
+  }, []);
+
+  const history = useHistory();
+
+  if (!activity || !activitiesUser) return <Loading></Loading>;
+
+  const getLocation = () => {
+    if (activity.locations.length) {
+      return activity.locations && activity.locations.length === 1
+        ? activity.locations[0].address
+        : "Multiple";
+    }
+    return "Sin asignar";
+  };
+
+  const goBack = () =>{
+    history.goBack();
   }
-  return null;
+  const activitiesUserOnlyId = activitiesUser.data.map((ac) => ac.id);
+
+  const now = moment().subtract(1, "days");
+
+  return (
+    <div className="container mt-4">
+      <Buttons>
+      <Button onClick={goBack}  className="mr-4">Atrás</Button>
+      <ActivitiesButtons
+          activity={activity}
+          userId={userId}
+          isApply={activitiesUserOnlyId.includes(activity.id)}
+          isEnable={now <= moment(activity.deadline)}
+        />
+      </Buttons>
+      <Container>
+        <LeftContainer>
+          {activity.description_image && (
+            <Img
+              className="card-img-top"
+              alt="img de actividad"
+              src={`https://app.fonselp.com/storage/${activity.description_image}`}
+            />
+          )}
+          <div>
+            <div>
+              <span className="strong">Estado:</span> {activity.status_alias}
+            </div>
+            <div>
+              <span className="strong">Comenzamos el:</span>
+              {activity.activity_to}
+            </div>
+            <div>
+              <span className="strong">Postúlate hasta:</span>
+              {activity.deadline.slice(0, 10)}
+            </div>
+            {!!activity.quota && (
+              <div>
+                <span className="strong">Cupos:</span>
+                {activity.quota}
+              </div>
+            )}
+            <div>
+              <span className="strong">Estamos en:</span>
+              {getLocation()}
+            </div>
+          </div>
+        </LeftContainer>
+        <RigthContainer>
+          <h2>{activity.title}</h2>
+          <p>{setHtml(activity.description)}</p>
+          <hr />
+          <h2> Terminos y condiciones </h2>
+          <p>{setHtml(activity.terms_and_conditions)}</p>
+        </RigthContainer>
+      </Container>
+      <Buttons>
+      <Button onClick={goBack}  className="mr-4">Atrás</Button>
+      <ActivitiesButtons
+          activity={activity}
+          userId={userId}
+          isApply={activitiesUserOnlyId.includes(activity.id)}
+          isEnable={now <= moment(activity.deadline)}
+        />
+      </Buttons>
+    </div>
+  );
 };
 
 export default DetailActivity;

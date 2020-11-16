@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ActivitiesButtons from "../ActivitiesButtons"
+import ActivitiesButtons from "../ActivitiesButtons";
 
 const Card = styled.div`
   background-color: #ffffff;
@@ -44,8 +44,7 @@ const Footer = styled.div`
   border-radius: 0 0 15px 15px;
 `;
 
-const ActivitiesCard = ({ activity, userId ,isApply,isEnable }) => {
-
+const ActivitiesCard = ({ activity, userId, isApply, isEnable }) => {
   const getLocation = () => {
     if (activity.locations.length) {
       return activity.locations && activity.locations.length === 1
@@ -55,15 +54,15 @@ const ActivitiesCard = ({ activity, userId ,isApply,isEnable }) => {
     return "Sin asignar";
   };
 
-
-
   return (
     <Card>
-      <Img
-        className="card-img-top"
-        alt="img de actividad"
-        src={`https://app.fonselp.com/storage/${activity.description_image}`}
-      />
+      {activity.description_image && (
+        <Img
+          className="card-img-top"
+          alt="img de actividad"
+          src={`https://app.fonselp.com/storage/${activity.description_image}`}
+        />
+      )}
       <Container>
         <Info>
           <h3>{activity.title}</h3>
@@ -78,13 +77,19 @@ const ActivitiesCard = ({ activity, userId ,isApply,isEnable }) => {
             <span className="strong">Estado:</span> {activity.status_alias}
           </div>
           <div>
-            <span className="strong">Comenzamos el:</span>{" "}
+            <span className="strong">Comenzamos el:</span>
             {activity.activity_to}
           </div>
           <div>
-            <span className="strong">Postúlate hasta:</span>{" "}
+            <span className="strong">Postúlate hasta:</span>
             {activity.deadline.slice(0, 10)}
           </div>
+          {!!activity.quota && (
+            <div>
+              <span className="strong">Cupos:</span>
+              {activity.quota}
+            </div>
+          )}
           <div>
             <span className="strong">Estamos en:</span>
             {getLocation()}
@@ -92,7 +97,12 @@ const ActivitiesCard = ({ activity, userId ,isApply,isEnable }) => {
         </div>
       </Container>
       <Footer>
-        <ActivitiesButtons activity={activity} userId={userId} isEnable={isEnable} isApply={isApply} />
+        <ActivitiesButtons
+          activity={activity}
+          userId={userId}
+          isEnable={isEnable}
+          isApply={isApply}
+        />
       </Footer>
     </Card>
   );
