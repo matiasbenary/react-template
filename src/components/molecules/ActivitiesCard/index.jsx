@@ -18,6 +18,9 @@ const Card = styled.div`
     font-weight: bold;
     margin: 0 5px 5px 0;
   }
+  h3{
+    font-size:20px;
+  }
 `;
 const Container = styled.div`
   padding: 25px;
