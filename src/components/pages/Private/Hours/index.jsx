@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { actions as userActivitiesHoursAction } from "../../../../store/ducks/user/activitiesHours.duck";
 import Loading from "../../../molecules/Loading";
-import Table from "../../../molecules/Table/Table";
+import Table from "./components/Table";
 import Pagination from "../../../molecules/Pagination";
 
 const Hours = () => {
@@ -50,6 +50,11 @@ const Hours = () => {
         selector: "horas",
         sortable: true,
         right: true,
+      },
+      {
+        name: "Editar",
+        right: true,
+        cell: () => <button>editar</button>,
       },
       {
         name: "Estado",
