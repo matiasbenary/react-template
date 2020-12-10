@@ -1,26 +1,24 @@
-import axios from "axios";
-import moment from "moment";
-import store from "../index";
+import axios from 'axios';
+import moment from 'moment';
+import store from '../index';
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
-const getHeaderLocalStorage = () => JSON.parse(localStorage.getItem("token"));
+const getHeaderLocalStorage = () => JSON.parse(localStorage.getItem('token'));
 
 const setHeaderLocalStorage = (res) => {
   const header = {
     Authorization: `${res.token_type} ${res.access_token}`,
   };
-  localStorage.setItem("token", JSON.stringify(header));
+  localStorage.setItem('token', JSON.stringify(header));
 };
 
-const getExpireTokenLocalStorage = () =>
-  JSON.parse(localStorage.getItem("expire_token"));
+const getExpireTokenLocalStorage = () => JSON.parse(localStorage.getItem('expire_token'));
 
-const setExpireTokenLocalStorage = (res) =>
-  localStorage.setItem(
-    "expire_token",
-    JSON.stringify(moment().add(res.expires_in, "s"))
-  );
+const setExpireTokenLocalStorage = (res) => localStorage.setItem(
+  'expire_token',
+  JSON.stringify(moment().add(res.expires_in, 's')),
+);
 
 const hasExpireToken = (expireToken) => expireToken !== null;
 
@@ -44,22 +42,22 @@ export const getToken = async () => {
 
   if (
     !(
-      hasExpireToken(expireToken) &&
-      isExpiredToken(expireToken) &&
-      hasToken(token)
+      hasExpireToken(expireToken)
+      && isExpiredToken(expireToken)
+      && hasToken(token)
     )
   ) {
     const params = new FormData();
-    params.set("grant_type", "client_credentials");
-    params.set("scope", "*");
-    params.set("client_id", process.env.REACT_APP_API_CLIENT_ID);
-    params.set("client_secret", process.env.REACT_APP_API_CLIENT_SECRET);
+    params.set('grant_type', 'client_credentials');
+    params.set('scope', '*');
+    params.set('client_id', process.env.REACT_APP_API_CLIENT_ID);
+    params.set('client_secret', process.env.REACT_APP_API_CLIENT_SECRET);
     try {
       const res = await axios({
-        method: "post",
+        method: 'post',
         url: `${BASE_URL}oauth/token`,
         data: params,
-        headers: { "content-type": "application/x-www-form-urlencoded" },
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
       });
       setHeaderLocalStorage(res.data);
       setExpireTokenLocalStorage(res.data);
@@ -77,10 +75,10 @@ export const apiCall = async (url, data, method) => {
   // console.log(store.getState());
   const headers = store.getState().auth.user
     ? {
-        ...token,
-        "User-Id": store.getState().auth.user.id,
-        "Entity-Id": process.env.REACT_APP_ID_ENTITY,
-      }
+      ...token,
+      'User-Id': store.getState().auth.user.id,
+      'Entity-Id': process.env.REACT_APP_ID_ENTITY,
+    }
     : token;
 
   return axios({
@@ -92,7 +90,7 @@ export const apiCall = async (url, data, method) => {
 };
 
 export const saveUser = (user) => {
-  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem('user', JSON.stringify(user));
 };
 
 export const clearStorage = () => {

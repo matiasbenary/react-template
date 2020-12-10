@@ -8,6 +8,7 @@ import Hours from "../pages/Private/Hours";
 import ModalRoot from "../molecules/Modal/ModalRoot";
 import DetailActivity from "../pages/Private/DetailActivity";
 import Profile from "../pages/Private/Profile";
+import "./layout.scss";
 
 const Main = () => {
   const user = useSelector((state) => state.auth.user);

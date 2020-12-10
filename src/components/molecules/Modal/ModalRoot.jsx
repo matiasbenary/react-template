@@ -1,8 +1,8 @@
-import React from "react";
-import ReactModal from "react-modal";
-import { useSelector, useDispatch } from "react-redux";
-import { actions } from "../../../store/ducks/modal.duck";
-import modalTypes from ".";
+import React from 'react';
+import ReactModal from 'react-modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { actions } from '../../../store/ducks/modal.duck';
+import modalTypes from '.';
 
 const MODAL_TYPES = {
   alert: modalTypes.AlertModal,
@@ -10,6 +10,7 @@ const MODAL_TYPES = {
   unapply: modalTypes.UnapplyModal,
   hoursLoad: modalTypes.HoursModal,
   commentary: modalTypes.CommentaryModal,
+  addHours: modalTypes.AddHoursModal,
 };
 
 const ModalRoot = () => {

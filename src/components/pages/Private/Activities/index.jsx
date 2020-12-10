@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { MdAddAlarm, MdComment } from "react-icons/md";
-import { actions as modalAction } from "../../../../store/ducks/modal.duck";
-import { actions as userActivitiesAction } from "../../../../store/ducks/user/activities.duck";
-import Loading from "../../../molecules/Loading";
-import Table from "../../../molecules/Table";
+import React, { useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { MdAddAlarm, MdComment } from 'react-icons/md';
+import { actions as modalAction } from '../../../../store/ducks/modal.duck';
+import { actions as userActivitiesAction } from '../../../../store/ducks/user/activities.duck';
+import Loading from '../../../molecules/Loading';
+import Table from '../../../molecules/Table';
 
 const Activities = () => {
   const dispatch = useDispatch();
@@ -15,11 +15,11 @@ const Activities = () => {
       modalAction.modalShow({
         modalProps: {
           open: true,
-          title: "Carga de horas",
+          title: 'Carga de horas',
           activity_id,
         },
-        modalType: "hoursLoad",
-      })
+        modalType: 'hoursLoad',
+      }),
     );
   };
 
@@ -29,10 +29,10 @@ const Activities = () => {
         modalProps: {
           open: true,
           activity_id,
-          url: "activity/addCommentary",
+          url: 'activity/addCommentary',
         },
-        modalType: "commentary",
-      })
+        modalType: 'commentary',
+      }),
     );
   };
 
@@ -41,7 +41,7 @@ const Activities = () => {
       user_id: state.auth.user.id,
       userActivities: state.userActivities.activities,
       userActivitiesLoading: state.userActivities.loading,
-    })
+    }),
   );
 
   useEffect(() => {
@@ -51,30 +51,29 @@ const Activities = () => {
   }, [dispatch, user_id, userActivities]);
 
   const iconStyle = {
-    fontSize: "24px",
+    fontSize: '24px',
   };
 
   const columns = useMemo(
     () => [
       {
-        name: "Acciones",
-        cell: (row) => {
-          return (
-            <>
-              {row.selection_status === "Seleccionad@" && (
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm m-1"
-                  onClick={() => {
-                    hoursModal(row.id);
-                  }}
-                >
-                  <MdAddAlarm style={iconStyle} />
-                </button>
-              )}
-              {!row.commentary &&
-                row.status === "Terminada" &&
-                row.selection_status === "Seleccionad@" && (
+        name: 'Acciones',
+        cell: (row) => (
+          <>
+            {row.selection_status === 'Seleccionad@' && (
+            <button
+              type="button"
+              className="btn btn-primary btn-sm m-1"
+              onClick={() => {
+                hoursModal(row.id);
+              }}
+            >
+              <MdAddAlarm style={iconStyle} />
+            </button>
+            )}
+            {!row.commentary
+                && row.status === 'Terminada'
+                && row.selection_status === 'Seleccionad@' && (
                   <button
                     type="button"
                     className="btn btn-primary btn-sm"
@@ -84,62 +83,61 @@ const Activities = () => {
                   >
                     <MdComment style={iconStyle} />
                   </button>
-                )}
-            </>
-          );
-        },
+            )}
+          </>
+        ),
         ignoreRowClick: true,
         allowOverflow: true,
         button: true,
       },
       {
-        name: "Actividad",
-        selector: "activity",
+        name: 'Actividad',
+        selector: 'activity',
         sortable: true,
         expandableRows: true,
         cell: (row) => <Link to={row.url}>{row.activity}</Link>,
       },
       {
-        name: "Estado",
-        selector: "status",
+        name: 'Estado',
+        selector: 'status',
         sortable: true,
         center: true,
       },
       {
-        name: "Fecha límite de postulación",
-        selector: "deadline",
+        name: 'Fecha límite de postulación',
+        selector: 'deadline',
         sortable: true,
         center: true,
         defaultSortAsc: false,
       },
       {
-        name: "Estado de selección",
-        selector: "selection_status",
+        name: 'Estado de selección',
+        selector: 'selection_status',
         sortable: true,
         center: true,
       },
       {
-        name: "Horas acumuladas por el equipo",
-        selector: "hours_total",
+        name: 'Horas acumuladas por el equipo',
+        selector: 'hours_total',
         sortable: true,
         center: true,
       },
     ],
-    [hoursModal, iconStyle]
+    [hoursModal, iconStyle],
   );
 
   const postulationStatus = (status) => {
     switch (status) {
       case 0:
-        return "Pendiente";
+        return 'Pendiente';
       case 1:
-        return "En revision";
+        return 'En revision';
       case 2:
-        return "Seleccionad@";
+        return 'Seleccionad@';
       case 3:
-        return "No seleccionad@";
+        return 'No seleccionad@';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -149,7 +147,7 @@ const Activities = () => {
 
   if (userActivities) {
     const tableStyles = {
-      margin: "20px auto",
+      margin: '20px auto',
     };
 
     const data = userActivities.data.map((a) => ({

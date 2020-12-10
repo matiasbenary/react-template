@@ -1,11 +1,10 @@
 import React from 'react';
-import HoursForm from '../Forms/HoursForm';
-import './modal.scss';
+import Form from './AddHours/Form';
 
-const HoursModal = ({ closeModal, title, activity_id }) => (
+const AddHoursModal = ({ closeModal }) => (
   <div className="modal-content">
     <div className="modal-header">
-      <h5 className="modal-title">{title}</h5>
+      <h5 className="modal-title">Agregar Hora</h5>
       <button
         type="button"
         className="close"
@@ -16,9 +15,9 @@ const HoursModal = ({ closeModal, title, activity_id }) => (
       </button>
     </div>
     <div className="modal-body">
-      <HoursForm closeModal={closeModal} activity_id={activity_id} />
+      <Form closeModal={closeModal} />
     </div>
   </div>
 );
 
-export default HoursModal;
+export default AddHoursModal;
