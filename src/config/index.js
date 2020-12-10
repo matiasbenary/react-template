@@ -6,6 +6,7 @@ import Naves from "./176/176";
 import VamosAZoomar from "./4161/4161";
 import Baufest from "./22/22";
 import CivicHouse from "./2241/2241";
+import Bisblick from "./3885/3885";
 
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
@@ -29,6 +30,8 @@ const config = () => {
       return { ...base, ...Baufest };
     case "2241":
       return { ...base, ...CivicHouse };
+    case "3885":
+      return { ...base, ...Bisblick };
     default:
       return base;
   }

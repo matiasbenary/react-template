@@ -8,7 +8,7 @@ import { actions } from "../../../store/ducks/auth.duck";
 import { BsPerson } from "react-icons/bs";
 
 const Img = styled.img`
-  width: ${(props) => props.width || "200px"};
+  width: ${(props) => props.width || "100px"};
 `;
 
 const Navbar = ({ name }) => {
@@ -43,6 +43,7 @@ const Navbar = ({ name }) => {
     setIsOpen(!isOpen);
   };
 
+  console.log(config.logo_width);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white ">
       <div className="container">
