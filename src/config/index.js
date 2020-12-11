@@ -7,6 +7,7 @@ import VamosAZoomar from "./4161/4161";
 import Baufest from "./22/22";
 import CivicHouse from "./2241/2241";
 import Bisblick from "./3885/3885";
+import Idex from "./2614/2614";
 
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
@@ -32,6 +33,8 @@ const config = () => {
       return { ...base, ...CivicHouse };
     case "3885":
       return { ...base, ...Bisblick };
+    case "2614":
+      return { ...base, ...Idex };
     default:
       return base;
   }
