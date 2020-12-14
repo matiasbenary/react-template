@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import "./modal.scss";
+import React, { useState } from 'react';
+import './modal.scss';
 
 const ApplyModal = ({ closeModal, title, send }) => {
-  const [commentary, setCommentary] = useState("");
+  const [commentary, setCommentary] = useState('');
   const onChange = (e) => {
     setCommentary(e.target.value);
   };
@@ -31,7 +31,7 @@ const ApplyModal = ({ closeModal, title, send }) => {
             Ingrese un comentario para participar:
           </label>
           <textarea
-            style={{ border: commentary.length ? "" : "1px solid #dc3545" }}
+            style={{ border: commentary.length ? '' : '1px solid #dc3545' }}
             className="form-control"
             id="message-text"
             value={commentary}

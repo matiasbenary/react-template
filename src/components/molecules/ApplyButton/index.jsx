@@ -2,21 +2,18 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { actions as modalAction } from "../../../store/ducks/modal.duck";
 import { actions as modalActivities } from "../../../store/ducks/activities.duck";
+import { ButtonPrimary } from "../Button";
 
 const ApplyButton = ({
-  user_id,
-  activity_id,
-  title,
-  description,
-  disabled,
+  activity, userId, setChange
 }) => {
   const dispatch = useDispatch();
-
   const sendApplyInfo = (postulation_reason) => {
+    setChange();
     const payload = {
       postulation_reason,
-      user_id,
-      activity_id,
+      user_id:userId,
+      activity_id:activity.id,
     };
     dispatch(modalActivities.applyActivity({ payload }));
   };
@@ -26,8 +23,8 @@ const ApplyButton = ({
       modalAction.modalShow({
         modalProps: {
           open: true,
-          title,
-          message: description,
+          title:activity.title,
+          message: activity.short_description,
           send: (postulation_reason) => sendApplyInfo(postulation_reason),
         },
         modalType: "apply",
@@ -35,14 +32,12 @@ const ApplyButton = ({
     );
   };
   return (
-    <button
-      className="btn btn-primary btn-sm"
+    <ButtonPrimary
       onClick={openApplyModal}
       type="button"
-      disabled={disabled}
     >
       Postularme
-    </button>
+    </ButtonPrimary>
   );
 };
 

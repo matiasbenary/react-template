@@ -55,12 +55,12 @@ const Navbar = ({ name }) => {
           </li>
           <li className="px-3">
             <NavLink activeClassName="selected" to="/actividad">
-              Mis actividades
+              Actividades
             </NavLink>
           </li>
           <li className="px-3">
             <NavLink activeClassName="selected" to="/horas">
-              Mis horas
+              Horas
             </NavLink>
           </li>
         </ul>
