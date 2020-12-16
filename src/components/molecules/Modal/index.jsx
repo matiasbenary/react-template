@@ -1,8 +1,9 @@
-import AlertModal from "./AlertModal";
-import ApplyModal from "./ApplyModal";
-import UnapplyModal from "./UnapplyModal";
-import HoursModal from "./HoursModal";
-import CommentaryModal from "./CommentaryModal";
+import AlertModal from './AlertModal';
+import ApplyModal from './ApplyModal';
+import UnapplyModal from './UnapplyModal';
+import HoursModal from './HoursModal';
+import AddHoursModal from './AddHoursModal';
+import CommentaryModal from './CommentaryModal';
 
 const modalTypes = {
   AlertModal,
@@ -10,5 +11,6 @@ const modalTypes = {
   UnapplyModal,
   HoursModal,
   CommentaryModal,
+  AddHoursModal,
 };
 export default modalTypes;

@@ -1,0 +1,23 @@
+.card__container {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 20px 0;
+}
+
+.card__container__columns {
+  margin: 0px 8px;
+  width: 100%;
+}
+
+.card__container__columns:first-of-type {
+  margin: 0 8px 0 0;
+}
+
+.card__container__columns:last-of-type {
+  margin: 0 0 0 8px;
+}
+
+.card__container__columns:only-of-type {
+  margin: 0;
+}

@@ -1,16 +1,16 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { apiCall } from "../../../crud/api.crud";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { apiCall } from '../../../crud/api.crud';
 
 export const actionTypes = {
-  GetActivitiesStart: "[USER ACTIVITIES] GET START",
-  GetActivitiesComplete: "[USER ACTIVITIES] GET COMPLETE",
-  GetActivitiesError: "[USER ACTIVITIES] GET ERROR",
+  GetActivitiesStart: '[USER ACTIVITIES] GET START',
+  GetActivitiesComplete: '[USER ACTIVITIES] GET COMPLETE',
+  GetActivitiesError: '[USER ACTIVITIES] GET ERROR',
 };
 
 const initialAuthState = {
   loading: false,
   activities: null,
-  error: "",
+  error: '',
 };
 
 export const reducer = (state = initialAuthState, action) => {
@@ -47,7 +47,7 @@ export function* getActivitiesState({ userId }) {
       apiCall,
       `user/${userId}/activities`,
       null,
-      "GET"
+      'GET',
     );
     yield put({ type: actionTypes.GetActivitiesComplete, results });
   } catch (error) {

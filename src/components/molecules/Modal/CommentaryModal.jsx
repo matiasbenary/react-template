@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import "./modal.scss";
-import StepOne from "./commentaryModal/StepOne";
-import StepTwo from "./commentaryModal/StepTwo";
+import React, { useState } from 'react';
+import './modal.scss';
+import StepOne from './commentaryModal/StepOne';
+import StepTwo from './commentaryModal/StepTwo';
 
 const CommentaryModal = ({ closeModal, url, activity_id }) => {
-  const [commentary, setCommentary] = useState("");
+  const [commentary, setCommentary] = useState('');
 
   const [step, setStep] = useState(0);
 

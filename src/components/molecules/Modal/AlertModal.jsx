@@ -1,5 +1,5 @@
-import React from "react";
-import "./modal.scss";
+import React from 'react';
+import './modal.scss';
 
 const AlertModal = ({ closeModal, title, message }) => (
   <div className="modal-content">

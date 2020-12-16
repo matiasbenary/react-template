@@ -16,19 +16,29 @@ const Item = ({ item, active, goTo }) => {
   );
 };
 
-const Pagination = ({ meta, action, className = null }) => {
+const Pagination = ({ meta, action, className = null ,withRedux = true }) => {
   const dispath = useDispatch();
 
+  const setPage = (pages) => {
+    if(withRedux){
+      dispath(action({ pages}));
+    }else{
+      action(pages)
+    }
+  }
+
   const before = () => {
-    dispath(action({ pages: meta.current_page - 1 }));
+    setPage(meta.current_page - 1 );
+
+
   };
 
   const next = () => {
-    dispath(action({ pages: meta.current_page + 1 }));
+    setPage(meta.current_page + 1 );
   };
 
-  const goTo = ($page) => {
-    dispath(action({ pages: $page }));
+  const goTo = (page) => {
+    setPage(page );
   };
 
   const getOtherPages = () => {
