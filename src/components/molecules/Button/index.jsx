@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const Button =styled.button`
+const Button = styled.button`
 background: #BCBBBB;
 &:focus {
   border: none;
@@ -32,17 +32,15 @@ background: #BCBBBB;
     outline: none;
   }
 
-`
+`;
 
-export default Button
+export default Button;
 
 export const ButtonPrimary = styled(Button)`
 background: #3F86F6;
-`
+`;
 
 export const ButtonWarning = styled(Button)`
 background: #DE6E6E
 ;
-`
-
-
+`;

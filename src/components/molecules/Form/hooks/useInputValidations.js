@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import validationsConstraints from '../validations';
 
 const useInputValidations = ({
-  formContext, validations, name, value,
+  formContext, validations, name, value, setValue = false,
 }) => {
   // manejo de estado
   const [isValid, setIsValid] = useState({
@@ -39,8 +39,15 @@ const useInputValidations = ({
   }, [isValid]);
 
   useEffect(() => {
-    formContext.setValues({ ...formContext.values, [name]: value });
+    formContext.updateValue(name, value);
   }, [value]);
+
+  useEffect(() => {
+    const defaultValue = formContext.getDefaultValue(name);
+    if (defaultValue) {
+      setValue(formContext.getDefaultValue(defaultValue));
+    }
+  }, []);
 
   // escucha cuando se ejecuta el submit para disparar las validaciones
   useEffect(() => {

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../../../../store/ducks/auth.duck";
-import GooglePlaceAutocomplete from "../../../../molecules/GooglePlaceAutocomplete";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../../../../store/ducks/auth.duck';
+import GooglePlaceAutocomplete from '../../../../molecules/GooglePlaceAutocomplete';
 
 const getMainAddress = (address) => {
-  if (!address || !address.length) return { address_info: "", address: "" };
+  if (!address || !address.length) return { address_info: '', address: '' };
 
   return address.filter((fil) => fil.is_main_address)[0];
 };
 
 const MyPersonalData = ({
-  user: { name, email, marital_status, id_type, id_number, id, addresses },
+  user: {
+    name, email, marital_status, id_type, id_number, id, addresses,
+  },
 }) => {
   const [profile, setProfile] = useState({
     name,
@@ -44,16 +46,16 @@ const MyPersonalData = ({
   };
 
   const maritalStatus = [
-    { label: "Soltero/a", value: "Soltero" },
-    { label: "Casado/a", value: "Casado" },
-    { label: "Viudo/a", value: "Viudo" },
-    { label: "Divorciado/a", value: "Divorciado" },
+    { label: 'Soltero/a', value: 'Soltero' },
+    { label: 'Casado/a', value: 'Casado' },
+    { label: 'Viudo/a', value: 'Viudo' },
+    { label: 'Divorciado/a', value: 'Divorciado' },
   ];
 
   const idTypes = [
-    { label: "DNI", value: "DNI" },
-    { label: "LE", value: "LE" },
-    { label: "PASAPORTE", value: "PASAPORTE" },
+    { label: 'DNI', value: 'DNI' },
+    { label: 'LE', value: 'LE' },
+    { label: 'PASAPORTE', value: 'PASAPORTE' },
   ];
   /*
  <div class="form-row">
@@ -86,12 +88,12 @@ const MyPersonalData = ({
         <div className="card-block">
           <div className="card-body">
             <div className="login__inputs">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputEmail4">Nombre completo</label>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label>Nombre completo</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="inputEmail4"
                     placeholder="EJ: Juan Peréz"
                     value={profile.name}
@@ -100,11 +102,11 @@ const MyPersonalData = ({
                     required
                   />
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="inputPassword4">Correo electrónico</label>
+                <div className="form-group col-md-6">
+                  <label>Correo electrónico</label>
                   <input
                     type="email"
-                    class="form-control"
+                    className="form-control"
                     id="inputPassword4"
                     placeholder="usuario@emai.com"
                     value={profile.email}
@@ -114,12 +116,12 @@ const MyPersonalData = ({
                   />
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputState">Estado civil</label>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label>Estado civil</label>
                   <select
                     id="inputState"
-                    class="form-control"
+                    className="form-control"
                     name="marital_status"
                     onChange={changeHandler}
                   >
@@ -137,12 +139,12 @@ const MyPersonalData = ({
                   </select>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputId">Tipo de documento</label>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputId">Tipo de documento</label>
                   <select
                     id="inputId"
-                    class="form-control"
+                    className="form-control"
                     name="id_type"
                     onChange={changeHandler}
                   >
@@ -157,11 +159,11 @@ const MyPersonalData = ({
                     ))}
                   </select>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="inputNunId">Número de documento</label>
+                <div className="form-group col-md-6">
+                  <label>Número de documento</label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="inputNunId"
                     placeholder="EJ: 1111111"
                     value={profile.id_number}
@@ -175,11 +177,11 @@ const MyPersonalData = ({
         </div>
         <div className="card-footer">
           {loading ? (
-            <button className="btn btn-info" disabled>
+            <button className="btn btn-info" disabled type="button">
               Actualizando
             </button>
           ) : (
-            <button className="btn btn-info" onClick={submit}>
+            <button className="btn btn-info" onClick={submit} type="button">
               Guardar
             </button>
           )}

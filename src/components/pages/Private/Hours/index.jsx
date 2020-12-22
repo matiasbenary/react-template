@@ -1,10 +1,28 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { FaEdit } from 'react-icons/fa';
+import styled from 'styled-components';
 import { actions as userActivitiesHoursAction } from '../../../../store/ducks/user/activitiesHours.duck';
 import Loading from '../../../molecules/Loading';
 import Table from './components/Table';
 import Pagination from '../../../molecules/Pagination';
+import Button from '../../../molecules/Button';
+import EditModal from './components/EditModal';
+
+const ButtonAddHours = styled(Button)`
+  padding: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  background: #3f86f6;
+`;
+
+const ButtonDisable = styled(Button)`
+  padding: 10px;
+  margin-right: 10px;
+  display: flex;
+`;
 
 const Hours = () => {
   const dispatch = useDispatch();
@@ -31,6 +49,13 @@ const Hours = () => {
     }
   }, [userActivitiesHours, setMeta]);
 
+  const [editModal, setEditModal] = useState(null);
+  // const [dataEditModal, setDataEditModal] = useState({});
+
+  const openEditModal = (row) => {
+    setEditModal(row);
+  };
+
   const columns = useMemo(
     () => [
       {
@@ -50,6 +75,14 @@ const Hours = () => {
         selector: 'horas',
         sortable: true,
         right: true,
+      },
+      {
+        name: 'Editar',
+        selector: 'editar',
+        sortable: false,
+        cell: (row) => (row.alidated_to
+          ? <ButtonDisable><FaEdit /></ButtonDisable>
+          : <ButtonAddHours onClick={() => openEditModal(row)}><FaEdit /></ButtonAddHours>),
       },
       {
         name: 'Estado',
@@ -79,20 +112,23 @@ const Hours = () => {
     }));
 
     return (
-      <div className="container mt-4">
-        <div className="card shadow  bg-white rounded">
-          <div className="card-block">
-            <div className="card-body">
-              <Table data={data} columns={columns} title="Mis Horas" />
-              <Pagination
-                meta={meta}
-                action={(payload) => userActivitiesHoursAction.getHours({ ...payload, user_id })}
-                className="d-flex justify-content-end mt-2"
-              />
+      <>
+        <EditModal data={editModal} />
+        <div className="container mt-4">
+          <div className="card shadow  bg-white rounded">
+            <div className="card-block">
+              <div className="card-body">
+                <Table data={data} columns={columns} title="Mis Horas" />
+                <Pagination
+                  meta={meta}
+                  action={(payload) => userActivitiesHoursAction.getHours({ ...payload, user_id })}
+                  className="d-flex justify-content-end mt-2"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 

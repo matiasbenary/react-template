@@ -37,7 +37,7 @@ const Hours = ({ isSummit, setIsInvalid }) => {
     else setHours(number);
   };
 
-  if (isSummit && hours >= 0) {
+  if (isSummit && hours > 0) {
     setIsInvalid(false);
   }
 

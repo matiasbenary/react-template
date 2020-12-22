@@ -3,10 +3,10 @@ import { useFormContext } from '../FormContext';
 import useInputValidations from '../hooks/useInputValidations';
 
 const Input = ({
-  label, name, validations, type = 'text', valueDefault = undefined,
+  label, name, validations, type = 'text',
 }) => {
   const [field, setField] = useState();
-  const [value, setValue] = useState(valueDefault);
+  const [value, setValue] = useState();
 
   const formContext = useFormContext();
 
@@ -16,6 +16,7 @@ const Input = ({
     validations,
     name,
     value,
+    setValue,
   });
 
   const handleBlur = () => {
@@ -43,6 +44,7 @@ const Input = ({
         type={type}
         name={name}
         className="input"
+        value={value}
       />
       {!isValid.valid && (
         <div>

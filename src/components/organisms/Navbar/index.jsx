@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
-import "./navbar.scss";
-import { Link, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import styled from "styled-components";
-import config from "../../../config";
-import { actions } from "../../../store/ducks/auth.duck";
-import { BsPerson } from "react-icons/bs";
+import React, { useState, useRef, useEffect } from 'react';
+import './navbar.scss';
+import { Link, NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { BsPerson } from 'react-icons/bs';
+import config from '../../../config';
+import { actions } from '../../../store/ducks/auth.duck';
 
 const Img = styled.img`
-  width: ${(props) => props.width || "100px"};
+  width: ${(props) => props.width || '100px'};
 `;
 
 const Navbar = ({ name }) => {
@@ -26,10 +26,10 @@ const Navbar = ({ name }) => {
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
+    document.addEventListener('mousedown', handleClick);
 
     return () => {
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener('mousedown', handleClick);
     };
   }, []);
 
@@ -43,7 +43,6 @@ const Navbar = ({ name }) => {
     setIsOpen(!isOpen);
   };
 
-  console.log(config.logo_width);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white ">
       <div className="container">
@@ -86,9 +85,9 @@ const Navbar = ({ name }) => {
           <li className="nav-item order-2 order-md-1">
             <div>
               <div className="nav-link" title="settings">
-                <i className="fa fa-cog fa-fw fa-lg"></i>
+                <i className="fa fa-cog fa-fw fa-lg" />
               </div>
-              <i className="fa fa-cog fa-fw fa-lg"></i>
+              <i className="fa fa-cog fa-fw fa-lg" />
             </div>
           </li>
           <li className="dropdown order-1">
@@ -99,10 +98,12 @@ const Navbar = ({ name }) => {
               className="btn btn-link dropdown-toggle d-flex align-items-center"
               onClick={toogleMenu}
             >
-              <BsPerson className="mr-1" /> {name}
+              <BsPerson className="mr-1" />
+              {' '}
+              {name}
               <span className="caret" />
             </button>
-            <ul className={`dropdown-menu rounded ${isOpen ? "show" : null}`}>
+            <ul className={`dropdown-menu rounded ${isOpen ? 'show' : null}`}>
               <li className="flex my-2">
                 <Link className="item-menu" to="/profile">
                   Mi perfil

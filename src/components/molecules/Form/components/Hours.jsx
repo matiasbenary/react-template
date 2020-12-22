@@ -45,6 +45,7 @@ const Hours = ({
     validations,
     name,
     value,
+    setValue,
   });
 
   const handleBlur = () => {
