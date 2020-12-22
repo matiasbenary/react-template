@@ -7,7 +7,7 @@ import TextArea from '../../../../molecules/Form/components/TextArea';
 import Hours from '../../../../molecules/Form/components/Hours';
 import { apiCall } from '../../../../../crud/api.crud';
 
-const EditModal = ({ data }) => {
+const EditModal = ({ data, refresh }) => {
   const [isOpen, setIsOpen] = useState(true);
   useEffect(() => setIsOpen(true), [data]);
 
@@ -15,6 +15,7 @@ const EditModal = ({ data }) => {
 
   const save = async (values) => {
     await apiCall(`activityHours/${data.id}`, values, 'POST');
+    refresh();
     closeModal();
   };
 

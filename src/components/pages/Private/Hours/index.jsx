@@ -37,11 +37,24 @@ const Hours = () => {
     userActivitiesHoursLoading: state.userActivitiesHours.loading,
   }));
 
+  const [editModal, setEditModal] = useState(null);
+
+  const [refresh, setRefresh] = useState(false);
+
+  const refreshNow = () => {
+    setRefresh(!refresh);
+    setEditModal(undefined);
+  };
+
   useEffect(() => {
     if (!userActivitiesHours) {
       dispatch(userActivitiesHoursAction.getHours({ user_id }));
     }
-  }, [dispatch, user_id, userActivitiesHours]);
+  }, [dispatch, user_id, userActivitiesHours, refresh]);
+
+  useEffect(() => {
+    dispatch(userActivitiesHoursAction.getHours({ user_id }));
+  }, [refresh]);
 
   useEffect(() => {
     if (userActivitiesHours) {
@@ -49,7 +62,6 @@ const Hours = () => {
     }
   }, [userActivitiesHours, setMeta]);
 
-  const [editModal, setEditModal] = useState(null);
   // const [dataEditModal, setDataEditModal] = useState({});
 
   const openEditModal = (row) => {
@@ -80,7 +92,7 @@ const Hours = () => {
         name: 'Editar',
         selector: 'editar',
         sortable: false,
-        cell: (row) => (row.alidated_to
+        cell: (row) => (row.estado === 'Validado'
           ? <ButtonDisable><FaEdit /></ButtonDisable>
           : <ButtonAddHours onClick={() => openEditModal(row)}><FaEdit /></ButtonAddHours>),
       },
@@ -103,7 +115,7 @@ const Hours = () => {
   if (userActivitiesHours) {
     const data = userActivitiesHours.data.map((u) => ({
       id: u.id,
-      fecha: u.created_at.slice(0, 10),
+      fecha: u.activity_day.slice(0, 10),
       actividad: u.activity ? u.activity.title : 'Actividad borrada',
       horas: u.hours,
       estado: hoursValidation(u.validated_to),
@@ -113,7 +125,7 @@ const Hours = () => {
 
     return (
       <>
-        <EditModal data={editModal} />
+        <EditModal data={editModal} refresh={refreshNow} />
         <div className="container mt-4">
           <div className="card shadow  bg-white rounded">
             <div className="card-block">

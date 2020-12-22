@@ -44,8 +44,9 @@ const useInputValidations = ({
 
   useEffect(() => {
     const defaultValue = formContext.getDefaultValue(name);
-    if (defaultValue) {
-      setValue(formContext.getDefaultValue(defaultValue));
+    console.log(defaultValue);
+    if (defaultValue !== undefined) {
+      setValue(defaultValue);
     }
   }, []);
 
