@@ -77,16 +77,19 @@ const Hours = () => {
         cell: (row) => <Link to={row.url}>{row.actividad}</Link>,
       },
       {
-        name: 'Fecha',
-        selector: 'fecha',
+        name: 'Fecha de creación del registro',
+        selector: 'createdAt',
         sortable: true,
-        right: true,
+      },
+      {
+        name: 'Fecha de la actividad',
+        selector: 'activityDay',
+        sortable: true,
       },
       {
         name: 'Horas',
         selector: 'horas',
         sortable: true,
-        right: true,
       },
       {
         name: 'Editar',
@@ -100,7 +103,6 @@ const Hours = () => {
         name: 'Estado',
         selector: 'estado',
         sortable: true,
-        right: true,
       },
     ],
     [],
@@ -115,7 +117,8 @@ const Hours = () => {
   if (userActivitiesHours) {
     const data = userActivitiesHours.data.map((u) => ({
       id: u.id,
-      fecha: u.activity_day.slice(0, 10),
+      createdAt: u.created_at.slice(0, 10),
+      activityDay: u.activity_day.slice(0, 10),
       actividad: u.activity ? u.activity.title : 'Actividad borrada',
       horas: u.hours,
       estado: hoursValidation(u.validated_to),

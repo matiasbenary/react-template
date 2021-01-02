@@ -1,43 +1,43 @@
-import React from "react";
-import moment from "moment";
+import React from 'react';
 
-const index = ({ activity }) => {
-  const deadline = moment(activity.deadline);
-  const now = moment();
-
+const Detail = ({ activity, showLocation = false }) => {
   const getLocation = () => {
     if (activity.locations.length) {
-      return (
-        <>
-          <b>Dirección: </b>
-          {activity.locations && activity.locations.length === 1
-            ? activity.locations[0].address
-            : "Multiple"}
-          <br />
-        </>
-      );
+      if (showLocation) {
+        return activity.locations.map((loc) => <div>{loc.address}</div>);
+      }
+      return activity.locations && activity.locations.length === 1
+        ? activity.locations[0].address
+        : 'Multiple';
     }
-    return null;
+    return 'Sin asignar';
   };
 
   return (
-    <div className="list text-dark">
-      <h5>
-        <span className="badge badge-info">#{activity.alternative_type}</span>
-      </h5>
-      <b>Estado de la actividad: </b>
-      {activity.status_alias}
-      <br />
-      <b>Límite de postulación: </b>
-      <span className={now < deadline ? "text-success" : "text-danger"}>
+    <div>
+      <div>
+        <span className="strong">Estado:</span>
+        {activity.status_alias}
+      </div>
+      <div>
+        <span className="strong">Comenzamos el:</span>
+        {activity.activity_to}
+      </div>
+      <div>
+        <span className="strong">Postúlate hasta:</span>
         {activity.deadline.slice(0, 10)}
-      </span>
-      <br />
-      <b>Fecha de la actividad: </b>
-      {activity.activity_to}
-      <br />
-      {getLocation()}
+      </div>
+      {!!activity.quota && (
+      <div>
+        <span className="strong">Cupos:</span>
+        {activity.quota}
+      </div>
+      )}
+      <div>
+        <span className="strong">Estamos en:</span>
+        {getLocation()}
+      </div>
     </div>
   );
 };
-export default index;
+export default Detail;
