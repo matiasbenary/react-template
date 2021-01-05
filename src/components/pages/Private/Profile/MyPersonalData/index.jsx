@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../../../store/ducks/auth.duck';
-import GooglePlaceAutocomplete from '../../../../molecules/GooglePlaceAutocomplete';
-
-const getMainAddress = (address) => {
-  if (!address || !address.length) return { address_info: '', address: '' };
-
-  return address.filter((fil) => fil.is_main_address)[0];
-};
 
 const MyPersonalData = ({
   user: {
-    name, email, marital_status, id_type, id_number, id, addresses,
+    name, email, volunteeringFields: { marital_status, id_type, id_number }, id,
   },
 }) => {
   const [profile, setProfile] = useState({
@@ -21,28 +14,20 @@ const MyPersonalData = ({
     id_type,
     id_number,
     id,
-    address_info: getMainAddress(addresses).address_info,
   });
 
-  const { loading, error } = useSelector((state) => ({
+  const { loading } = useSelector((state) => ({
     loading: state.auth.loading,
-    error: state.auth.error,
   }));
   const dispatch = useDispatch();
 
-  const [addressForm, setAddress] = useState({
-    address: getMainAddress(addresses).address,
-  });
-
   const changeHandler = (e) => {
-    const { name, value } = e.target;
-    setProfile({ ...profile, [name]: value });
+    const { name: nameInput, value } = e.target;
+    setProfile({ ...profile, [nameInput]: value });
   };
 
   const submit = () => {
-    const payload = { ...profile, ...addressForm };
-
-    dispatch(actions.chageProfile(payload));
+    dispatch(actions.chageProfile(profile));
   };
 
   const maritalStatus = [
@@ -57,30 +42,7 @@ const MyPersonalData = ({
     { label: 'LE', value: 'LE' },
     { label: 'PASAPORTE', value: 'PASAPORTE' },
   ];
-  /*
- <div class="form-row">
-   <div class="form-group col-md-6">
-     <label>Dirección</label>
-     <GooglePlaceAutocomplete
-       className="form-control"
-       query={addressForm}
-       setQuery={setAddress}
-     />
-   </div>
-   <div class="form-group col-md-6">
-     <label for="address_info123">Piso - Dpto</label>
-     <input
-       type="text"
-       class="form-control"
-       id="address_info123"
-       placeholder="usuario@emai.com"
-       value={profile.address_info}
-       name="address_info"
-       onChange={changeHandler}
-     />
-   </div>
- </div>;
-*/
+
   return (
     <div className="container mt-4">
       <div className="card shadow  bg-white rounded">
