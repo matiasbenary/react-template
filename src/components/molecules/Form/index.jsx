@@ -12,6 +12,12 @@ const Form = ({ children, defaultValue = {}, submit }) => {
   /* Reducer para manejo de inputs invalidos desde el Form */
   const [invalidInputs, dispatch] = useReducer(validatorReducer, { names: [] });
 
+  const updateValue = (name, value) => {
+    setValues({ ...values, [name]: value });
+  };
+
+  const getDefaultValue = (name) => values[name];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setCheckSubmit(true);
@@ -31,6 +37,8 @@ const Form = ({ children, defaultValue = {}, submit }) => {
           onValidate: dispatch,
           values,
           setValues,
+          updateValue,
+          getDefaultValue,
         }}
       >
         {children}

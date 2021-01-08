@@ -1,7 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import ActivitiesButtons from "../ActivitiesButtons";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import ActivitiesButtons from '../ActivitiesButtons';
+import Detail from '../Detail';
 
 const Card = styled.div`
   background-color: #ffffff;
@@ -47,68 +48,37 @@ const Footer = styled.div`
   border-radius: 0 0 15px 15px;
 `;
 
-const ActivitiesCard = ({ activity, userId, isApply, isEnable }) => {
-  const getLocation = () => {
-    if (activity.locations.length) {
-      return activity.locations && activity.locations.length === 1
-        ? activity.locations[0].address
-        : "Multiple";
-    }
-    return "Sin asignar";
-  };
-
-  return (
-    <Card>
-      {activity.description_image && (
-        <Img
-          className="card-img-top"
-          alt="img de actividad"
-          src={`https://app.fonselp.com/storage/${activity.description_image}`}
-        />
-      )}
-      <Container>
-        <Info>
-          <h3>{activity.title}</h3>
-          <p>{activity.short_description}</p>
-          <Link to={`detail/${activity.id}`} style={{ alignSelf: "flex-end" }}>
-            + Ver más
-          </Link>
-        </Info>
-        <hr />
-        <div>
-          <div>
-            <span className="strong">Estado:</span> {activity.status_alias}
-          </div>
-          <div>
-            <span className="strong">Comenzamos el:</span>
-            {activity.activity_to}
-          </div>
-          <div>
-            <span className="strong">Postúlate hasta:</span>
-            {activity.deadline.slice(0, 10)}
-          </div>
-          {!!activity.quota && (
-            <div>
-              <span className="strong">Cupos:</span>
-              {activity.quota}
-            </div>
-          )}
-          <div>
-            <span className="strong">Estamos en:</span>
-            {getLocation()}
-          </div>
-        </div>
-      </Container>
-      <Footer>
-        <ActivitiesButtons
-          activity={activity}
-          userId={userId}
-          isEnable={isEnable}
-          isApply={isApply}
-        />
-      </Footer>
-    </Card>
-  );
-};
+const ActivitiesCard = ({
+  activity, userId, isApply, isEnable,
+}) => (
+  <Card>
+    {activity.description_image && (
+    <Img
+      className="card-img-top"
+      alt="img de actividad"
+      src={`https://app.fonselp.com/storage/${activity.description_image}`}
+    />
+    )}
+    <Container>
+      <Info>
+        <h3>{activity.title}</h3>
+        <p>{activity.short_description}</p>
+        <Link to={`detail/${activity.id}`} style={{ alignSelf: 'flex-end' }}>
+          + Ver más
+        </Link>
+      </Info>
+      <hr />
+      <Detail activity={activity} />
+    </Container>
+    <Footer>
+      <ActivitiesButtons
+        activity={activity}
+        userId={userId}
+        isEnable={isEnable}
+        isApply={isApply}
+      />
+    </Footer>
+  </Card>
+);
 
 export default ActivitiesCard;

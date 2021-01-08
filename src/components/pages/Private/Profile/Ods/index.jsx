@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../../../../store/ducks/auth.duck";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../../../../store/ducks/auth.duck';
 
 const Ods = ({ ods, userId }) => {
   const { loading, error } = useSelector((state) => ({
@@ -10,28 +10,26 @@ const Ods = ({ ods, userId }) => {
   const dispatch = useDispatch();
 
   const list = [
-    "Fin de la pobreza (Objetivo 1)",
-    "Hambre cero (Objetivo 2)",
-    "Salud y bienestar (Objetivo 3)",
-    "Educación de calidad (Objetivo 4)",
-    "Igualdad de género y empoderamiento de la mujer (Objetivo 5)",
-    "Agua limpia y saneamiento (Objetivo 6)",
-    "Energía asequible y no contaminante (Objetivo 7)",
-    "Trabajo decente y crecimiento económico (Objetivo 8)",
-    "Industria, innovación e infraestructura (Objetivo 9)",
-    "Reducción de las desigualdades entre países y dentro de ellos (Objetivo 10)",
-    "Ciudades y comunidades sostenibles (Objetivo 11)",
-    "Producción y consumo responsables (Objetivo 12)",
-    "Acción por el clima (Objetivo 13)",
-    "Vida submarina (Objetivo 14)",
-    "Vida de ecosistemas terrestres (Objetivo 15)",
-    "Paz, justicia e instituciones sólidas (Objetivo 16)",
-    "Alianzas para lograr los objetivos (Objetivo 17)",
+    'Fin de la pobreza (Objetivo 1)',
+    'Hambre cero (Objetivo 2)',
+    'Salud y bienestar (Objetivo 3)',
+    'Educación de calidad (Objetivo 4)',
+    'Igualdad de género y empoderamiento de la mujer (Objetivo 5)',
+    'Agua limpia y saneamiento (Objetivo 6)',
+    'Energía asequible y no contaminante (Objetivo 7)',
+    'Trabajo decente y crecimiento económico (Objetivo 8)',
+    'Industria, innovación e infraestructura (Objetivo 9)',
+    'Reducción de las desigualdades entre países y dentro de ellos (Objetivo 10)',
+    'Ciudades y comunidades sostenibles (Objetivo 11)',
+    'Producción y consumo responsables (Objetivo 12)',
+    'Acción por el clima (Objetivo 13)',
+    'Vida submarina (Objetivo 14)',
+    'Vida de ecosistemas terrestres (Objetivo 15)',
+    'Paz, justicia e instituciones sólidas (Objetivo 16)',
+    'Alianzas para lograr los objetivos (Objetivo 17)',
   ];
 
-  const listIds = ods.map((od) => {
-    return od.id;
-  });
+  const listIds = ods.map((od) => od.id);
 
   const [odsForm, setOdsForm] = useState(listIds);
 

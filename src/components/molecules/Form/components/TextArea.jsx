@@ -19,6 +19,7 @@ const TextArea = ({
     validations,
     name,
     value,
+    setValue,
   });
 
   const handleBlur = () => {
@@ -45,6 +46,7 @@ const TextArea = ({
         ref={setField}
         name={name}
         className="input"
+        value={value}
       />
       {!isValid.valid && (
         <div>
