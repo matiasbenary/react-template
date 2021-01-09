@@ -4,9 +4,12 @@ import { actions } from '../../../../../store/ducks/auth.duck';
 
 const MyPersonalData = ({
   user: {
-    name, email, volunteeringFields: { marital_status, id_type, id_number }, id,
+    name, email, id, volunteeringFields,
   },
 }) => {
+  const { marital_status, id_type, id_number } = volunteeringFields
+  || { marital_status: null, id_type: null, id_number: null };
+
   const [profile, setProfile] = useState({
     name,
     email,
