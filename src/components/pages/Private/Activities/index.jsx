@@ -122,6 +122,18 @@ const Activities = () => {
         sortable: true,
         center: true,
       },
+      {
+        name: 'Organizacion de origen',
+        selector: 'entity_to',
+        sortable: true,
+        center: true,
+      },
+      {
+        name: 'Organizacion beneficiaria',
+        selector: 'entity_from',
+        sortable: true,
+        center: true,
+      },
     ],
     [hoursModal, iconStyle],
   );
@@ -162,6 +174,8 @@ const Activities = () => {
       hours_total: a.hoursTotal,
       sdg: a.sdg_id,
       commentary: a.commentary,
+      entity_to: a.fromEntity.bussiness_name,
+      entity_from: a.toEntity.bussiness_name,
     }));
 
     return (

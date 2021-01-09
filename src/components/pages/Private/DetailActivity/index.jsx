@@ -10,7 +10,6 @@ import ActivitiesButtons from '../../../molecules/ActivitiesButtons';
 import Loading from '../../../molecules/Loading';
 import Button from '../../../molecules/Button';
 import Detail from '../../../molecules/Detail';
-import Ods from '../../../molecules/Ods';
 import OnlyOds from '../../../molecules/Ods/OnlyOds';
 
 const Img = styled.img`
