@@ -124,13 +124,13 @@ const Activities = () => {
       },
       {
         name: 'Organizacion de origen',
-        selector: 'entity_to',
+        selector: 'entity_from',
         sortable: true,
         center: true,
       },
       {
         name: 'Organizacion beneficiaria',
-        selector: 'entity_from',
+        selector: 'entity_to',
         sortable: true,
         center: true,
       },
