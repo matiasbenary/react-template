@@ -105,6 +105,11 @@ const Navbar = ({ name }) => {
             </button>
             <ul className={`dropdown-menu rounded ${isOpen ? 'show' : null}`}>
               <li className="flex my-2">
+                <Link className="item-menu" to="/management">
+                  Datos de gestión
+                </Link>
+              </li>
+              <li className="flex my-2">
                 <Link className="item-menu" to="/profile">
                   Mi perfil
                 </Link>
