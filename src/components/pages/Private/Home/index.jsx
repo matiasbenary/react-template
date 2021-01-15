@@ -12,6 +12,7 @@ import ActivitiesCard from '../../../molecules/ActivitiesCard';
 import { apiCall } from '../../../../crud/api.crud';
 import Pagination from '../../../molecules/Pagination';
 import { invercionMatriz } from '../../../../utils/helper';
+import Toast from '../../../molecules/Toast';
 
 const CardsContainer = () => {
   const [activities, setActivities] = useState(null);
@@ -43,36 +44,40 @@ const CardsContainer = () => {
   const now = moment().subtract(1, 'days');
 
   return (
-    <div className="container mt-4">
-      <div className="card-deck">
-        <Card
-          description={<Map activities={activities} />}
-          title="Actividades de voluntariado"
-          style={{ flexGrow: 200 }}
+    <>
+      <Toast />
+
+      <div className="container mt-4">
+        <div className="card-deck">
+          <Card
+            description={<Map activities={activities} />}
+            title="Actividades de voluntariado"
+            style={{ flexGrow: 200 }}
+          />
+          <VolunteerExperiences />
+        </div>
+        <Pagination
+          meta={activities.meta}
+          action={setPage}
+          withRedux={false}
+          className="d-flex justify-content-end mt-5"
         />
-        <VolunteerExperiences />
+        <div className="card__container">
+          {activitiesColumns.map((activitiesColumn) => (
+            <div className="card__container__columns">
+              {activitiesColumn.map((activity) => (
+                <ActivitiesCard
+                  activity={activity}
+                  userId={user_id}
+                  isApply={activitiesUserOnlyId.includes(activity.id)}
+                  isEnable={now <= moment(activity.deadline)}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-      <Pagination
-        meta={activities.meta}
-        action={setPage}
-        withRedux={false}
-        className="d-flex justify-content-end mt-5"
-      />
-      <div className="card__container">
-        {activitiesColumns.map((activitiesColumn) => (
-          <div className="card__container__columns">
-            {activitiesColumn.map((activity) => (
-              <ActivitiesCard
-                activity={activity}
-                userId={user_id}
-                isApply={activitiesUserOnlyId.includes(activity.id)}
-                isEnable={now <= moment(activity.deadline)}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 // actions
 export const actionTypes = {
-  modalShow: "[MODAL] SHOW",
-  modalHide: "[MODAL] HIDDEN",
+  modalShow: '[MODAL] SHOW',
+  modalHide: '[MODAL] HIDDEN',
 };
 
 const initialState = {
