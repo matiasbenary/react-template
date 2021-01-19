@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../../../store/ducks/auth.duck';
 import { checkUser } from '../../../../../utils/checkUser';
@@ -17,14 +17,26 @@ const MyPersonalData = ({
     name, email, id, ...volunteeringFields,
   };
 
+  const [change, setChange] = useState(false);
   const isLoading = useSelector((state) => state.auth.loading);
+
+  useEffect(() => {
+    if (!change && isLoading)setChange(true);
+  }, [isLoading]);
+
   const dispatch = useDispatch();
 
   const save = (values) => {
+    setChange(false);
     dispatch(actions.chageProfile(values));
   };
   return (
     <div className="container mt-4">
+      {change && (
+      <div className="alert alert-success" role="alert">
+        Se actualizo de forma correta
+      </div>
+      )}
       {checkUser(user) || (
       <div className="alert alert-warning" role="alert">
         Por favor complete sus datos personales
@@ -107,6 +119,18 @@ const MyPersonalData = ({
                     validations={[
                       { key: 'required', val: true },
                       { key: 'only_numbers', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Perfil Linkendin"
+                    name="linkedin_url"
+                    type="url"
+                    validations={[
+                      { key: 'required', val: true },
                     ]}
                   />
                 </div>

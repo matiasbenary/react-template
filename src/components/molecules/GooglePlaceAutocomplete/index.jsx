@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
 let autoComplete;
 
@@ -6,10 +6,10 @@ const handleScriptLoad = (updateQuery, autoCompleteRef) => {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current,
     {
-      types: ["geocode"],
-    }
+      types: ['geocode'],
+    },
   );
-  autoComplete.addListener("place_changed", () => {
+  autoComplete.addListener('place_changed', () => {
     handlePlaceSelect(updateQuery);
   });
 };
@@ -23,19 +23,19 @@ const handlePlaceSelect = async (updateQuery) => {
 const formatQuery = (addressObject) => {
   const parseAddress = {};
   const diccionario = [
-    "administrative_area_level_1",
-    "administrative_area_level_2",
-    "postal_code",
-    "country",
-    "locality",
-    "sublocality_level_1",
+    'administrative_area_level_1',
+    'administrative_area_level_2',
+    'postal_code',
+    'country',
+    'locality',
+    'sublocality_level_1',
   ];
 
   addressObject.address_components.forEach((address) => {
     const type = address.types[0];
 
     if (!diccionario.includes(type)) return;
-    if (type === "country") {
+    if (type === 'country') {
       parseAddress.country_long = address.long_name;
       parseAddress.country_short = address.short_name;
     } else {
@@ -51,7 +51,7 @@ const formatQuery = (addressObject) => {
 };
 
 const GooglePlaceAutocomplete = ({ className, query, setQuery }) => {
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
   const autoCompleteRef = useRef(null);
 
   useEffect(() => {
