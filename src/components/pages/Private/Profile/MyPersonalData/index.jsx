@@ -34,7 +34,7 @@ const MyPersonalData = ({
     <div className="container mt-4">
       {change && (
       <div className="alert alert-success" role="alert">
-        Se actualizo de forma correta
+        Se actualizo de forma correcta
       </div>
       )}
       {checkUser(user) || (

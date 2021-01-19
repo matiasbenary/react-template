@@ -59,7 +59,9 @@ const GooglePlaceAutocomplete = ({ className, query, setQuery }) => {
   }, []);
 
   useEffect(() => {
-    setAddress(query.address);
+    if (query && query.address) {
+      setAddress(query.address);
+    }
   }, [query]);
 
   return (
