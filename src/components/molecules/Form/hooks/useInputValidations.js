@@ -16,9 +16,9 @@ const useInputValidations = ({
       error_message: '',
       valid: true,
     };
-    validations.forEach(({ key, val }) => {
+    validations.forEach(({ key, val, optional }) => {
       if (validationResult.valid) {
-        validationResult = validationsConstraints(key, val, value);
+        validationResult = validationsConstraints(key, val, value, formContext.values, optional);
       }
     });
     return validationResult;
@@ -44,7 +44,7 @@ const useInputValidations = ({
 
   useEffect(() => {
     const defaultValue = formContext.getDefaultValue(name);
-    console.log(defaultValue);
+
     if (defaultValue !== undefined) {
       setValue(defaultValue);
     }

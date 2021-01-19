@@ -43,7 +43,7 @@ const Input = ({
         ref={setField}
         type={type}
         name={name}
-        className="input"
+        className="form-control"
         value={value}
       />
       {!isValid.valid && (

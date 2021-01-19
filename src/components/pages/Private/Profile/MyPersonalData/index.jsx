@@ -1,26 +1,122 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../../../store/ducks/auth.duck';
+import Form, { Input, SubmitButton } from '../../../../molecules/Form';
+import GenderSelect from './Components/GenderSelect';
+import IdTypeSelect from './Components/IdTypeSelect';
+import MaritalSelect from './Components/MaritalSelect';
 
-const maritalStatus = [
-  { label: 'Soltero/a', value: 'Soltero' },
-  { label: 'Casado/a', value: 'Casado' },
-  { label: 'Viudo/a', value: 'Viudo' },
-  { label: 'Divorciado/a', value: 'Divorciado' },
-];
+const MyPersonalData = ({
+  user: {
+    name, email, id, volunteeringFields,
+  },
+}) => {
+  const defaultValue = {
+    name, email, id, ...volunteeringFields,
+  };
 
-const idTypes = [
-  { label: 'DNI', value: 'DNI' },
-  { label: 'LE', value: 'LE' },
-  { label: 'PASAPORTE', value: 'PASAPORTE' },
-];
+  const isLoading = useSelector((state) => state.auth.loading);
+  const dispatch = useDispatch();
 
-const genderTypes = [
-  { label: 'Masculino', value: 'Masculino' },
-  { label: 'Femenino', value: 'Femenino' },
-  { label: 'No indica', value: 'No indica' },
-];
+  const save = (values) => {
+    dispatch(actions.chageProfile(values));
+  };
+  return (
+    <div className="container mt-4">
+      <div className="alert alert-warning" role="alert">
+        A simple warning alert—check it out!
+      </div>
+      <div className="card shadow  bg-white rounded">
+        <div className="card-header">Mis datos personales</div>
+        <div className="card-block">
+          <div className="card-body">
+            <Form
+              className="form"
+              submit={save}
+              defaultValue={defaultValue}
+            >
 
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Nombre"
+                    name="name"
+                    type="text"
+                    validations={[
+                      { key: 'required', val: true },
+                    ]}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Email"
+                    name="email"
+                    type="email"
+                    validations={[
+                      { key: 'required', val: true },
+                      { key: 'email', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <MaritalSelect />
+                </div>
+                <div className="form-group col-md-6">
+                  <GenderSelect />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <IdTypeSelect />
+                </div>
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Numero de documento"
+                    name="id_number"
+                    type="number"
+                    validations={[
+                      { key: 'required', val: true },
+                      { key: 'only_numbers', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Numero de telefono"
+                    name="phone_number"
+                    type="number"
+                    validations={[
+                      { key: 'required', val: true },
+                      { key: 'only_numbers', val: true },
+                    ]}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Numero de celular"
+                    name="mobile_number"
+                    type="number"
+                    validations={[
+                      { key: 'required', val: true },
+                      { key: 'only_numbers', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <SubmitButton isloading={isLoading} />
+            </Form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/*
 const MyPersonalData = ({
   user: {
     name, email, id, volunteeringFields,
@@ -229,5 +325,5 @@ const MyPersonalData = ({
     </div>
   );
 };
-
+*/
 export default MyPersonalData;

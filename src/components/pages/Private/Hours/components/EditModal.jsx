@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactModal from 'react-modal';
-import Form from '../../../../molecules/Form';
+import Form from '../../../../molecules/Form/Form';
 import Input from '../../../../molecules/Form/components/Input';
 import SubmitButton from '../../../../molecules/Form/components/SubmitButton';
 import TextArea from '../../../../molecules/Form/components/TextArea';

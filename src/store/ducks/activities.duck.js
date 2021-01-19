@@ -1,29 +1,29 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { apiCall } from "../../crud/api.crud";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { apiCall } from '../../crud/api.crud';
 
 export const actionTypes = {
-  GetActivitiesStart: "[ACTIVITIES] GET START",
-  GetActivitiesComplete: "[ACTIVITIES] GET COMPLETE",
-  GetActivitiesError: "[ACTIVITIES] GET ERROR",
-  ApplyActivityStart: "[ACTIVITIES] APPLY START",
-  ApplyActivityComplete: "[ACTIVITIES] APPLY COMPLETE",
-  ApplyActivityError: "[ACTIVITIES] APPLY ERROR",
-  UnapplyActivityStart: "[ACTIVITIES] UNAPPLY START",
-  UnapplyActivityComplete: "[ACTIVITIES] UNAPPLY COMPLETE",
-  UnapplyActivityError: "[ACTIVITIES] UNAPPLY ERROR",
+  GetActivitiesStart: '[ACTIVITIES] GET START',
+  GetActivitiesComplete: '[ACTIVITIES] GET COMPLETE',
+  GetActivitiesError: '[ACTIVITIES] GET ERROR',
+  ApplyActivityStart: '[ACTIVITIES] APPLY START',
+  ApplyActivityComplete: '[ACTIVITIES] APPLY COMPLETE',
+  ApplyActivityError: '[ACTIVITIES] APPLY ERROR',
+  UnapplyActivityStart: '[ACTIVITIES] UNAPPLY START',
+  UnapplyActivityComplete: '[ACTIVITIES] UNAPPLY COMPLETE',
+  UnapplyActivityError: '[ACTIVITIES] UNAPPLY ERROR',
 };
 
 const initialAuthState = {
   loading: false,
   activities: null,
-  error: "",
+  error: '',
   loadingApply: false,
-  errorApply: "",
-  apply: "",
+  errorApply: '',
+  apply: '',
   applyId: null,
   loadingUnapply: false,
-  errorUnapply: "",
-  unapply: "",
+  errorUnapply: '',
+  unapply: '',
   unapplyId: null,
 };
 
@@ -50,9 +50,9 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingApply: true,
         errorApply: null,
-        apply: "",
+        apply: '',
         applyId: null,
-        unapply: "",
+        unapply: '',
       };
     }
     case actionTypes.ApplyActivityComplete: {
@@ -71,7 +71,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingApply: false,
         errorApply: error,
-        apply: "",
+        apply: '',
         applyId: null,
       };
     }
@@ -80,8 +80,8 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingUnapply: true,
         errorUnapply: null,
-        unapply: "",
-        apply: "",
+        unapply: '',
+        apply: '',
       };
     }
     case actionTypes.UnapplyActivityComplete: {
@@ -100,7 +100,7 @@ export const reducer = (state = initialAuthState, action) => {
         ...state,
         loadingUnapply: false,
         errorUnapply: error,
-        unapply: "",
+        unapply: '',
       };
     }
     default:
@@ -125,13 +125,13 @@ export const actions = {
 // Watchers
 
 export function* getActivitiesState({ payload }) {
-  const setPage = payload.pages ? `page[number]=${payload.pages}` : "";
+  const setPage = payload.pages ? `page[number]=${payload.pages}` : '';
   try {
     const results = yield call(
       apiCall,
       `activity/?${setPage}&filter[entity_origin_id]=${process.env.REACT_APP_ID_ENTITY}&filter[status]=1,2&include=locations`,
       null,
-      "GET"
+      'GET',
     );
     yield put({ type: actionTypes.GetActivitiesComplete, results });
   } catch (error) {
@@ -141,7 +141,7 @@ export function* getActivitiesState({ payload }) {
 
 export function* applyActivityStart({ payload }) {
   try {
-    const results = yield call(apiCall, "activity/postulate", payload, "POST");
+    const results = yield call(apiCall, 'activity/postulate', payload, 'POST');
     yield put({
       type: actionTypes.ApplyActivityComplete,
       results,
@@ -156,9 +156,9 @@ export function* unapplyActivityStart({ payload }) {
   try {
     const results = yield call(
       apiCall,
-      "activity/despostulate",
+      'activity/despostulate',
       payload,
-      "POST"
+      'POST',
     );
     yield put({
       type: actionTypes.UnapplyActivityComplete,

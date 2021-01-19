@@ -1,4 +1,8 @@
-const validationsConstraints = (type, value, inputValue) => {
+function emailIsValid(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+const validationsConstraints = (type, value, inputValue, othersValues, optional) => {
   if (type === 'required') {
     return {
       error_message: 'Campo obligatorio',
@@ -15,6 +19,18 @@ const validationsConstraints = (type, value, inputValue) => {
     return {
       error_message: `Ingresa mínimo ${value} caracteres`,
       valid: inputValue.length >= value,
+    };
+  }
+  if (type === 'email') {
+    return {
+      error_message: `Ingresa mínimo ${value} caracteres`,
+      valid: emailIsValid(inputValue),
+    };
+  }
+  if (type === 'equal') {
+    return {
+      error_message: `Ingresa mínimo ${value} caracteres`,
+      valid: inputValue === othersValues[optional],
     };
   }
 };

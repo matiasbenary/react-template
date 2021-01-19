@@ -6,7 +6,7 @@ import SelectActivity from './SelectActivity';
 import { ButtonPrimary } from '../../Button';
 */
 import { useDispatch, useSelector } from 'react-redux';
-import { default as FormTest } from '../../Form';
+import { default as FormTest } from '../../Form/Form';
 import Input from '../../Form/components/Input';
 import Select from '../../Form/components/Select';
 import TextArea from '../../Form/components/TextArea';

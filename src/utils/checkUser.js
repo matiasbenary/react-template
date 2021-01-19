@@ -1,3 +1,1 @@
-export const checkUser = (user) => {
-
-};
+export const checkUser = (user) => user.name && user.email;

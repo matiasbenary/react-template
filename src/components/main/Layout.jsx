@@ -11,32 +11,11 @@ import Profile from '../pages/Private/Profile';
 import './layout.scss';
 import Toast from '../molecules/Toast';
 import Management from '../pages/Private/Management';
-import { actions } from '../../store/ducks/toast.duck';
-
-const checkCorrect = (obj) => Object.values(obj).reduce((acc, voluntee) => {
-  acc = voluntee ? acc + 1 : acc;
-  return acc;
-}, 0);
+import useCheckUser from './hooks/useCheckUser';
 
 const Main = () => {
   const user = useSelector((state) => state.auth.user);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (checkCorrect(user.volunteeringFields) <= 7) {
-      dispatch(actions.addToast({
-        item: {
-          id: 'test12321',
-          description: <p>
-            Falta completar datos personales ,
-            <Link to="/profile">click aqui</Link>
-                       </p>,
-          type: 'success',
-        },
-      }));
-    }
-  }, []);
-
+  useCheckUser(user);
   return (
     <div className="bg-light" style={{ minHeight: '100vh' }}>
       <Navbar email={user.email} name={user.name} />

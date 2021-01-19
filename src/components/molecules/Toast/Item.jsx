@@ -46,8 +46,9 @@ const Item = ({ toast, deleteToast }) => {
         X
       </button>
       <div className="notication-container-main">
-        <div className="notification-image" />
-        <img src={typeToast.icon} style={{ height: 30, width: 30 }} alt="" />
+        <div className="notification-image">
+          <img src={typeToast.icon} style={{ height: 30, width: 30 }} alt="" />
+        </div>
         <div className="notification-description">
           <p className="notification-title">{typeToast.title}</p>
           <p className="notification-message">{toast.description}</p>

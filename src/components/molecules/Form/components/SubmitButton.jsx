@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SubmitButton = () => (
+const SubmitButton = ({ isloading = false }) => (
   <button className="button" type="submit">
-    Enviar
+    {isloading ? 'Cargando' : 'Enviar'}
   </button>
 );
 

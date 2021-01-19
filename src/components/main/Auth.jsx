@@ -1,16 +1,16 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import "./auth.scss";
-import styled from "styled-components";
-import config from "../../config";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import './auth.scss';
+import styled from 'styled-components';
+import config from '../../config';
 
-import ResetUser from "../pages/Public/ResetUser/index.jsx";
-import Login from "../pages/Public/Login";
-import Register from "../pages/Public/Register";
-import ResetPass from "../pages/Public/ResetPass/index.jsx";
+import ResetUser from '../pages/Public/ResetUser/index.jsx';
+import Login from '../pages/Public/Login';
+import Register from '../pages/Public/Register';
+import ResetPass from '../pages/Public/ResetPass/index.jsx';
 
 const Img = styled.img`
-  width: ${(props) => props.width || "300px"};
+  width: ${(props) => props.width || '300px'};
   margin-bottom: 3rem;
   display: block;
 `;
@@ -29,7 +29,7 @@ const Main = () => (
       </div>
     </div>
 
-    <div className="col-xs-12 col-md-6 right hidden-xs"></div>
+    <div className="col-xs-12 col-md-6 right hidden-xs" />
   </div>
 );
 
