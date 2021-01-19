@@ -1,16 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../../../store/ducks/auth.duck';
+import { checkUser } from '../../../../../utils/checkUser';
 import Form, { Input, SubmitButton } from '../../../../molecules/Form';
 import GenderSelect from './Components/GenderSelect';
 import IdTypeSelect from './Components/IdTypeSelect';
 import MaritalSelect from './Components/MaritalSelect';
 
 const MyPersonalData = ({
-  user: {
-    name, email, id, volunteeringFields,
-  },
+  user,
 }) => {
+  const {
+    name, email, id, volunteeringFields,
+  } = user;
   const defaultValue = {
     name, email, id, ...volunteeringFields,
   };
@@ -23,9 +25,11 @@ const MyPersonalData = ({
   };
   return (
     <div className="container mt-4">
+      {checkUser(user) || (
       <div className="alert alert-warning" role="alert">
-        A simple warning alert—check it out!
+        Por favor complete sus datos personales
       </div>
+      )}
       <div className="card shadow  bg-white rounded">
         <div className="card-header">Mis datos personales</div>
         <div className="card-block">
