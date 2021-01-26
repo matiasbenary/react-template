@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import * as Yup from "yup";
-import { apiCall } from "../../../../crud/api.crud";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { Link, useParams } from 'react-router-dom';
 import {
   FaAsterisk,
   FaCheck,
   FaExclamationCircle,
   FaEye,
   FaEyeSlash,
-} from "react-icons/fa";
+} from 'react-icons/fa';
+import { apiCall } from '../../../../crud/api.crud';
 
 const schema = Yup.object().shape({
-  email: Yup.string().email("Email invalido").required("Es requerido"),
-  password: Yup.string().required("Es requerido"),
+  email: Yup.string().email('Email invalido').required('Es requerido'),
+  password: Yup.string().required('Es requerido'),
   passwordConfirmation: Yup.string()
-    .oneOf([Yup.ref("password"), "las contraseñas no coiciden"])
-    .required("Es requerido"),
+    .oneOf([Yup.ref('password'), 'las contraseñas no coiciden'])
+    .required('Es requerido'),
 });
 
 const stateError = {
@@ -26,10 +26,10 @@ const stateError = {
 };
 
 const ResetUser = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [error, setError] = useState(stateError);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(false);
@@ -47,19 +47,19 @@ const ResetUser = () => {
     try {
       await schema.validate(
         { email, password, passwordConfirmation },
-        { abortEarly: false }
+        { abortEarly: false },
       );
     } catch (err) {
       let errorList = {};
       err.inner.forEach((e) => {
-        if (e.path === "email") {
+        if (e.path === 'email') {
           errorList = { ...errorList, email: e.message };
-        } else if (e.path === "password") {
+        } else if (e.path === 'password') {
           errorList = { ...errorList, password: e.message };
-        } else if (e.path === "passwordConfirmation") {
+        } else if (e.path === 'passwordConfirmation') {
           errorList = {
             ...errorList,
-            confirmations: "Tus contraseñas deben coincidir",
+            confirmations: 'Tus contraseñas deben coincidir',
           };
         }
       });
@@ -76,7 +76,7 @@ const ResetUser = () => {
     };
 
     try {
-      const response = await apiCall("reset", payload, "POST");
+      await apiCall('reset', payload, 'POST');
       setStatus(true);
       setError(stateError);
     } catch (err) {
@@ -89,16 +89,18 @@ const ResetUser = () => {
     <>
       <h5 className="mt-2 mb-4">Restablecer contraseña</h5>
       <div className="col-12 p-0">
-        <div className={`d-flex mb-2 ${!status && "mb-4"}`}>
-          <FaAsterisk className="icon-required"></FaAsterisk>
+        <div className={`d-flex mb-2 ${!status && 'mb-4'}`}>
+          <FaAsterisk className="icon-required" />
           <span className="span span--error">Campos obligatorios</span>
         </div>
         <label className="pl-2 d-flex justify-content-between align-items-end">
-          Correo electrónico <FaAsterisk className="icon-required"></FaAsterisk>
+          Correo electrónico
+          {' '}
+          <FaAsterisk className="icon-required" />
         </label>
         <input
           type="text"
-          className={`input-text ${error.email && "input-text--danger"}`}
+          className={`input-text ${error.email && 'input-text--danger'}`}
           placeholder="usuario@email.com"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
@@ -107,12 +109,14 @@ const ResetUser = () => {
         {error.email && <span className="span span--error">{error.email}</span>}
 
         <label className="pl-2 d-flex justify-content-between align-items-end mt-3">
-          Contraseñas <FaAsterisk className="icon-required"></FaAsterisk>
+          Contraseñas
+          {' '}
+          <FaAsterisk className="icon-required" />
         </label>
         <div className="password-wrapper">
           <input
-            type={showPass ? "text" : "password"}
-            className={`input-text ${error.password && "input-text--danger"}`}
+            type={showPass ? 'text' : 'password'}
+            className={`input-text ${error.password && 'input-text--danger'}`}
             placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -122,9 +126,9 @@ const ResetUser = () => {
             <FaEyeSlash
               className="password-eye"
               onClick={changeShowPass}
-            ></FaEyeSlash>
+            />
           ) : (
-            <FaEye className="password-eye" onClick={changeShowPass}></FaEye>
+            <FaEye className="password-eye" onClick={changeShowPass} />
           )}
         </div>
         {error.password && (
@@ -132,15 +136,16 @@ const ResetUser = () => {
         )}
 
         <label className="pl-2 d-flex justify-content-between align-items-end mt-1">
-          Confirmar contraseña{" "}
-          <FaAsterisk className="icon-required"></FaAsterisk>
+          Confirmar contraseña
+          {' '}
+          <FaAsterisk className="icon-required" />
         </label>
 
         <div className="password-wrapper">
           <input
-            type={showPass ? "text" : "password"}
+            type={showPass ? 'text' : 'password'}
             className={`input-text ${
-              error.confirmations && "input-text--danger"
+              error.confirmations && 'input-text--danger'
             }`}
             placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
             onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -151,9 +156,9 @@ const ResetUser = () => {
             <FaEyeSlash
               className="password-eye"
               onClick={changeShowPass}
-            ></FaEyeSlash>
+            />
           ) : (
-            <FaEye className="password-eye" onClick={changeShowPass}></FaEye>
+            <FaEye className="password-eye" onClick={changeShowPass} />
           )}
         </div>
         {error.confirmations && (
@@ -162,14 +167,14 @@ const ResetUser = () => {
 
         {status && (
           <div className="d-flex mt-2">
-            <FaCheck className="mr-2 icon icon--ok"></FaCheck>
+            <FaCheck className="mr-2 icon icon--ok" />
             <span className="msj msj--ok">Se restablecio tu contraseña!</span>
           </div>
         )}
 
         {error.server && (
           <div className="d-flex mt-2">
-            <FaExclamationCircle className="mr-2 icon icon--error"></FaExclamationCircle>
+            <FaExclamationCircle className="mr-2 icon icon--error" />
             <span className="msj msj--error">Error</span>
           </div>
         )}
@@ -180,7 +185,7 @@ const ResetUser = () => {
           Ir al login
         </Link>
         <button className="button" onClick={resetPassword}>
-          {loading ? "Validando..." : "Siguiente"}
+          {loading ? 'Validando...' : 'Siguiente'}
         </button>
       </div>
     </>

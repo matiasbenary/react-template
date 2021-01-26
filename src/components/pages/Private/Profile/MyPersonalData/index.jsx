@@ -3,18 +3,30 @@ import { useDispatch, useSelector } from 'react-redux';
 import { actions } from '../../../../../store/ducks/auth.duck';
 import { checkUser } from '../../../../../utils/checkUser';
 import Form, { Input, SubmitButton } from '../../../../molecules/Form';
+import GooglePlaceAutocomplete from '../../../../molecules/Form/components/GooglePlaceAutocomplete';
 import GenderSelect from './Components/GenderSelect';
 import IdTypeSelect from './Components/IdTypeSelect';
 import MaritalSelect from './Components/MaritalSelect';
+
+const getAdress = (addresses) => {
+  if (!addresses) return { name: '' };
+  return { address_id: addresses[0].id, address: addresses[0].name };
+};
 
 const MyPersonalData = ({
   user,
 }) => {
   const {
-    name, email, id, volunteeringFields,
+    name, email, id, volunteeringFields, addresses,
   } = user;
+
   const defaultValue = {
-    name, email, id, ...volunteeringFields,
+    name,
+    email,
+    id,
+    ...volunteeringFields,
+    ...getAdress(addresses),
+    address_info: addresses ? addresses[0].info : '',
   };
 
   const [change, setChange] = useState(false);
@@ -129,6 +141,27 @@ const MyPersonalData = ({
                     label="Perfil Linkendin"
                     name="linkedin_url"
                     type="url"
+                    validations={[
+                      { key: 'required', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <GooglePlaceAutocomplete
+                    label="Domicilio"
+                    name="address"
+                    validations={[
+                      { key: 'required', val: true },
+                    ]}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <Input
+                    label="Información adicional"
+                    name="address_info"
+                    type="text"
                     validations={[
                       { key: 'required', val: true },
                     ]}

@@ -16,6 +16,10 @@ const Form = ({ children, defaultValue = {}, submit }) => {
     setValues({ ...values, [name]: value });
   };
 
+  const updateValueObjects = (value) => {
+    setValues({ ...values, ...value });
+  };
+
   const getDefaultValue = (name) => values[name];
 
   const handleSubmit = (e) => {
@@ -39,6 +43,7 @@ const Form = ({ children, defaultValue = {}, submit }) => {
           setValues,
           updateValue,
           getDefaultValue,
+          updateValueObjects,
         }}
       >
         {children}
