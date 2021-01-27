@@ -9,7 +9,7 @@ import IdTypeSelect from './Components/IdTypeSelect';
 import MaritalSelect from './Components/MaritalSelect';
 
 const getAdress = (addresses) => {
-  if (!addresses) return { name: '' };
+  if (addresses.length === 0) return { address: '' };
   return { address_id: addresses[0].id, address: addresses[0].name };
 };
 
@@ -26,7 +26,7 @@ const MyPersonalData = ({
     id,
     ...volunteeringFields,
     ...getAdress(addresses),
-    address_info: addresses ? addresses[0].info : '',
+    address_info: addresses.length === 0 ? '' : addresses[0].info,
   };
 
   const [change, setChange] = useState(false);

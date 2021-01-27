@@ -64,14 +64,13 @@ const GooglePlaceAutocomplete = ({
     handleScriptLoad(setQuery, autoCompleteRef);
   }, []);
 
-  console.log(value);
+  const formContext = useFormContext();
   useEffect(() => {
     if (query && query.address) {
       setValue(query.address || value);
     }
+    formContext.updateValueObjects(query);
   }, [query]);
-
-  const formContext = useFormContext();
 
   // custom hook: useInputValidations
   const { setIsValid, triggerValidations, isValid } = useInputValidations({
