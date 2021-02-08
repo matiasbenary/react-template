@@ -140,7 +140,7 @@ const MyPersonalData = ({
                   <Input
                     label="Perfil Linkendin"
                     name="linkedin_url"
-                    type="url"
+                    type="text"
                     validations={[
                       { key: 'required', val: true },
                     ]}
