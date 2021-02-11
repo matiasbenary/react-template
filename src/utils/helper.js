@@ -43,6 +43,7 @@ export const downloadCSV = (array) => {
 export const invercionMatriz = (data, columns) => {
   const row = Math.ceil(data.length / columns);
 
+  console.log(row);
   let aux = [];
   const auxFinal = [];
   let acts = [];
@@ -53,6 +54,7 @@ export const invercionMatriz = (data, columns) => {
     indice = i * columns;
     aux.push(data.slice(indice, indice + columns));
   }
+  console.log(aux);
 
   for (let x = 0; x < aux.length; x += 1) {
     for (let y = 0; y < aux[x].length; y += 1) {
@@ -60,18 +62,24 @@ export const invercionMatriz = (data, columns) => {
       auxFinal[y][x] = aux[x][y];
     }
   }
+  console.log(auxFinal);
 
   for (let x = 0; x < auxFinal.length; x += 1) {
     acts = [...acts, ...auxFinal[x]];
   }
+  console.log({ acts });
 
   aux = [];
   indice = 0;
 
+  const largo = acts.length;
   for (let i = 0; columns > i; i += 1) {
-    limit = indice + row;
+    limit = (largo - (row * i)) <= indice ? indice + 1 : indice + row;
+
     aux.push(acts.slice(indice, limit));
     indice = limit;
   }
+
+  console.log(aux);
   return aux;
 };
