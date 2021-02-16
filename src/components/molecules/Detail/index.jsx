@@ -16,6 +16,10 @@ const Detail = ({ activity, showLocation = false }) => {
   return (
     <div>
       <div>
+        <span className="strong">Tipo:</span>
+        {activity.alternative_type}
+      </div>
+      <div>
         <span className="strong">Estado:</span>
         {activity.status_alias}
       </div>
