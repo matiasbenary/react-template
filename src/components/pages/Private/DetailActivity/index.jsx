@@ -76,7 +76,6 @@ const DetailActivity = () => {
     history.goBack();
   };
   const activitiesUserOnlyId = activitiesUser.data.map((ac) => ac.id);
-  console.log('🚀 ~ file: index.jsx ~ line 77 ~ DetailActivity ~ activity', activity);
 
   const now = moment().subtract(1, 'days');
 

@@ -39,11 +39,28 @@ export const downloadCSV = (array) => {
   link.setAttribute('download', filename);
   link.click();
 };
+/*
+7 4
+3 2
+2 1
+2 1
+4/3 = 1.33
+5/3 = 1.66
 
+1 2 3 4 5 6 7 8 9
+1 1 1 2 2 2 3 3 3
+0 1 1 1 2 2 2 3 3
+0 0 1 1 1 2 2 2 3
+
+1 2 3 4 5 6 7 8 9
+1 1 2 2 3 3 4 4 5
+0 1 1 2 2 3 3 4 4
+
+*/
 export const invercionMatriz = (data, columns) => {
+  if (columns === 1) return [data];
   const row = Math.ceil(data.length / columns);
 
-  console.log(row);
   let aux = [];
   const auxFinal = [];
   let acts = [];
@@ -54,7 +71,6 @@ export const invercionMatriz = (data, columns) => {
     indice = i * columns;
     aux.push(data.slice(indice, indice + columns));
   }
-  console.log(aux);
 
   for (let x = 0; x < aux.length; x += 1) {
     for (let y = 0; y < aux[x].length; y += 1) {
@@ -62,24 +78,26 @@ export const invercionMatriz = (data, columns) => {
       auxFinal[y][x] = aux[x][y];
     }
   }
-  console.log(auxFinal);
 
   for (let x = 0; x < auxFinal.length; x += 1) {
     acts = [...acts, ...auxFinal[x]];
   }
-  console.log({ acts });
 
   aux = [];
   indice = 0;
 
-  const largo = acts.length;
+  const add = acts.length % columns;
+
   for (let i = 0; columns > i; i += 1) {
-    limit = (largo - (row * i)) <= indice ? indice + 1 : indice + row;
+    if (add === 0) {
+      limit = indice + row;
+    } else {
+      limit = add <= i ? indice + row - 1 : indice + row;
+    }
 
     aux.push(acts.slice(indice, limit));
     indice = limit;
   }
 
-  console.log(aux);
   return aux;
 };

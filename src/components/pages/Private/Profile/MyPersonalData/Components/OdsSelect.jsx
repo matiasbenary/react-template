@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-const OdsSelect = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const OdsSelect = () => (
+  <div />
+);
 
-export default OdsSelect
+export default OdsSelect;
