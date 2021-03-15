@@ -29,6 +29,7 @@ const MyPersonalData = ({
     address_info: addresses.length === 0 ? '' : addresses[0].info,
   };
 
+  console.log(defaultValue);
   const [change, setChange] = useState(false);
   const isLoading = useSelector((state) => state.auth.loading);
 
@@ -128,10 +129,7 @@ const MyPersonalData = ({
                     label="Numero de celular"
                     name="mobile_number"
                     type="number"
-                    validations={[
-                      { key: 'required', val: true },
-                      { key: 'only_numbers', val: true },
-                    ]}
+                    validations={[]}
                   />
                 </div>
               </div>
@@ -141,9 +139,7 @@ const MyPersonalData = ({
                     label="Perfil Linkendin"
                     name="linkedin_url"
                     type="text"
-                    validations={[
-                      { key: 'required', val: true },
-                    ]}
+                    validations={[]}
                   />
                 </div>
               </div>
@@ -162,9 +158,7 @@ const MyPersonalData = ({
                     label="Información adicional"
                     name="address_info"
                     type="text"
-                    validations={[
-                      { key: 'required', val: true },
-                    ]}
+                    validations={[]}
                   />
                 </div>
               </div>

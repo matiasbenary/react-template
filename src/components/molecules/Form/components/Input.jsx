@@ -9,7 +9,6 @@ const Input = ({
   const [value, setValue] = useState();
 
   const formContext = useFormContext();
-
   // custom hook: useInputValidations
   const { setIsValid, triggerValidations, isValid } = useInputValidations({
     formContext,
