@@ -5,6 +5,7 @@ import Card from '../../../molecules/Card';
 import Loading from '../../../molecules/Loading';
 import Map from '../../../molecules/Map';
 
+
 import VolunteerExperiences from '../../../molecules/VolunteerExperiences';
 import './cardContainer.scss';
 import { useBreackpoint } from '../../../../utils/hooks/useBreackpoint';
@@ -13,6 +14,7 @@ import { apiCall } from '../../../../crud/api.crud';
 import Pagination from '../../../molecules/Pagination';
 import { invercionMatriz } from '../../../../utils/helper';
 import Toast from '../../../molecules/Toast';
+import config from '../../../../config';
 
 const CardsContainer = () => {
   const [activities, setActivities] = useState(null);
@@ -49,12 +51,13 @@ const CardsContainer = () => {
 
       <div className="container mt-4">
         <div className="card-deck">
-          <Card
+          {config.banner? <div  className="card"><img  src={config.banner} alt="banner"/></div>
+          :(<><Card
             description={<Map activities={activities} />}
             title="Actividades de voluntariado"
             style={{ flexGrow: 200 }}
           />
-          <VolunteerExperiences />
+          <VolunteerExperiences /></>)}
         </div>
         <Pagination
           meta={activities.meta}
