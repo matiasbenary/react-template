@@ -8,6 +8,7 @@ import Baufest from "./22/22";
 import CivicHouse from "./2241/2241";
 import Bisblick from "./3885/3885";
 import Idex from "./2614/2614";
+import Mediapila from "./1284/1284"
 
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
@@ -35,6 +36,8 @@ const config = () => {
       return { ...base, ...Bisblick };
     case "2614":
       return { ...base, ...Idex };
+    case "1284":
+      return { ...base, ...Mediapila };
     default:
       return base;
   }
