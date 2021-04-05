@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import { apiCall } from "../../../crud/api.crud";
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { apiCall } from '../../../crud/api.crud';
 
 export const actionTypes = {
-  GetActivityHoursStart: "[USER HOURS] GET START",
-  GetActivityHoursComplete: "[USER HOURS] GET COMPLETE",
-  GetActivityHoursError: "[USER HOURS] GET ERROR",
+  GetActivityHoursStart: '[USER HOURS] GET START',
+  GetActivityHoursComplete: '[USER HOURS] GET COMPLETE',
+  GetActivityHoursError: '[USER HOURS] GET ERROR',
 };
 
 const initialAuthState = {
@@ -37,12 +37,12 @@ export const actions = {
 
 export function* getHoursState({ payload }) {
   try {
-    const setPage = payload.pages ? `page[number]=${payload.pages}` : "";
+    const setPage = payload.pages ? `page[number]=${payload.pages}` : '';
     const results = yield call(
       apiCall,
       `user/${payload.user_id}/activityHours?${setPage}&sort=-created_at`,
       null,
-      "GET"
+      'GET',
     );
     yield put({ type: actionTypes.GetActivityHoursComplete, results });
   } catch (error) {
