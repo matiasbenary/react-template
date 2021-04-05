@@ -20,6 +20,7 @@ const MyPersonalData = ({
     name, email, id, volunteeringFields, addresses,
   } = user;
 
+  console.log(user);
   const defaultValue = {
     name,
     email,
