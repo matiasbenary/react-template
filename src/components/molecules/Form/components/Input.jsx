@@ -5,8 +5,8 @@ import useInputValidations from '../hooks/useInputValidations';
 const Input = ({
   label, name, validations, type = 'text',
 }) => {
-  const [field, setField] = useState();
-  const [value, setValue] = useState();
+  const [field, setField] = useState('');
+  const [value, setValue] = useState('');
 
   const formContext = useFormContext();
   // custom hook: useInputValidations
