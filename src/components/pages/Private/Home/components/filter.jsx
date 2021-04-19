@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { FiFilter, FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import styled from "styled-components";
 
+import { ButtonPrimary } from "../../../../molecules/Button";
+
+import { FaFilter } from "react-icons/fa";
+
 const Container = styled.div`
   padding: 10px 10px;
   border: 2px solid #e7e7e7;
@@ -16,15 +20,10 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 
-  .arrow{
-    color: #C4C4C4
-  font-size: 18px;
-  margin-left:5px;
-  &:hover{
-    color: #3f86f6;
-  }
-  cursor:pointer;
+  p {
+    margin: 0;
   }
 `;
 
@@ -33,21 +32,17 @@ const IconFilter = styled(FiFilter)`
   font-size: 24px;
 `;
 
-
-const Filter = () => {
-  const [isClose, setIsClose] = useState(true);
-  const toogleStatus = () => {
-    setIsClose(!isClose);
+const Filter = ({ setIsOpen }) => {
+  const openModal = () => {
+    setIsOpen(true);
   };
   return (
-    <Container isClose={isClose}>
-      <IconFilter />
-      {isClose ? (
-        <FiChevronRight className="arrow" onClick={toogleStatus} />
-      ) : (
-
-        <FiChevronLeft className="arrow" onClick={toogleStatus} />
-      )}
+    <Container>
+      <p>TExto de rellenos</p>
+      <ButtonPrimary onClick={openModal}>
+        <FaFilter />
+        Filtro
+      </ButtonPrimary>
     </Container>
   );
 };
