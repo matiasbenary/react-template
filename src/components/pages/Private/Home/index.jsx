@@ -14,7 +14,7 @@ import Pagination from "../../../molecules/Pagination";
 import { invercionMatriz } from "../../../../utils/helper";
 import Toast from "../../../molecules/Toast";
 import config from "../../../../config";
-import Filter from "./components/Filter";
+// import Filter from "./components/Filter";
 import Modal from "./components/Modal";
 
 const converFilterToUrl = (filters) => {
