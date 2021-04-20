@@ -128,9 +128,9 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
 							placeholder="Tipo de la actividad"
 							components={animatedComponents}
 							isMulti
-							onChange={addFilter('inTypeActivity')}
+							onChange={addFilter('inActivityType')}
 							options={optionsTipoActividad}
-							defaultValue={filter ? filter.inTypeActivity : []}
+							defaultValue={filter ? filter.inActivityType : []}
 						/>
 					</DivMargin>
           {/* <DivMargin>
