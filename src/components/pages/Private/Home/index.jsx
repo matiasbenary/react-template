@@ -10,11 +10,10 @@ import "./cardContainer.scss";
 import { useBreackpoint } from "../../../../utils/hooks/useBreackpoint";
 import ActivitiesCard from "../../../molecules/ActivitiesCard";
 import { apiCall } from "../../../../crud/api.crud";
-import Pagination from "../../../molecules/Pagination";
 import { invercionMatriz } from "../../../../utils/helper";
 import Toast from "../../../molecules/Toast";
 import config from "../../../../config";
-// import Filter from "./components/Filter";
+import Filter from "./components/Filter";
 import Modal from "./components/Modal";
 
 const converFilterToUrl = (filters) => {
@@ -91,13 +90,7 @@ const CardsContainer = () => {
             </>
           )}
         </div>
-        <Pagination
-          meta={activities.meta}
-          action={setPage}
-          withRedux={false}
-          className="d-flex justify-content-end mt-5"
-        />
-        {/* <Filter setIsOpen={setIsOpen}></Filter> */}
+        <Filter setIsOpen={setIsOpen} setPage={setPage} meta={activities.meta}></Filter>
         <div className="card__container">
           {activitiesColumns.map((activitiesColumn) => (
             <div className="card__container__columns">
