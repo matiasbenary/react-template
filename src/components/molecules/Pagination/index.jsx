@@ -16,29 +16,27 @@ const Item = ({ item, active, goTo }) => {
 	);
 };
 
-const Pagination = ({ meta, action, className = null ,withRedux = true }) => {
+const Pagination = ({ meta, action, className = null, withRedux = true }) => {
 	const dispath = useDispatch();
 
 	const setPage = (pages) => {
-		if(withRedux){
-			dispath(action({ pages}));
-		}else{
+		if (withRedux) {
+			dispath(action({ pages }));
+		} else {
 			action(pages);
 		}
 	};
 
 	const before = () => {
-		setPage(meta.current_page - 1 );
-
-
+		setPage(meta.current_page - 1);
 	};
 
 	const next = () => {
-		setPage(meta.current_page + 1 );
+		setPage(meta.current_page + 1);
 	};
 
 	const goTo = (page) => {
-		setPage(page );
+		setPage(page);
 	};
 
 	const getOtherPages = () => {

@@ -13,8 +13,8 @@ import { apiCall } from "../../../../crud/api.crud";
 import { invercionMatriz } from "../../../../utils/helper";
 import Toast from "../../../molecules/Toast";
 import config from "../../../../config";
-import Filter from "./components/Filter";
 import Modal from "./components/Modal";
+import Filter from "./components/Filter";
 
 const converFilterToUrl = (filters) => {
   let aux = "";

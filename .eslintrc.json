@@ -17,9 +17,9 @@
     "plugins": [
         "react"
     ],
-    "rules":  {
-      "camelcase": "off",
-      "react/prop-types":"off",
-      "import/no-cycle":"off",
+    "rules": {
+        "camelcase": "off",
+        "react/prop-types": "off",
+        "import/no-cycle": "off"
     }
 }
