@@ -124,6 +124,7 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
               className="form-control"
               onChange={setName}
               placeholder="Nombre de la actividad"
+              value={filter ? filter.withTitle : ""}
             />
           </DivMargin>
           <DivMargin>
@@ -131,6 +132,7 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
               className="form-control"
               onChange={setType}
               placeholder="Tipo de la actividad"
+              value={filter ? filter.withAlternativeType : ""}
             />
           </DivMargin>
           {/* <DivMargin>
