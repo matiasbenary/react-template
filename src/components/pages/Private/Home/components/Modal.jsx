@@ -49,14 +49,14 @@ const DivMargin = styled.div`
   margin: 25px 0;
 `;
 
-const optionsTipoActividad = [
-  { value: "V", label: "Voluntariado" },
-  { value: "P", label: "Pro Bono y Prácticas Profesionales Supervisadas(PPS)" },
-  { value: "D", label: "Donación de bienes y servicios" },
-  { value: "C", label: "Compra/Venta: Negocios inclusivos y verdes" },
-  { value: "E", label: "Educación: Talleres, Webinarios, Cursos" },
-  { value: "W", label: "Wellness: habitos saludables" },
-];
+// const optionsTipoActividad = [
+//   { value: "V", label: "Voluntariado" },
+//   { value: "P", label: "Pro Bono y Prácticas Profesionales Supervisadas(PPS)" },
+//   { value: "D", label: "Donación de bienes y servicios" },
+//   { value: "C", label: "Compra/Venta: Negocios inclusivos y verdes" },
+//   { value: "E", label: "Educación: Talleres, Webinarios, Cursos" },
+//   { value: "W", label: "Wellness: habitos saludables" },
+// ];
 
 // const optionsOds = [
 // 	{ value: 1, label: 'Fin de la pobreza' },
@@ -106,6 +106,9 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
   const setName = (event) => {
     addFilter("withTitle")(event.target.value);
   };
+  const setType = (event) => {
+    addFilter("withAlternativeType")(event.target.value);
+  };
 
   if (!isOpen) return null;
   return (
@@ -124,6 +127,13 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
             />
           </DivMargin>
           <DivMargin>
+            <input
+              className="form-control"
+              onChange={setType}
+              placeholder="Tipo de la actividad"
+            />
+          </DivMargin>
+          {/* <DivMargin>
 						<Select
 							placeholder="Tipo de la actividad"
 							components={animatedComponents}
@@ -132,7 +142,7 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
 							options={optionsTipoActividad}
 							defaultValue={filter ? filter.inActivityType : []}
 						/>
-					</DivMargin>
+					</DivMargin> */}
           {/* <DivMargin>
 						<Select
 							placeholder="Objetivos de desarrollo sostenible"
