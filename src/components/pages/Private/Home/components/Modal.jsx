@@ -52,7 +52,7 @@ const DivMargin = styled.div`
 
 const convertResponseToOptions = (array, label, value) => {
   if (!value) value = label;
-
+  if(array.length ==0) return [];
   return array.map((v) => ({ value: v[value], label: v[label] }));
 };
 
