@@ -20,7 +20,7 @@ const converFilterToUrl = (filters) => {
   let aux = "";
   for (const filter in filters) {
     const filterData = filters[filter];
-    if(!filterData) continue;
+    if(!filterData ) continue;
     const data = Array.isArray(filterData)
       ? filterData.map((v) => v.value).join()
       : filters[filter];
