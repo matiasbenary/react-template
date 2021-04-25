@@ -131,7 +131,7 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
             </DivMargin>
           )}
 
-          {response.alternativeType && (
+          {response.ods && (
             <DivMargin>
               <Select
                 placeholder="Objetivos de desarrollo sostenible"
@@ -140,6 +140,19 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
                 onChange={addFilter("inSdgs")}
                 options={convertResponseToOptions(response.ods, "label", "id")}
                 defaultValue={filter ? filter.inSdgs : []}
+              />
+            </DivMargin>
+          )}
+
+          {response.entity_type && (
+            <DivMargin>
+              <Select
+                placeholder="Tipo de organización"
+                components={animatedComponents}
+                isMulti
+                onChange={addFilter("inEntityType")}
+                options={convertResponseToOptions(response.entity_type, "name", "id")}
+                defaultValue={filter ? filter.inEntityType : []}
               />
             </DivMargin>
           )}
