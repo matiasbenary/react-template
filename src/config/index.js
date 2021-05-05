@@ -13,6 +13,8 @@ import Caritas from './2387/2387';
 import PactoEmprendedor from './4193/4193';
 import Globant from './71/71';
 import AnimalKarma from './5838/5838';
+import ManosAbiertas from './343';
+import PontenciarSolidario from './3403';
 
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
@@ -50,6 +52,10 @@ const config = () => {
     return { ...base, ...Globant };
     case '5838':
     return { ...base, ...AnimalKarma };
+    case '343':
+      return { ...base, ...ManosAbiertas };
+    case '3403':
+      return { ...base, ...PontenciarSolidario };
     default:
       return base;
   }
