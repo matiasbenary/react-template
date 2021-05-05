@@ -26,6 +26,7 @@ const Main = () => (
           <Route exact path="/password/reset/:id" component={ResetPass} />
           <Route path="/" component={Login} />
         </Switch>
+        {config.logo_login && <Img className="mt-5" src={config.logo_login} alt="logo" />}
       </div>
     </div>
 
