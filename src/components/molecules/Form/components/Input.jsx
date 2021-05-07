@@ -27,9 +27,7 @@ const Input = ({
       field.focus();
     }
   }, [formContext.focus, name, field]);
-  console.log({
-    label, name, value, formContext,
-  });
+
   return (
     <div className="input-container">
       <div>

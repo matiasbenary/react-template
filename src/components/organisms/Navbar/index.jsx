@@ -14,7 +14,6 @@ const Img = styled.img`
 const Navbar = ({ name }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log(config);
   const node = useRef();
 
   const handleClick = (e) => {

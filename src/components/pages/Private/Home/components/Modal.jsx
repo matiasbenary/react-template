@@ -163,6 +163,23 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
                   placeholder={filter.title}
                   components={animatedComponents}
                   isMulti
+                  onChange={addFilter("inCustomFilter"+filter.order)}
+                  options={convertResponseToOptions(
+                    filter.values,
+                    "value",
+                    "id"
+                  )}
+                  defaultValue={filter ? filter["inCustomFilter"+filter.order]: []}
+                />
+              </DivMargin>
+            ))}
+            {/* {response.filtersCustom &&
+            response.filtersCustom.map((filter) => (
+              <DivMargin key={`filter${filter.id}`}>
+                <Select
+                  placeholder={filter.title}
+                  components={animatedComponents}
+                  isMulti
                   onChange={addCustomFilter(filter.id)}
                   options={convertResponseToOptions(
                     filter.values,
@@ -172,7 +189,7 @@ const Modal = ({ setIsOpen, isOpen, setFilter, filter }) => {
                   defaultValue={filtersCustom ? filtersCustom[filter.id] : []}
                 />
               </DivMargin>
-            ))}
+            ))} */}
         </BodyModal>
       </MainModal>
     </Overlay>
