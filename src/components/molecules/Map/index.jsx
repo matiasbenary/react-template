@@ -8,13 +8,14 @@ const { google } = window;
 
 const MyMapComponent = withGoogleMap(({ activities }) => (
   <GoogleMap
+
     defaultZoom={config.location_zoom}
     defaultCenter={{ lat: config.location_lat, lng: config.location_lng }}
   >
     {activities &&
       activities.map((activity) =>
         activity.locations.map((location) => (
-          <Marker location={location} activity={activity} />
+          <Marker key={`markerGoogleMaps${activity.id}`} location={location} activity={activity} />
         ))
       )}
   </GoogleMap>

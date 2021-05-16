@@ -8,12 +8,13 @@ const ApplyButton = ({
   activity, userId, setChange
 }) => {
   const dispatch = useDispatch();
-  const sendApplyInfo = (postulation_reason) => {
+  const sendApplyInfo = (postulation_reason,forms) => {
     setChange();
     const payload = {
       postulation_reason,
       user_id:userId,
       activity_id:activity.id,
+      forms
     };
     dispatch(modalActivities.applyActivity({ payload }));
   };
@@ -25,7 +26,8 @@ const ApplyButton = ({
           open: true,
           title:activity.title,
           message: activity.short_description,
-          send: (postulation_reason) => sendApplyInfo(postulation_reason),
+          forms:(activity.form && [...activity.form.fields]),
+          send: (postulation_reason,forms) => sendApplyInfo(postulation_reason,forms),
         },
         modalType: "apply",
       })

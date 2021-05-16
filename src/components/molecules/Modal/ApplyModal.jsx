@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
+import Form from './applyModal/Forms';
 import './modal.scss';
 
-const ApplyModal = ({ closeModal, title, send }) => {
+const ApplyModal = ({ closeModal, title, send,forms}) => {
   const [commentary, setCommentary] = useState('');
+  const [formsSend, setFormsSend] = useState([]);
   const onChange = (e) => {
     setCommentary(e.target.value);
   };
 
   const save = () => {
-    send(commentary);
+    const aux = [];
+    for (const form in formsSend) {
+      aux.push({id:form,value:typeof formsSend[form] === "object"?formsSend[form].value:formsSend[form]})
+    }
+
+    send(commentary,aux);
     closeModal();
   };
+
+  const setAnswers = (name) => (value)=>{
+    setFormsSend({ ...formsSend, [name]: value });
+  }
 
   return (
     <div className="modal-content">
@@ -38,6 +49,7 @@ const ApplyModal = ({ closeModal, title, send }) => {
             onChange={onChange}
           />
         </div>
+        {forms && forms.map(form=><Form key={`formApply${form.id}`} form={form} setAnswers={setAnswers}/>)}
       </div>
       <div className="modal-footer">
         <button

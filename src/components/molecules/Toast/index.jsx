@@ -40,11 +40,11 @@ const Toast = () => {
   );
 };
 
-Toast.propTypes = {
+/* Toast.propTypes = {
   toastList: PropTypes.array.isRequired,
   position: PropTypes.string,
   autoDelete: PropTypes.bool,
   dismissTime: PropTypes.number,
-};
+}; */
 
 export default Toast;

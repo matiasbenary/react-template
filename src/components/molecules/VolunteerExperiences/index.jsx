@@ -21,11 +21,11 @@ const VolunteerExperiences = () => {
   return (
     <Card
       description={commentary.map((commentary, index) => (
-        <div className={`${index ? "commentContainer" : ""}`}>
+        <div className={`${index ? "commentContainer" : ""}`} key={`commentaryId${commentary.name}`}>
           <p className="font-weight-light text-md comment">
             {commentary.commentary}
           </p>
-          <small class="font-italic text-sm quote text-primary">
+          <small className="font-italic text-sm quote text-primary">
             {commentary.name} <p>{commentary.title}</p>
           </small>
         </div>

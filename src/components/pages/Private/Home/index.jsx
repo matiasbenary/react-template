@@ -44,7 +44,7 @@ const CardsContainer = () => {
     apiCall(
       `activity/?${pageApi}&filter[entity_origin_id]=${
         process.env.REACT_APP_ID_ENTITY
-      }${converFilterToUrl(filter)}&filter[status]=1,2&include=locations`,
+      }${converFilterToUrl(filter)}&filter[status]=1,2&include=locations,form.fields.options`,
       null,
       "GET"
     ).then((response) => setActivities(response.data));
@@ -92,10 +92,11 @@ const CardsContainer = () => {
         </div>
         <Filter setIsOpen={setIsOpen} setPage={setPage} meta={activities.meta}></Filter>
         <div className="card__container">
-          {activitiesColumns.map((activitiesColumn) => (
-            <div className="card__container__columns">
+          {activitiesColumns.map((activitiesColumn,index) => (
+            <div className="card__container__columns"  key={`cardActivityColumn${index}`}>
               {activitiesColumn.map((activity) => (
                 <ActivitiesCard
+                  key={`cardActivity${activity.id}`}
                   activity={activity}
                   userId={user_id}
                   isApply={activitiesUserOnlyId.includes(activity.id)}
