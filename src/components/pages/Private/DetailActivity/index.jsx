@@ -61,7 +61,7 @@ const DetailActivity = () => {
   const [activitiesUser, setActivitiesUser] = useState(null);
 
   useEffect(() => {
-    apiCall(`activity/${id}?include=locations,sdg`, null, 'GET').then((response) => setActivity(response.data.data[0]));
+    apiCall(`activity/${id}?include=locations,form.fields.options`, null, 'GET').then((response) => setActivity(response.data.data[0]));
   }, []);
 
   useEffect(() => {

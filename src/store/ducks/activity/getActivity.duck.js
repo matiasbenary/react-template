@@ -45,7 +45,7 @@ export function* getActivityState({ id }) {
   try {
     const results = yield call(
       apiCall,
-      `activity/${id}?include=locations`,
+      `activity/${id}?include=locations,form.fields.options`,
       null,
       "GET"
     );
