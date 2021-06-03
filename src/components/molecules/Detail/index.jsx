@@ -25,7 +25,7 @@ const Detail = ({ activity, showLocation = false }) => {
       </div>
       <div>
         <span className="strong">Comenzamos el:</span>
-        {activity.activity_to}
+        {(activity.activity_from=== activity.activity_to)?activity.activity_from:`${activity.activity_from} al ${activity.activity_to}`}
       </div>
       <div>
         <span className="strong">Postúlate hasta:</span>
