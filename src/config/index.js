@@ -19,6 +19,9 @@ import ArgentinaNarrada from "./492";
 import MadreEmprededora from "./3766";
 import MovimientoNuevaGeneracion from "./5878";
 
+import GrupoSupervielle from "./5933/5933";
+import GrupoMexico from "./2621/2621";
+
 const config = () => {
   const entityConfig = process.env.REACT_APP_ID_ENTITY;
 
@@ -65,6 +68,10 @@ const config = () => {
       return { ...base, ...MadreEmprededora };
     case "5878":
       return { ...base, ...MovimientoNuevaGeneracion };
+    case "2621":
+      return { ...base, ...GrupoMexico };
+    case "5933":
+      return { ...base, ...GrupoSupervielle };
     default:
       return base;
   }
