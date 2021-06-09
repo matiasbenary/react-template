@@ -1,4 +1,44 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const getColors = (color)=>{
+  switch(color){
+    case "success":
+      return { color:"#fff", backgroundColor:"#34bfa3"}
+      case "secondary":
+      return { color:"#212529", backgroundColor:"#ebedf2"}
+      case "brand":
+      return { color:"#fff", backgroundColor:"#716aca"}
+      case "info":
+      return { color:"#fff", backgroundColor:"#36a3f7"}
+      case "primary":
+      return { color:"#fff", backgroundColor:"#5867dd"}
+      case "warning":
+      return { color:"#fff", backgroundColor:"#ffb822"}
+      case "accent":
+      return { color:"#fff", backgroundColor:"#00c5dc"}
+      case "metal":
+      return { color:"#fff", backgroundColor:"#c4c5d6"}
+      case "danger":
+      return { color:"#fff", backgroundColor:"#f4516c"}
+  }
+}
+
+const Span = styled.span`
+  padding: 5px 15px;
+  background-color: ${props=>getColors(props.color).backgroundColor};
+  color: ${props=>getColors(props.color).color};
+  display: block;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 5px;
+`
+
+const Container = styled.div`
+ display: flex;
+ flex-direction: column;
+`
+
 
 const Detail = ({ activity, showLocation = false }) => {
   const getLocation = () => {
@@ -14,11 +54,8 @@ const Detail = ({ activity, showLocation = false }) => {
   };
 
   return (
-    <div>
-      <div>
-        <span className="strong">Tipo:</span>
-        {activity.alternative_type}
-      </div>
+    <Container>
+        <Span color={activity.color_alternative_type}>{activity.alternative_type}</Span>
       <div>
         <span className="strong">Estado:</span>
         {activity.status_alias}
@@ -41,7 +78,7 @@ const Detail = ({ activity, showLocation = false }) => {
         <span className="strong">Estamos en:</span>
         {getLocation()}
       </div>
-    </div>
+    </Container>
   );
 };
 export default Detail;
