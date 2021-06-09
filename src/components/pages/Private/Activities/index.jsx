@@ -117,7 +117,7 @@ const Activities = () => {
         center: true,
       },
       {
-        name: 'Horas acumuladas por el equipo',
+        name: 'Horas acumuladas',
         selector: 'hours_total',
         sortable: true,
         center: true,
