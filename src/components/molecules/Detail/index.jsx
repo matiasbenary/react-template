@@ -21,6 +21,8 @@ const getColors = (color)=>{
       return { color:"#fff", backgroundColor:"#c4c5d6"}
       case "danger":
       return { color:"#fff", backgroundColor:"#f4516c"}
+      default:
+      return { color:"#fff", backgroundColor:"#34bfa3"}
   }
 }
 
