@@ -18,6 +18,7 @@ import PontenciarSolidario from "./3403";
 import ArgentinaNarrada from "./492";
 import MadreEmprededora from "./3766";
 import MovimientoNuevaGeneracion from "./5878";
+import Priar from "./1505/1505";
 
 import GrupoSupervielle from "./5933/5933";
 import GrupoMexico from "./2621/2621";
@@ -72,6 +73,8 @@ const config = () => {
       return { ...base, ...GrupoMexico };
     case "5933":
       return { ...base, ...GrupoSupervielle };
+    case "1505":
+      return { ...base, ...Priar };
     default:
       return base;
   }
