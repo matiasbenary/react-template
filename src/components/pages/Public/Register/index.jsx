@@ -19,9 +19,9 @@ const Register = () => {
   const [name, setName] = useState("");
   const [business, setBusiness] = useState("");
   const [error, setError] = useState(stateError);
+  const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(false);
-
   const resetPassword = async () => {
     setLoading(true);
     setError(stateError);
@@ -49,7 +49,7 @@ const Register = () => {
       bussiness_name: business,
     };
     try {
-      await apiCall("sendMailResgister", payload, "POST");
+      setResponse((await apiCall("sendMailResgister", payload, "POST")).data);
       setStatus(true);
       setError(stateError);
     } catch (err) {
@@ -107,12 +107,21 @@ const Register = () => {
           name="business"
         />
 
-        {status && (
+        {status && !response.exist &&(
           <div className="d-flex mt-2">
             <FaCheck className="mr-2 icon icon--ok"></FaCheck>
             <span className="msj msj--ok">
               Un administrador revisará tu registro y te enviaremos un mail para
               confirmar tu usuario.
+            </span>
+          </div>
+        )}
+
+        {status && response.exist && (
+          <div className="d-flex mt-2">
+            <FaCheck className="mr-2 icon icon--ok"></FaCheck>
+            <span className="msj msj--ok">
+              Tu correo ya se encuenta registrado
             </span>
           </div>
         )}
@@ -129,9 +138,10 @@ const Register = () => {
         <Link to="/" className="button button--white">
           Ir al login
         </Link>
-        <button className="button" onClick={resetPassword}>
-          {loading ? "Validando..." : "Siguiente"}
-        </button>
+        {!response ?  <button className="button" onClick={resetPassword}>
+          {loading ? "Validando..." : "Enviar"}
+        </button>:null}
+
       </div>
     </>
   );
