@@ -114,6 +114,18 @@ const MyPersonalData = ({
               <div className="form-row">
                 <div className="form-group col-md-6">
                   <Input
+                    label="Fecha de nacimiento"
+                    name="birthday"
+                    type="date"
+                    validations={[
+                      { key: 'required', val: true },
+                    ]}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <Input
                     label="Numero de telefono"
                     name="phone_number"
                     type="number"

@@ -118,6 +118,12 @@ const Activities = () => {
       },
       {
         name: 'Horas acumuladas',
+        selector: 'hours_individual',
+        sortable: true,
+        center: true,
+      },
+      {
+        name: 'Horas acumuladas en grupo',
         selector: 'hours_total',
         sortable: true,
         center: true,
@@ -172,6 +178,7 @@ const Activities = () => {
       from_entity: a.fromEntity.bussiness_name,
       to_entity: a.toEntity.bussiness_name,
       hours_total: a.hoursTotal,
+      hours_individual: a.hoursIndividual,
       sdg: a.sdg_id,
       commentary: a.commentary,
       entity_to: a.fromEntity.bussiness_name,
