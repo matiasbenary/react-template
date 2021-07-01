@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { BsPerson } from 'react-icons/bs';
 import config from '../../../config';
 import { actions } from '../../../store/ducks/auth.duck';
+import Notification from './components/Notification';
 
 const Img = styled.img`
   width: ${(props) => props.width || '100px'};
@@ -13,6 +14,7 @@ const Img = styled.img`
 
 const Navbar = ({ name }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
 
   const node = useRef();
 
@@ -23,6 +25,7 @@ const Navbar = ({ name }) => {
     }
     // outside click
     setIsOpen(false);
+    setIsOpenNotification(false);
   };
 
   useEffect(() => {
@@ -39,9 +42,16 @@ const Navbar = ({ name }) => {
     dispatch(actions.logOut());
   };
 
-  const toogleMenu = () => {
+  const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const toggleNotifications = () => {
+    setIsOpenNotification(!isOpenNotification);
+  };
+
+
+  console.log(isOpenNotification);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white ">
@@ -82,13 +92,8 @@ const Navbar = ({ name }) => {
           className="nav navbar-nav flex-row justify-content-between"
           ref={node}
         >
-          <li className="nav-item order-2 order-md-1">
-            <div>
-              <div className="nav-link" title="settings">
-                <i className="fa fa-cog fa-fw fa-lg" />
-              </div>
-              <i className="fa fa-cog fa-fw fa-lg" />
-            </div>
+          <li className="dropdown order-1">
+            <Notification isOpen={isOpenNotification} toggle={toggleNotifications} ></Notification>
           </li>
           <li className="dropdown order-1">
             <button
@@ -96,10 +101,9 @@ const Navbar = ({ name }) => {
               id="dropdownMenu1"
               data-toggle="dropdown"
               className="btn btn-link dropdown-toggle d-flex align-items-center"
-              onClick={toogleMenu}
+              onClick={toggleMenu}
             >
               <BsPerson className="mr-1" />
-              {' '}
               {name}
               <span className="caret" />
             </button>

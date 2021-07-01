@@ -16,8 +16,8 @@
 }
 
 .dropdown-menu {
-  width: 150px;
-  padding: 0px
+  width: auto;
+  padding: 0px 5px;
 }
 
 .item-menu{
@@ -27,4 +27,8 @@
     color: #007bff;
     text-decoration: underline;
   }
+}
+
+.item-menu-notification{
+  width:350px;
 }
